@@ -1,0 +1,25 @@
+﻿<p>Enter Seed or Session info</p>
+<input type="text" @bind="InputValue" @bind:event="oninput" title="for solo, use Seed (not Seed Number) for multiworld, use Session"/>
+<p>@InputValue</p>
+
+<button @onclick="ReturnValue">@ButtonText</button>
+
+
+@code {
+    [Parameter]
+    public string? ButtonText { get; set; }
+
+    [Parameter]
+    public string? InputValue { get; set; }
+
+
+    [Parameter]
+    public EventCallback<string> MessageChanged { get; set; }
+
+
+    private async Task ReturnValue()
+    {
+        await MessageChanged.InvokeAsync(InputValue);
+    }
+
+}

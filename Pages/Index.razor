@@ -1,0 +1,126 @@
+﻿@page "/"
+@inject HttpClient Http
+@using smz3.countdown.wasm.Enums
+@using smz3.countdown.wasm.Extenstions
+@using smz3.countdown.wasm.Models
+
+<PageTitle>Index</PageTitle>
+<br />
+<p>Enter Seed or Session info</p>
+<input type="text" @bind="childString" @bind:event="oninput" title="for solo, use Seed (not Seed Number) for multiworld, use Session" />
+<button @onclick="ConvertShortGuid">Fetch Spoiler</button>
+
+<br />
+<br />
+
+@*@if (players.Count() > 1)
+{
+    <p>players: @string.Join(", ", @players)</p>
+}*@
+
+@if (countdownLocationInfos.Any())
+{
+    <TabControl>
+        @for(var i = 0; i < countdownLocationInfos.Count(); i++)
+        {
+            var internalIndex = i;
+            <TabBody Title="@countdownLocationInfos[internalIndex].LocationName">
+                <CountdownLocation @bind-LocationInfo=countdownLocationInfos[internalIndex] />
+            </TabBody>
+        }
+    </TabControl>
+}
+
+@* uncomment to see listings of items in the locations *@
+@*@if (otherDictionary.Keys.Count > 0)
+{
+    @foreach (var location in otherDictionary)
+    {
+        <h2>@location.Key</h2>
+        <ol>
+            @foreach (var item in @location.Value)
+            {
+                <li>@item</li>
+            }
+        </ol>
+    }
+
+}*@
+
+@code {
+    private List<string> players { get; set; } = new List<string>();
+    private string? id { get; set; }
+    private string? childString { get; set; }
+    private bool isMultiworld { get; set; }
+    private Dictionary<string, int> locationInfo { get; set; } = new Dictionary<string, int>();
+    private SpoilerResponse response = new SpoilerResponse();
+    private Dictionary<string, List<string>> otherDictionary = new Dictionary<string, List<string>>();
+    private List<CountdownLocationInfo> countdownLocationInfos = new List<CountdownLocationInfo>();
+
+    string urlBase => "https://samus.link/api/spoiler/";
+
+    public async Task ConvertShortGuid()
+    {
+        id = childString?.ConvertShortGuidToGuidString();
+        try
+        {
+            var items = Enum.GetValues(typeof(Item));
+
+            var itemList = ((Item[])items).Select(x => new { Name = x.GetDescription(), IsMajor = x.IsMajor() })
+                                          .Where(x => x.IsMajor)
+                                          .Select(x => x.Name)
+                                          .ToHashSet();
+
+            response = await Http.GetFromJsonAsync<SpoilerResponse>($"https://smz3-countdown-api.herokuapp.com/spoiler/{id}") ?? response;
+            if (!response.Locations.Any())
+            {
+                return;
+            }
+
+            players = response?.Seed.Worlds.Select(x => x.Player).ToList() ?? players;
+
+            //Single player
+            if (players.Count == 1)
+            {
+                response?.Locations.ForEach(l =>
+                {
+                    if (!itemList.Contains(l.ItemName))
+                    {
+                        return;
+                    }
+
+                    if (locationInfo.ContainsKey(l.LocationArea))
+                    {
+                        locationInfo[l.LocationArea] += 1;
+                        otherDictionary[l.LocationArea].Add(l.ItemName);
+                    }
+                    else
+                    {
+                        locationInfo.Add(l.LocationArea, 1);
+                        otherDictionary.Add(l.LocationArea, new List<string> { l.ItemName });
+                    }
+                });
+
+                countdownLocationInfos = locationInfo.Select(x =>
+                    new CountdownLocationInfo
+                        {
+                            LocationName = x.Key,
+                            CurrentCount = x.Value,
+                            OriginalCount = x.Value
+                        })
+                    .ToList();
+            }
+
+            //multiworld
+            if(players.Count > 1)
+            {
+                //requires Selected Player code to be built
+            }
+        }
+        catch (Exception ex)
+        {
+            var stuff = ex;
+            throw ex;
+        }
+    }
+}

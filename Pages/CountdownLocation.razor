@@ -1,0 +1,37 @@
+﻿@using smz3.countdown.wasm.Models
+<br />
+<p class="location"><b>@LocationInfo.LocationName</b>: @LocationInfo.CurrentCount</p>
+<button class="btn btn-primary" @onclick="@Found">Found</button>&nbsp;&nbsp;<button class="btn" @onclick="@Undo">Undo</button>
+
+
+
+@code {
+    [Parameter]
+    public CountdownLocationInfo LocationInfo { get; set; }
+
+    [Parameter]
+    public EventCallback<CountdownLocationInfo> LocationInfoChanged { get; set; }
+
+    private async Task Found()
+    {
+        if (LocationInfo.CurrentCount - 1 >= 0)
+        {
+            LocationInfo.CurrentCount -= 1;
+            await LocationInfoChanged.InvokeAsync(LocationInfo);
+        }
+    }
+
+    private async Task Undo()
+    {
+        if(LocationInfo.CurrentCount + 1 <= LocationInfo.OriginalCount)
+        {
+            LocationInfo.CurrentCount += 1;
+            await LocationInfoChanged.InvokeAsync(LocationInfo);
+        }
+    }
+
+    async Task UpdateLocationInfo()
+    {
+        await LocationInfoChanged.InvokeAsync(LocationInfo);
+    }
+}
