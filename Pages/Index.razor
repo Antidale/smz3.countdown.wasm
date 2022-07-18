@@ -5,24 +5,41 @@
 @using smz3.countdown.wasm.Extenstions
 @using smz3.countdown.wasm.Models
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Countdown</PageTitle>
 <br />
-<p>Enter Seed or Session info</p>
-<input type="text" @bind="childString" @bind:event="oninput" title="for solo, use Seed (not Seed Number) for multiworld, use Session" />
-<button @onclick="ConvertShortGuid">Fetch Spoiler</button>
 
+@if (!countdownLocationInfos.Any())
+{
+    <p>Enter Seed or Session info</p>
+    <input type="text" @bind="childString" @bind:event="oninput" title="for solo, use Seed (not Seed Number) for multiworld, use Session" />
+    <button @onclick="ConvertShortGuid">Fetch Spoiler</button>
+}
+else
+{
+
+}
+
+<br />
 <br />
 
 @if (players.Count() > 1)
 {
-    <div>Select World:</div>
-    <select @onchange="SelectedPlayerChanged" disabled="@disableDropdown">
-        <option value="" disabled selected> -- Select -- </option>
-        @foreach (var player in players)
-        {
-            <option value="@player.Item2">@player.Item1</option>
-        }
-    </select>
+    @if (!disableDropdown)
+    {
+        <div>Select World:</div>
+        <select @onchange="SelectedPlayerChanged" disabled="@disableDropdown">
+            <option value="" disabled selected> -- Select -- </option>
+            @foreach (var player in players)
+            {
+                <option value="@player.Item2">@player.Item1</option>
+            }
+        </select>
+    }
+    else 
+    {
+        <h2>@SelectedPlayer</h2>
+    }
+
 }
 
 @if (countdownLocationInfos.Any())
@@ -42,11 +59,10 @@
     private List<(string, int)> players { get; set; } = new List<(string, int)>();
     private string? id { get; set; }
     private string? childString { get; set; }
-    private bool isMultiworld { get; set; }
     private Dictionary<string, int> locationInfo { get; set; } = new Dictionary<string, int>();
     private SpoilerResponse response = new SpoilerResponse();
     private List<CountdownLocationInfo> countdownLocationInfos = new List<CountdownLocationInfo>();
-    private int SelectedPlayer { get; set; } = 0;
+    private string SelectedPlayer { get; set; } = string.Empty;
     private HashSet<string> itemList { get; set; } = new HashSet<string>();
     private Dictionary<string, string> locationsList = new Dictionary<string, string>();
     private bool disableDropdown { get; set; } = false;
@@ -64,17 +80,6 @@
 
         try
         {
-            var items = Enum.GetValues(typeof(Item));
-
-            itemList = ((Item[])items).Select(x => new { Name = x.GetDescription(), IsMajor = x.IsMajor() })
-                                          .Where(x => x.IsMajor)
-                                          .Select(x => x.Name)
-                                          .ToHashSet();
-
-            var areas = Enum.GetValues(typeof(Area));
-            locationsList = ((Area[])areas).Select(x => x.GetAttribute<AreaAttribute>()).ToDictionary(key => key.LocationRegion, value => value.DisplayText);
-            locationInfo = locationsList.Select(x => x.Value).Distinct().ToDictionary(key => key, value => 0);
-
             response = await GetSpoilerAsync(id);
             if (!response.Locations.Any())
             {
@@ -86,40 +91,13 @@
             //Single player
             if (players.Count == 1)
             {
-                response?.Locations.ForEach(l =>
-                {
-                    if (!itemList.Contains(l.ItemName))
-                    {
-                        return;
-                    }
-
-                    if (locationsList.ContainsKey(l.LocationRegion))
-                    {
-                        var displayText = locationsList[l.LocationRegion];
-                        locationInfo[displayText] += 1;
-
-                    }
-                });
-
-                countdownLocationInfos = locationInfo.Select(x =>
-                    new CountdownLocationInfo
-                        {
-                            LocationName = x.Key,
-                            CurrentCount = x.Value,
-                            OriginalCount = x.Value
-                        })
-                    .ToList();
+                countdownLocationInfos = ParseSpoiler();
             }
             else
             {
                 countdownLocationInfos = new List<CountdownLocationInfo>();
             }
 
-            //multiworld
-            if (players.Count > 1)
-            {
-                //requires Selected Player code to be built
-            }
         }
         catch (Exception ex)
         {
@@ -139,37 +117,59 @@
         {
             if (int.TryParse(e.Value.ToString(), out int selectedPlayer))
             {
-                SelectedPlayer = selectedPlayer;
+                SelectedPlayer = players.FirstOrDefault(x => x.Item2 == selectedPlayer).Item1;
 
-                response?.Locations.Where(x => x.WorldId == SelectedPlayer).ToList().ForEach(l =>
-                    {
-                        if (!itemList.Contains(l.ItemName))
-                        {
-                            return;
-                        }
+                countdownLocationInfos = ParseSpoiler(selectedPlayer);
 
-                        if (locationsList.ContainsKey(l.LocationRegion))
-                        {
-                            var displayText = locationsList[l.LocationRegion];
-                            locationInfo[displayText] += 1;
-                        }
-                    });
-
-                countdownLocationInfos = locationInfo.Select(x =>
-                    new CountdownLocationInfo
-                        {
-                            LocationName = x.Key,
-                            CurrentCount = x.Value,
-                            OriginalCount = x.Value
-                        })
-                    .ToList();
                 if (countdownLocationInfos.Any())
                 {
                     disableDropdown = true;
                 }
+            }
+        }
+    }
 
+    protected override void OnInitialized()
+    {
+        var items = Enum.GetValues(typeof(Item));
+        itemList = ((Item[])items).Select(x => new { Name = x.GetDescription(), IsMajor = x.IsMajor() })
+                                  .Where(x => x.IsMajor)
+                                  .Select(x => x.Name)
+                                  .ToHashSet();
+
+        var areas = Enum.GetValues(typeof(Area));
+        locationsList = ((Area[])areas).Select(x => x.GetAttribute<AreaAttribute>())
+                                       .ToDictionary(key => key.LocationRegion, value => value.DisplayText);
+
+        locationInfo = locationsList.Select(x => x.Value)
+                                     .Distinct()
+                                    .ToDictionary(key => key, value => 0);
+        base.OnInitialized();
+    }
+
+    private List<CountdownLocationInfo> ParseSpoiler(int? worldId = null)
+    {
+        response?.Locations.Where(x => worldId == null || x.WorldId == worldId!).ToList().ForEach(l =>
+        {
+            if (!itemList.Contains(l.ItemName))
+            {
+                return;
             }
 
-        }
+            if (locationsList.ContainsKey(l.LocationRegion))
+            {
+                var displayText = locationsList[l.LocationRegion];
+                locationInfo[displayText] += 1;
+            }
+        });
+
+        return locationInfo.Select(x =>
+            new CountdownLocationInfo
+                {
+                    LocationName = x.Key,
+                    CurrentCount = x.Value,
+                    OriginalCount = x.Value
+                })
+            .ToList();
     }
 }
