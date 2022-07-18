@@ -24,14 +24,18 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+      
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v2.1.0
         with:
           dotnet-version: 6.0.6
+      
       - name: Publish with dotnet
         run: dotnet publish --configuration Release --output build
+
       - name: change base tag in index.html
         run: sed -i 's/<base href="\/" \/>/<base href="\/smz3.countdown.wasm\/" \/>/g' release/wwwroot/index.html
+      
       - name: Deploy to Github Pages
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
