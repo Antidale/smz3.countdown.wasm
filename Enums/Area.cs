@@ -4,8 +4,11 @@ namespace smz3.countdown.wasm.Enums
 {
     public enum Area
     {
-        [Area("Castle Tower", "Castle Tower", "Castle Tower")]
-        CastleTower,
+        [Area("Hyrule Castle", "Hyrule Castle", "Hyrule Castle")]
+        HyruleCastle,
+
+        [Area("Light World", "Death Mountain", "Light World Death Mountain East")]
+        LightWorldDeathMountainEast,
 
         [Area("Eastern Palace", "Eastern Palace", "Eastern Palace")]
         EasternPalace,
@@ -16,9 +19,12 @@ namespace smz3.countdown.wasm.Enums
         [Area("Tower of Hera", "Tower of Hera", "Tower of Hera")]
         TowerOfHera,
 
+        [Area("Dark World", "Death Mountain", "Dark World Death Mountain West")]
+        DarkWorldDeathMountainWest,
+
         [Area("Palace of Darkness", "Palace of Darkness", "Palace of Darkness")]
         PalaceOfDarkness,
-        
+
         [Area("Swamp Palace", "Swamp Palace", "Swamp Palace")]
         SwampPalace,
 
@@ -39,40 +45,31 @@ namespace smz3.countdown.wasm.Enums
 
         [Area("Ganon's Tower", "Ganon's Tower", "Ganon's Tower")]
         GanonsTower,
-        
-        [Area("Light World", "Death Mountain", "Light World Death Mountain East")]
-        LightWorldDeathMountainEast,
-        
+
         [Area("Light World", "Death Mountain", "Light World Death Mountain West")]
         LightWorldDeathMountainWest,
-        
+
         [Area("Light World", "Light World", "Light World North West")]
         LightWorldNorthWest,
-        
+
         [Area("Light World", "Light World", "Light World North East")]
         LightWorldNorthEast,
-        
+
         [Area("Light World", "Light World", "Light World South")]
         LightWorldSouth,
-        
-        [Area("Hyrule Castle", "Hyrule Castle", "Hyrule Castle")]
-        HyruleCastle,
-        
-        [Area("Dark World", "Death Mountain", "Dark World Death Mountain West")]
-        DarkWorldDeathMountainWest,
-        
+
         [Area("Dark World", "Death Mountain", "Dark World Death Mountain East")]
         DarkWorldDeathMountainEast,
-        
+
         [Area("Dark World", "Dark World", "Dark World North West")]
         DarkWorldNorthWest,
-        
+
         [Area("Dark World", "Dark World", "Dark World North East")]
         DarkWorldNorthEast,
-        
+
         [Area("Dark World", "Dark World", "Dark World South")]
         DarkWorldSouth,
-        
+
         [Area("Dark World", "Dark World", "Dark World Mire")]
         DarkWorldMire,
 
@@ -81,7 +78,7 @@ namespace smz3.countdown.wasm.Enums
 
         [Area("Crateria", "Crateria", "Crateria Central")]
         CrateriaCentral,
-        
+
         [Area("Crateria", "Crateria", "Crateria East")]
         CrateriaEast,
 
@@ -96,17 +93,17 @@ namespace smz3.countdown.wasm.Enums
 
         [Area("Brinstar", "Brinstar", "Brinstar Red")]
         BrinstarRed,
-        
+
         [Area("Brinstar", "Brinstar", "Brinstar Kraid")]
         BrinstarKraid,
 
-        [Area("Wrecked Ship", "Wrecked Ship", "Wrecked Ship")] 
+        [Area("Wrecked Ship", "Wrecked Ship", "Wrecked Ship")]
         WreckedShip,
 
-        [Area("Maridia", "Maridia", "Maridia Outer")] 
+        [Area("Maridia", "Maridia", "Maridia Outer")]
         MaridiaOuter,
 
-        [Area("Maridia", "Maridia", "Maridia Inner")] 
+        [Area("Maridia", "Maridia", "Maridia Inner")]
         MaridiaInner,
 
         [Area("Upper Norfair", "Upper Norfair", "Norfair Upper West")]
@@ -115,13 +112,16 @@ namespace smz3.countdown.wasm.Enums
         [Area("Upper Norfair", "Upper Norfair", "Norfair Upper East")]
         NorfairUpperEast,
 
-        [Area("Upper Norfair", "Upper Norfair", "Norfair Upper Crocomire")] 
+        [Area("Upper Norfair", "Upper Norfair", "Norfair Upper Crocomire")]
         NorfairUpperCrocomire,
 
         [Area("Lower Norfair", "Lower Norfair", "NorfairLowerWest")]
         NorfairLowerWest,
-        
+
         [Area("Lower Norfair", "Lower Norfair", "Norfair Lower East")]
-        NorfairLowerEast
+        NorfairLowerEast,
+
+        [Area("Castle Tower", "Castle Tower", "Castle Tower")]
+        CastleTower,
     }
 }
