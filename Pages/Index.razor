@@ -14,15 +14,23 @@
 <br />
 <br />
 
-@*@if (players.Count() > 1)
+@if (players.Count() > 1)
 {
-    <p>players: @string.Join(", ", @players)</p>
-}*@
+    <p>Select World:</p>
+    <br />
+    <select @onchange="SelectedPlayerChanged" disabled="@disableDropdown">
+        <option value="" disabled selected> -- Select -- </option>
+        @foreach (var player in players)
+        {
+            <option value="@player.Item2">@player.Item1</option>
+        }
+    </select>
+}
 
 @if (countdownLocationInfos.Any())
 {
     <TabControl>
-        @for(var i = 0; i < countdownLocationInfos.Count(); i++)
+        @for (var i = 0; i < countdownLocationInfos.Count(); i++)
         {
             var internalIndex = i;
             <TabBody Title="@countdownLocationInfos[internalIndex].LocationName">
@@ -33,39 +41,49 @@
 }
 
 @code {
-    private List<string> players { get; set; } = new List<string>();
+    private List<(string, int)> players { get; set; } = new List<(string, int)>();
     private string? id { get; set; }
     private string? childString { get; set; }
     private bool isMultiworld { get; set; }
     private Dictionary<string, int> locationInfo { get; set; } = new Dictionary<string, int>();
     private SpoilerResponse response = new SpoilerResponse();
     private List<CountdownLocationInfo> countdownLocationInfos = new List<CountdownLocationInfo>();
+    private int SelectedPlayer { get; set; } = 0;
+    private HashSet<string> itemList { get; set; } = new HashSet<string>();
+    private Dictionary<string, string> locationsList = new Dictionary<string, string>();
+    private bool disableDropdown { get; set; } = false;
 
     string urlBase => "https://samus.link/api/spoiler/";
 
     public async Task ConvertShortGuid()
     {
         id = childString?.ConvertShortGuidToGuidString();
+
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            return;
+        }
+
         try
         {
             var items = Enum.GetValues(typeof(Item));
 
-            var itemList = ((Item[])items).Select(x => new { Name = x.GetDescription(), IsMajor = x.IsMajor() })
+            itemList = ((Item[])items).Select(x => new { Name = x.GetDescription(), IsMajor = x.IsMajor() })
                                           .Where(x => x.IsMajor)
                                           .Select(x => x.Name)
                                           .ToHashSet();
 
             var areas = Enum.GetValues(typeof(Area));
-            var locationsList = ((Area[])areas).Select(x => x.GetAttribute<AreaAttribute>()).ToDictionary(key => key.LocationRegion, value => value.DisplayText);
+            locationsList = ((Area[])areas).Select(x => x.GetAttribute<AreaAttribute>()).ToDictionary(key => key.LocationRegion, value => value.DisplayText);
             locationInfo = locationsList.Select(x => x.Value).Distinct().ToDictionary(key => key, value => 0);
 
-            response = await Http.GetFromJsonAsync<SpoilerResponse>($"https://smz3-countdown-api.herokuapp.com/spoiler/{id}") ?? response;
+            response = await GetSpoilerAsync(id);
             if (!response.Locations.Any())
             {
                 return;
             }
 
-            players = response?.Seed.Worlds.Select(x => x.Player).ToList() ?? players;
+            players = response?.Seed.Worlds.Select(x => (x.Player, x.WorldId)).ToList() ?? players;
 
             //Single player
             if (players.Count == 1)
@@ -81,7 +99,7 @@
                     {
                         var displayText = locationsList[l.LocationRegion];
                         locationInfo[displayText] += 1;
-                        
+
                     }
                 });
 
@@ -96,7 +114,7 @@
             }
 
             //multiworld
-            if(players.Count > 1)
+            if (players.Count > 1)
             {
                 //requires Selected Player code to be built
             }
@@ -105,6 +123,51 @@
         {
             var stuff = ex;
             throw ex;
+        }
+    }
+
+    public async Task<SpoilerResponse> GetSpoilerAsync(string id)
+    {
+        return await Http.GetFromJsonAsync<SpoilerResponse>($"https://smz3-countdown-api.herokuapp.com/spoiler/{id}") ?? new SpoilerResponse();
+    }
+
+    void SelectedPlayerChanged(ChangeEventArgs e)
+    {
+        if (e is not null && e.Value is not null)
+        {
+            if (int.TryParse(e.Value.ToString(), out int selectedPlayer))
+            {
+                SelectedPlayer = selectedPlayer;
+
+                response?.Locations.Where(x => x.WorldId == SelectedPlayer).ToList().ForEach(l =>
+                    {
+                        if (!itemList.Contains(l.ItemName))
+                        {
+                            return;
+                        }
+
+                        if (locationsList.ContainsKey(l.LocationRegion))
+                        {
+                            var displayText = locationsList[l.LocationRegion];
+                            locationInfo[displayText] += 1;
+                        }
+                    });
+
+                countdownLocationInfos = locationInfo.Select(x =>
+                    new CountdownLocationInfo
+                        {
+                            LocationName = x.Key,
+                            CurrentCount = x.Value,
+                            OriginalCount = x.Value
+                        })
+                    .ToList();
+                if (countdownLocationInfos.Any())
+                {
+                    disableDropdown = true;
+                }
+
+            }
+
         }
     }
 }
