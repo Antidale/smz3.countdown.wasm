@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject HttpClient Http
+@using smz3.countdown.wasm.Attributes
 @using smz3.countdown.wasm.Enums
 @using smz3.countdown.wasm.Extenstions
 @using smz3.countdown.wasm.Models
@@ -31,22 +32,6 @@
     </TabControl>
 }
 
-@* uncomment to see listings of items in the locations *@
-@*@if (otherDictionary.Keys.Count > 0)
-{
-    @foreach (var location in otherDictionary)
-    {
-        <h2>@location.Key</h2>
-        <ol>
-            @foreach (var item in @location.Value)
-            {
-                <li>@item</li>
-            }
-        </ol>
-    }
-
-}*@
-
 @code {
     private List<string> players { get; set; } = new List<string>();
     private string? id { get; set; }
@@ -54,7 +39,6 @@
     private bool isMultiworld { get; set; }
     private Dictionary<string, int> locationInfo { get; set; } = new Dictionary<string, int>();
     private SpoilerResponse response = new SpoilerResponse();
-    private Dictionary<string, List<string>> otherDictionary = new Dictionary<string, List<string>>();
     private List<CountdownLocationInfo> countdownLocationInfos = new List<CountdownLocationInfo>();
 
     string urlBase => "https://samus.link/api/spoiler/";
@@ -70,6 +54,10 @@
                                           .Where(x => x.IsMajor)
                                           .Select(x => x.Name)
                                           .ToHashSet();
+
+            var areas = Enum.GetValues(typeof(Area));
+            var locationsList = ((Area[])areas).Select(x => x.GetAttribute<AreaAttribute>()).ToDictionary(key => key.LocationRegion, value => value.DisplayText);
+            locationInfo = locationsList.Select(x => x.Value).Distinct().ToDictionary(key => key, value => 0);
 
             response = await Http.GetFromJsonAsync<SpoilerResponse>($"https://smz3-countdown-api.herokuapp.com/spoiler/{id}") ?? response;
             if (!response.Locations.Any())
@@ -89,15 +77,11 @@
                         return;
                     }
 
-                    if (locationInfo.ContainsKey(l.LocationArea))
+                    if (locationsList.ContainsKey(l.LocationRegion))
                     {
-                        locationInfo[l.LocationArea] += 1;
-                        otherDictionary[l.LocationArea].Add(l.ItemName);
-                    }
-                    else
-                    {
-                        locationInfo.Add(l.LocationArea, 1);
-                        otherDictionary.Add(l.LocationArea, new List<string> { l.ItemName });
+                        var displayText = locationsList[l.LocationRegion];
+                        locationInfo[displayText] += 1;
+                        
                     }
                 });
 
