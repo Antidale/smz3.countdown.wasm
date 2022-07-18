@@ -12,12 +12,10 @@
 <button @onclick="ConvertShortGuid">Fetch Spoiler</button>
 
 <br />
-<br />
 
 @if (players.Count() > 1)
 {
-    <p>Select World:</p>
-    <br />
+    <div>Select World:</div>
     <select @onchange="SelectedPlayerChanged" disabled="@disableDropdown">
         <option value="" disabled selected> -- Select -- </option>
         @foreach (var player in players)
@@ -111,6 +109,10 @@
                             OriginalCount = x.Value
                         })
                     .ToList();
+            }
+            else
+            {
+                countdownLocationInfos = new List<CountdownLocationInfo>();
             }
 
             //multiworld
