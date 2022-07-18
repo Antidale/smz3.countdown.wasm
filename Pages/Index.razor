@@ -16,7 +16,9 @@
 }
 else
 {
-
+    <button @onclick="NewSeed" class="btn btn-success float-end">New Seed</button>
+    <br />
+    <br />
 }
 
 <br />
@@ -39,7 +41,6 @@ else
     {
         <h2>@SelectedPlayer</h2>
     }
-
 }
 
 @if (countdownLocationInfos.Any())
@@ -93,6 +94,7 @@ else
             {
                 countdownLocationInfos = ParseSpoiler();
             }
+            //Delay showing locations until a player is chosen
             else
             {
                 countdownLocationInfos = new List<CountdownLocationInfo>();
@@ -171,5 +173,16 @@ else
                     OriginalCount = x.Value
                 })
             .ToList();
+    }
+
+    private void NewSeed()
+    {
+        countdownLocationInfos = new List<CountdownLocationInfo>();
+        childString = string.Empty;
+        players = new List<(string, int)>();
+        response = new SpoilerResponse();
+        SelectedPlayer = string.Empty;
+
+        StateHasChanged();
     }
 }
