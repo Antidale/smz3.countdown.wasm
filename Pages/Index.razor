@@ -1,9 +1,13 @@
 ﻿@page "/"
-@inject HttpClient Http
+
 @using smz3.countdown.wasm.Attributes
 @using smz3.countdown.wasm.Enums
 @using smz3.countdown.wasm.Extenstions
 @using smz3.countdown.wasm.Models
+@using smz3.countdown.wasm.Services
+
+@inject HttpClient Http
+@inject ItemService ItemService
 
 <PageTitle>Countdown</PageTitle>
 <br />
@@ -133,11 +137,7 @@ else
 
     protected override void OnInitialized()
     {
-        var items = Enum.GetValues(typeof(Item));
-        itemList = ((Item[])items).Select(x => new { Name = x.GetDescription(), IsMajor = x.IsMajor() })
-                                  .Where(x => x.IsMajor)
-                                  .Select(x => x.Name)
-                                  .ToHashSet();
+        itemList = ItemService.Items;
 
         var areas = Enum.GetValues(typeof(Area));
         locationsList = ((Area[])areas).Select(x => x.GetAttribute<AreaAttribute>())

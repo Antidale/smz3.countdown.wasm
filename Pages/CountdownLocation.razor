@@ -1,16 +1,35 @@
 ﻿@using smz3.countdown.wasm.Models
+@using smz3.countdown.wasm.Services
+@inject LocationService LocationService
+
 <br />
 <p class="location"><b>@LocationInfo.LocationName</b>: @LocationInfo.CurrentCount (of @LocationInfo.OriginalCount remain)</p>
 <button class="btn btn-primary" @onclick="@Found">Found</button>&nbsp;&nbsp;<button class="btn" @onclick="@Undo">Undo</button>
+
+<br />
+<br />
+<br />
+<br />
+<h4>Area Locations</h4>
+<div class="container">
+    <div class="row">
+        @foreach (var location in Locations)
+        {
+            <div class="col-4">@location</div>
+        }
+    </div>
+</div>
 
 
 
 @code {
     [Parameter]
-    public CountdownLocationInfo LocationInfo { get; set; }
+    public CountdownLocationInfo LocationInfo { get; set; } = new CountdownLocationInfo();
 
     [Parameter]
     public EventCallback<CountdownLocationInfo> LocationInfoChanged { get; set; }
+
+    List<string> Locations = new List<string>();
 
     private async Task Found()
     {
@@ -23,7 +42,7 @@
 
     private async Task Undo()
     {
-        if(LocationInfo.CurrentCount + 1 <= LocationInfo.OriginalCount)
+        if (LocationInfo.CurrentCount + 1 <= LocationInfo.OriginalCount)
         {
             LocationInfo.CurrentCount += 1;
             await LocationInfoChanged.InvokeAsync(LocationInfo);
@@ -33,5 +52,11 @@
     async Task UpdateLocationInfo()
     {
         await LocationInfoChanged.InvokeAsync(LocationInfo);
+    }
+
+    protected override Task OnParametersSetAsync()
+    {
+        Locations = LocationService.Locations.FirstOrDefault(x => x.Key == LocationInfo.LocationName).Value;
+        return base.OnParametersSetAsync();
     }
 }
