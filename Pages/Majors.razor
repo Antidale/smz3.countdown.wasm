@@ -2,27 +2,67 @@
 
 @using smz3.countdown.wasm.Services
 @inject ItemService ItemService
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 
 <PageTitle>Majors</PageTitle>
 <h3>Majors</h3>
-<p>Not implemented, but will be a place for you to determine your own selection of major items</p>
 
-<p>In the meantime, here are all the items considered major</p>
+@foreach (var item in ItemsChoices)
+{
+    <div class="form-group">
+        <input id="@item.Key" type="checkbox" class="form-check-input" checked="@item.Value" @onchange="(e) => CheckboxChanged(item.Key, e)" />
+        <label for="@item.Key" class="form-check-label">&nbsp;@item.Key</label>
+    </div>
+}
 
-
-<ul class="list-group list-inline">
-    @foreach(var item in Items)
-    {
-        <li class="list-inline-item">@item</li>
-    }
-</ul>
 
 @code {
-    private HashSet<string> Items { get; set; } = new HashSet<string>();
 
-    protected override void OnInitialized()
+    private HashSet<string> Items { get; set; } = new HashSet<string>();
+    private Dictionary<string, bool> ItemsChoices { get; set; } = new Dictionary<string, bool>();
+
+    protected override async Task OnInitializedAsync()
     {
-        Items = ItemService.Items.OrderBy(x => x).ToHashSet();
+
+        var storageMajors = await localStorage.GetItemAsync<List<string>>("Majors");
+        if (storageMajors != null)
+        {
+            Items = storageMajors.ToHashSet();
+        }
+        else
+        {
+            Items = ItemService.MajorItems.OrderBy(x => x).ToHashSet();
+        }
+
+        ItemsChoices = ItemService.AllItems.GroupJoin(
+            Items,
+            a => a,
+            i => i,
+            (a, i) => new { ItemName = a, Selected = !string.IsNullOrWhiteSpace(i.FirstOrDefault()) }
+        )
+        .OrderBy(x => x.ItemName).ToDictionary(x => x.ItemName, y => y.Selected);
+
         base.OnInitialized();
+    }
+
+    private async Task CheckboxChanged(string itemName, ChangeEventArgs e)
+    {
+        if (e == null || e.Value == null)
+        {
+            return;
+        }
+
+        var stuff = (bool)e.Value;
+        if (stuff)
+        {
+            Items.Add(itemName);
+        }
+        else
+        {
+            Items.Remove(itemName);
+        }
+
+        ItemService.MajorItems = Items;
+        await localStorage.SetItemAsync<List<string>>("Majors", Items.ToList());
     }
 }
