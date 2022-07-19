@@ -191,6 +191,10 @@ else
         players = new List<(string, int)>();
         response = new SpoilerResponse();
         SelectedPlayer = string.Empty;
+        foreach(var location in locationInfo)
+        {
+            locationInfo[location.Key] = 0;
+        }
 
         StateHasChanged();
     }
