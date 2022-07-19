@@ -1,8 +1,28 @@
 ﻿@page "/majors"
+
+@using smz3.countdown.wasm.Services
+@inject ItemService ItemService
+
 <PageTitle>Majors</PageTitle>
 <h3>Majors</h3>
 <p>Not implemented, but will be a place for you to determine your own selection of major items</p>
 
-@code {
+<p>In the meantime, here are all the items considered major</p>
 
+
+<ul class="list-group list-inline">
+    @foreach(var item in Items)
+    {
+        <li class="list-inline-item">@item</li>
+    }
+</ul>
+
+@code {
+    private HashSet<string> Items { get; set; } = new HashSet<string>();
+
+    protected override void OnInitialized()
+    {
+        Items = ItemService.Items.OrderBy(x => x).ToHashSet();
+        base.OnInitialized();
+    }
 }

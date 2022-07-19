@@ -1,0 +1,28 @@
+﻿@page "/locations"
+@using smz3.countdown.wasm.Services
+@inject LocationService LocationService
+
+<h3>Locations</h3>
+<p>Setting your own location groupings is not yet an available feature. In the meantime, this page lists all the places that are grouped under each heading</p>
+
+<p>If you want to keep this open while playing as a reference, do it in another tab/browser. <b>leaving the home page will reset all seed information</b></p>
+
+@foreach (var locationGroup in LocationService.Locations)
+{
+    <h4>@locationGroup.Key</h4>
+    <div class="container">
+        <div class="row">
+            @foreach (var location in locationGroup.Value)
+            {
+                <div class="col-4">@location</div>
+            }
+        </div>
+    </div>
+    <br />
+}
+
+
+
+@code {
+
+}
