@@ -8,6 +8,7 @@
 
 @inject HttpClient Http
 @inject ItemService ItemService
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 
 <PageTitle>Countdown</PageTitle>
 <br />
@@ -41,7 +42,7 @@ else
             }
         </select>
     }
-    else 
+    else
     {
         <h2>@SelectedPlayer</h2>
     }
@@ -135,9 +136,17 @@ else
         }
     }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        itemList = ItemService.Items;
+        var storageMajors = await localStorage.GetItemAsync<List<string>>("Majors");
+        if (storageMajors != null)
+        {
+            itemList = storageMajors.ToHashSet();
+        }
+        else
+        {
+            itemList = ItemService.MajorItems;
+        }
 
         var areas = Enum.GetValues(typeof(Area));
         locationsList = ((Area[])areas).Select(x => x.GetAttribute<AreaAttribute>())
