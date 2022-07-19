@@ -9,6 +9,7 @@
 @inject HttpClient Http
 @inject ItemService ItemService
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
+@implements IAsyncDisposable
 
 <PageTitle>Countdown</PageTitle>
 <br />
@@ -138,23 +139,11 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var storageMajors = await localStorage.GetItemAsync<List<string>>("Majors");
-        if (storageMajors != null)
-        {
-            itemList = storageMajors.ToHashSet();
-        }
-        else
-        {
-            itemList = ItemService.MajorItems;
-        }
+        await GetSavedMajorsAsync();
+        GetLocationInfo();
+        await GetSavedCoundownInfoAsync();
+        await GetSavedPlayerInfoAsync();
 
-        var areas = Enum.GetValues(typeof(Area));
-        locationsList = ((Area[])areas).Select(x => x.GetAttribute<AreaAttribute>())
-                                       .ToDictionary(key => key.LocationRegion, value => value.DisplayText);
-
-        locationInfo = locationsList.Select(x => x.Value)
-                                     .Distinct()
-                                    .ToDictionary(key => key, value => 0);
         base.OnInitialized();
     }
 
@@ -191,11 +180,67 @@ else
         players = new List<(string, int)>();
         response = new SpoilerResponse();
         SelectedPlayer = string.Empty;
-        foreach(var location in locationInfo)
+        foreach (var location in locationInfo)
         {
             locationInfo[location.Key] = 0;
         }
 
         StateHasChanged();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await localStorage.SetItemAsync<List<CountdownLocationInfo>>("CurrentSeed", countdownLocationInfos);
+        await localStorage.SetItemAsync<List<(string, int)>>("players", players);
+        await localStorage.SetItemAsStringAsync("SelectedPlayer", SelectedPlayer);
+    }
+
+    private async Task GetSavedCoundownInfoAsync()
+    {
+        var currentSeed = await localStorage.GetItemAsync<List<CountdownLocationInfo>>("CurrentSeed");
+        if (currentSeed != null)
+        {
+            countdownLocationInfos = currentSeed;
+        }
+    }
+
+    private async Task GetSavedPlayerInfoAsync()
+    {
+        var currentPlayers = await localStorage.GetItemAsync<List<(string, int)>>("players");
+        if (currentPlayers != null && currentPlayers.Count > 1)
+        {
+            players = currentPlayers;
+        }
+
+        var currentPlayer = await localStorage.GetItemAsStringAsync("SelectedPlayer");
+        if (!string.IsNullOrEmpty(currentPlayer))
+        {
+            SelectedPlayer = currentPlayer;
+            disableDropdown = true;
+        }
+    }
+
+    private async Task GetSavedMajorsAsync()
+    {
+        var storageMajors = await localStorage.GetItemAsync<List<string>>("Majors");
+        if (storageMajors != null)
+        {
+            itemList = storageMajors.ToHashSet();
+        }
+        else
+        {
+            itemList = ItemService.MajorItems;
+        }
+    }
+
+    public void GetLocationInfo()
+    {
+        var areas = Enum.GetValues(typeof(Area));
+        locationsList = ((Area[])areas).Select(x => x.GetAttribute<AreaAttribute>())
+                                       .ToDictionary(key => key.LocationRegion, value => value.DisplayText);
+
+        locationInfo = locationsList.Select(x => x.Value)
+                                    .Distinct()
+                                    .ToDictionary(key => key, value => 0);
     }
 }
