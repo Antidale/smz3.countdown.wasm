@@ -79,7 +79,7 @@ else
 
     public async Task ConvertShortGuid()
     {
-        id = childString?.ConvertShortGuidToGuidString();
+        id = childString?.Trim().ConvertShortGuidToGuidString();
 
         if (string.IsNullOrWhiteSpace(id))
         {

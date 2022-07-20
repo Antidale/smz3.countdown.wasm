@@ -8,16 +8,15 @@
             //this does the necessary steps to reconvert.
             try
             {
-                if(shortGuid?.Length == 22)
+                if (shortGuid?.Length == 22)
                     return Convert.ToHexString(Convert.FromBase64String(shortGuid.Replace("-", "+").Replace("_", "/") + "==")).ToLower();
 
-                return shortGuid ?? string.Empty; ;
+                return shortGuid ?? string.Empty;
             }
             catch
             {
                 return string.Empty;
             }
-            
         }
     }
 }
