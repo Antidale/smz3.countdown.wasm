@@ -115,7 +115,7 @@ namespace smz3.countdown.wasm.Enums
         [Area("Upper Norfair", "Upper Norfair", "Norfair Upper Crocomire")]
         NorfairUpperCrocomire,
 
-        [Area("Lower Norfair", "Lower Norfair", "NorfairLowerWest")]
+        [Area("Lower Norfair", "Lower Norfair", "Norfair Lower West")]
         NorfairLowerWest,
 
         [Area("Lower Norfair", "Lower Norfair", "Norfair Lower East")]
