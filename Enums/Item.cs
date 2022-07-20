@@ -101,14 +101,14 @@ namespace smz3.countdown.wasm.Enums
         [Description("Ganons Tower Key")]
         KeyGT = 0xAD,
 
-        [Description("Small Key")]
-        Key = 0x24,
-        [Description("Compass")]
-        Compass = 0x25,
-        [Description("Big Key")]
-        BigKey = 0x32,
-        [Description("Map")]
-        Map = 0x33,
+        //[Description("Small Key")]
+        //Key = 0x24,
+        //[Description("Compass")]
+        //Compass = 0x25,
+        //[Description("Big Key")]
+        //BigKey = 0x32,
+        //[Description("Map")]
+        //Map = 0x33,
 
         [Major(true)]
         [Description("Progressive Mail")]
