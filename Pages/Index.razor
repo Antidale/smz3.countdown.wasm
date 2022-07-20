@@ -22,7 +22,8 @@
 }
 else
 {
-    <button @onclick="NewSeed" class="btn btn-success float-end">New Seed</button>
+    <button @onclick="SaveSeedAsync" class="btn btn-success">Save Seed</button>
+    <button @onclick="NewSeed" class="btn btn-outline-success float-end">New Seed</button>
     <br />
     <br />
 }
@@ -188,11 +189,16 @@ else
         StateHasChanged();
     }
 
-    public async ValueTask DisposeAsync()
+    private async Task SaveSeedAsync()
     {
         await localStorage.SetItemAsync<List<CountdownLocationInfo>>("CurrentSeed", countdownLocationInfos);
         await localStorage.SetItemAsync<List<(string, int)>>("players", players);
         await localStorage.SetItemAsStringAsync("SelectedPlayer", SelectedPlayer);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await SaveSeedAsync();
     }
 
     private async Task GetSavedCoundownInfoAsync()
