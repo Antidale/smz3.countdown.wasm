@@ -20,6 +20,5 @@ namespace smz3.countdown.wasm.Services
                                       .OrderBy(x => x)
                                       .ToHashSet();
         }
-
     }
 }
