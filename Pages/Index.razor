@@ -174,7 +174,7 @@ else
             .ToList();
     }
 
-    private void NewSeed()
+    private async Task NewSeed()
     {
         countdownLocationInfos = new List<CountdownLocationInfo>();
         childString = string.Empty;
@@ -185,6 +185,8 @@ else
         {
             locationInfo[location.Key] = 0;
         }
+
+        await SaveSeedAsync();
 
         StateHasChanged();
     }
