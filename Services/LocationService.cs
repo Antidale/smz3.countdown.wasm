@@ -398,50 +398,25 @@
                 ["Light World"] = new List<string>
                 {
                     "Aginah's Cave",
-                    "Blind's Hideout - Top",
-                    "Blind's Hideout - Far Left",
-                    "Blind's Hideout - Left",
-                    "Blind's Hideout - Right",
-                    "Blind's Hideout - Far Right",
                     "Bombos Tablet",
-                    "Bottle Merchant",
                     "Checkerboard Cave",
-                    "Chicken House",
                     "Desert Ledge",
                     "Graveyard Ledge",
                     "Hobo",
                     "Ice Rod Cave",
                     "Floodgate Chest",
                     "Flute Spot",
-                    "Kakariko Tavern",
-                    "Kakariko Well - Top",
-                    "Kakariko Well - Left",
-                    "Kakariko Well - Middle",
-                    "Kakariko Well - Right",
-                    "Kakariko Well - Bottom",
+                    
                     "King's Tomb",
                     "King Zora",
                     "Lake Hylia Island",
-                    "Library",
-                    "Link's House",
-                    "Lost Woods Hideout",
-                    "Lumberjack Tree",
-                    "Magic Bat",
-                    "Master Sword Pedestal",
-                    "Maze Race",
                     "Mini Moldorm Cave - Far Left",
                     "Mini Moldorm Cave - Left",
                     "Mini Moldorm Cave - NPC",
                     "Mini Moldorm Cave - Right",
                     "Mini Moldorm Cave - Far Right",
-                    "Mushroom",
-                    "Pegasus Rocks",
                     "Potion Shop",
-                    "Sahasrahla",
-                    "Sahasrahla's Hut - Left",
-                    "Sahasrahla's Hut - Middle",
-                    "Sahasrahla's Hut - Right",
-                    "Sick Kid",
+
                     "South of Grove",
                     "Spectacle Rock",
                     "Spectacle Rock Cave",
@@ -449,6 +424,35 @@
                     "Waterfall Fairy - Right",
                     "Waterfall Fairy - Left",
                     "Zora's Ledge"
+                },
+                ["North/North West LW"] = new List<string>
+                {
+                    "Lost Woods Hideout",
+                    "Lumberjack Tree",
+                    "Master Sword Pedestal",
+                    "Mushroom",
+                    "Pegasus Rocks",
+                },
+                ["Kakariko Village"] = new List<string>
+                {
+
+                    "Blind's Hideout - Top",
+                    "Blind's Hideout - Far Left",
+                    "Blind's Hideout - Left",
+                    "Blind's Hideout - Right",
+                    "Blind's Hideout - Far Right",
+                    "Bottle Merchant",
+                    "Chicken House",
+                    "Kakariko Tavern",
+                    "Kakariko Well - Top",
+                    "Kakariko Well - Left",
+                    "Kakariko Well - Middle",
+                    "Kakariko Well - Right",
+                    "Kakariko Well - Bottom",
+                    "Library",
+                    "Magic Bat",
+                    "Maze Race",
+                    "Sick Kid",
                 },
                 ["West LW DM"] = new List<string>
                 {
@@ -462,10 +466,10 @@
                     "Paradox Cave Lower - Right",
                     "Paradox Cave Lower - Far Right",
                     "Spiral Cave",
-
                 },
-                ["Hyrule Castle"] = new List<string>
+                ["Central Hyrule"] = new List<string>
                 {
+                    "Link's House",
                     "Hyrule Castle - Boomerang Chest",
                     "Hyrule Castle - Map Chest",
                     "Hyrule Castle - Zelda's Cell",
@@ -482,8 +486,12 @@
                     "Castle Tower - Foyer",
                     "Castle Tower - Dark Maze"
                 },
-                ["Eastern Palace"] = new List<string>
+                ["Eastern Area"] = new List<string>
                 {
+                    "Sahasrahla",
+                    "Sahasrahla's Hut - Left",
+                    "Sahasrahla's Hut - Middle",
+                    "Sahasrahla's Hut - Right",
                     "Eastern Palace - Cannonball Chest",
                     "Eastern Palace - Map Chest",
                     "Eastern Palace - Compass Chest",
@@ -522,12 +530,7 @@
                     "Superbunny Cave - Top",
                     "Superbunny Cave - Bottom",
                     "Bumper Cave",
-                    "Chest Game",
-                    "C-Shaped House",
-                    "Brewery",
-                    "Hammer Pegs",
-                    "Blacksmith",
-                    "Purple Chest",
+                    
                     "Catfish",
                     "Pyramid",
                     "Pyramid Fairy - Left",
@@ -539,8 +542,7 @@
                     "Hype Cave - Middle Left",
                     "Hype Cave - Bottom",
                     "Hype Cave - NPC",
-                    "Mire Shed - Left",
-                    "Mire Shed - Right",
+                    
                 },
                 ["Palace of Darkness"] = new List<string>
                 {
@@ -583,8 +585,14 @@
                     "Skull Woods - Bridge Room",
                     "Skull Woods - Mothula",
                 },
-                ["Thieves' Town"] = new List<string>
+                ["Village of Outcasts"] = new List<string>
                 {
+                    "Chest Game",
+                    "C-Shaped House",
+                    "Brewery",
+                    "Hammer Pegs",
+                    "Blacksmith",
+                    "Purple Chest",
                     "Thieves' Town - Map Chest",
                     "Thieves' Town - Ambush Chest",
                     "Thieves' Town - Compass Chest",
@@ -605,7 +613,7 @@
                     "Ice Palace - Big Chest",
                     "Ice Palace - Kholdstare",
                 },
-                ["Misery Mire"] = new List<string>
+                ["Mire Area"] = new List<string>
                 {
                     "Misery Mire - Main Lobby",
                     "Misery Mire - Map Chest",
@@ -615,6 +623,8 @@
                     "Misery Mire - Big Key Chest",
                     "Misery Mire - Big Chest",
                     "Misery Mire - Vitreous",
+                    "Mire Shed - Left",
+                    "Mire Shed - Right",
                 },
                 ["Turtle Rock"] = new List<string>
                 {
@@ -672,20 +682,15 @@
                     "Missile (Crateria bottom)",
                     "Super Missile (Crateria)",
                     "Bombs",
-                    "Missile (outside Wrecked Ship bottom)",
-                    "Missile (outside Wrecked Ship top)",
-                    "Missile (outside Wrecked Ship middle)",
-                    "Missile (Crateria moat)",
-                },
-                ["Brinstar"] = new List<string>
-                {
                     "Morphing Ball",
                     "Power Bomb (blue Brinstar)",
                     "Missile (blue Brinstar middle)",
                     "Energy Tank, Brinstar Ceiling",
                     "Missile (blue Brinstar bottom)",
                     "Missile (blue Brinstar top)",
-                    "Missile (blue Brinstar behind missile)",
+                },
+                ["Green/Pink Brin"] = new List<string>
+                {
                     "Power Bomb (green Brinstar bottom)",
                     "Missile (green Brinstar below super missile)",
                     "Super Missile (green Brinstar top)",
@@ -702,6 +707,9 @@
                     "Missile (green Brinstar pipe)",
                     "Energy Tank, Waterway",
                     "Energy Tank, Brinstar Gate",
+                },
+                ["Red Brin/Kraid"] = new List<string>
+                {
                     "X-Ray Scope",
                     "Power Bomb (red Brinstar sidehopper room)",
                     "Power Bomb (red Brinstar spike room)",
@@ -713,6 +721,11 @@
                 },
                 ["Wrecked Ship"] = new List<string>
                 {
+                    "Missile (blue Brinstar behind missile)",
+                    "Missile (outside Wrecked Ship bottom)",
+                    "Missile (outside Wrecked Ship top)",
+                    "Missile (outside Wrecked Ship middle)",
+                    "Missile (Crateria moat)",
                     "Missile (Wrecked Ship middle)",
                     "Reserve Tank, Wrecked Ship",
                     "Missile (Gravity Suit)",
@@ -722,7 +735,7 @@
                     "Right Super, Wrecked Ship",
                     "Gravity Suit",
                 },
-                ["Maridia"] = new List<string>
+                ["East Maridia"] = new List<string>
                 {
                     "Missile (green Maridia shinespark)",
                     "Super Missile (green Maridia)",
@@ -731,6 +744,13 @@
                     "Super Missile (yellow Maridia)",
                     "Missile (yellow Maridia super missile)",
                     "Missile (yellow Maridia false wall)",
+                },
+                ["West Maridia"] = new List<string>
+                {
+                    "Spring Ball",
+                    "Missile (Draygon)",
+                    "Energy Tank, Botwoon",
+                    "Space Jump",
                     "Plasma Beam",
                     "Missile (left Maridia sand pit room)",
                     "Reserve Tank, Maridia",
@@ -738,12 +758,8 @@
                     "Power Bomb (right Maridia sand pit room)",
                     "Missile (pink Maridia)",
                     "Super Missile (pink Maridia)",
-                    "Spring Ball",
-                    "Missile (Draygon)",
-                    "Energy Tank, Botwoon",
-                    "Space Jump",
                 },
-                ["Upper Norfair"] = new List<string>
+                ["Business Center"] = new List<string>
                 {
                     "Missile (lava room)",
                     "Ice Beam",
@@ -751,6 +767,9 @@
                     "Hi-Jump Boots",
                     "Missile (Hi-Jump Boots)",
                     "Energy Tank (Hi-Jump Boots)",
+                },
+                ["Bubble Mountain"] = new List<string>
+                {
                     "Reserve Tank, Norfair",
                     "Missile (Norfair Reserve Tank)",
                     "Missile (bubble Norfair green door)",
@@ -759,6 +778,9 @@
                     "Speed Booster",
                     "Missile (Wave Beam)",
                     "Wave Beam",
+                },
+                ["Crocomire"] = new List<string>
+                {
                     "Energy Tank, Crocomire",
                     "Missile (above Crocomire)",
                     "Power Bomb (Crocomire)",
