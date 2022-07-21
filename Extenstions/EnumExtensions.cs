@@ -20,19 +20,6 @@ namespace smz3.countdown.wasm.Extenstions
                 return name.ToString();
         }
 
-        public static bool IsMajor(this Enum name)
-        {
-            var field = name.GetType().GetField(name.ToString());
-            if (field == null)
-                return false;
-
-            var attributes = (MajorAttribute[])field.GetCustomAttributes(typeof(MajorAttribute), false);
-            if (attributes != null && attributes.Length > 0)
-                return attributes[0].Major;
-            else
-                return false;
-        }
-
         public static T GetAttribute<T>(this Enum name) where T : Attribute, new()
         {
             var field = name.GetType().GetField(name.ToString());
@@ -47,6 +34,23 @@ namespace smz3.countdown.wasm.Extenstions
             else
             {
                 return new T();
+            }
+        }
+
+        public static bool HasAttribute<T>(this Enum name) where T : Attribute
+        {
+            var field = name.GetType().GetField(name.ToString());
+            if (field == null)
+                return false;
+
+            var attributes = (T[])field.GetCustomAttributes(typeof(T), false);
+            if (attributes != null && attributes.Length > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

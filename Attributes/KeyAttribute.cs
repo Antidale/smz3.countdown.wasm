@@ -1,6 +1,6 @@
 ﻿namespace smz3.countdown.wasm.Attributes
 {
-    public class MajorAttribute : Attribute
+    public class KeyAttribute : Attribute
     {
     }
 }
