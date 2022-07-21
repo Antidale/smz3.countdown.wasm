@@ -7,13 +7,18 @@
 <PageTitle>Majors</PageTitle>
 <h3>Majors</h3>
 
-@foreach (var item in ItemsChoices)
-{
-    <div class="form-group">
-        <input id="@item.Key" type="checkbox" class="form-check-input" checked="@item.Value" @onchange="(e) => CheckboxChanged(item.Key, e)" />
-        <label for="@item.Key" class="form-check-label">&nbsp;@item.Key</label>
+<div class="container">
+    <div class="row">
+        @foreach (var item in ItemsChoices)
+        {
+            <fieldset class="col-lg-6 col-md-12">
+                <input id="@item.Key" type="checkbox" class="form-check-input" checked="@item.Value" @onchange="(e) => CheckboxChanged(item.Key, e)" />
+                <label for="@item.Key" class="form-check-label">&nbsp;@item.Key</label>
+            </fieldset>
+        }
     </div>
-}
+</div>
+
 
 
 @code {
