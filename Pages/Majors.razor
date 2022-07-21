@@ -3,9 +3,15 @@
 @using smz3.countdown.wasm.Services
 @inject ItemService ItemService
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager NavigationManager
 
 <PageTitle>Majors</PageTitle>
-<h3>Majors</h3>
+<h3>
+    Majors
+    <button class="btn btn-primary" @onclick="SetToDefault">Default</button>
+    <button class="btn btn-secondary" @onclick="SetToDefaultKeys">Keys Default</button>
+</h3>
+
 
 <div class="container">
     <div class="row">
@@ -18,7 +24,6 @@
         }
     </div>
 </div>
-
 
 
 @code {
@@ -39,13 +44,7 @@
             Items = ItemService.MajorItems.OrderBy(x => x).ToHashSet();
         }
 
-        ItemsChoices = ItemService.AllItems.GroupJoin(
-            Items,
-            a => a,
-            i => i,
-            (a, i) => new { ItemName = a, Selected = !string.IsNullOrWhiteSpace(i.FirstOrDefault()) }
-        )
-        .OrderBy(x => x.ItemName).ToDictionary(x => x.ItemName, y => y.Selected);
+        ItemsChoices = GenerateItemsChoicesDictionary(ItemService.AllItems, Items);
 
         base.OnInitialized();
     }
@@ -67,7 +66,35 @@
             Items.Remove(itemName);
         }
 
-        ItemService.MajorItems = Items;
         await localStorage.SetItemAsync<List<string>>("Majors", Items.ToList());
     }
+
+    private async Task SetToDefault()
+    {
+        Items = ItemService.MajorItems.OrderBy(x => x).ToHashSet();
+
+        ItemsChoices = GenerateItemsChoicesDictionary(ItemService.AllItems, Items);
+        NavigationManager.NavigateTo("/");
+        await localStorage.SetItemAsync<List<string>>("Majors", Items.ToList());
+    }
+
+    private async Task SetToDefaultKeys()
+    {
+        Items = ItemService.KeysItems.Concat(ItemService.MajorItems).OrderBy(x => x).ToHashSet();
+        ItemsChoices = GenerateItemsChoicesDictionary(ItemService.AllItems, Items);
+        NavigationManager.NavigateTo("/");
+        await localStorage.SetItemAsync<List<string>>("Majors", Items.ToList());
+    }
+
+    private Dictionary<string, bool> GenerateItemsChoicesDictionary(HashSet<string> outerSet, HashSet<string> innerSet)
+    {
+        return outerSet.GroupJoin(
+            innerSet,
+            o => o,
+            i => i,
+            (o, i) => new { ItemName = o, Selected = !string.IsNullOrWhiteSpace(i.FirstOrDefault()) })
+            .OrderBy(x => x.ItemName)
+            .ToDictionary(x => x.ItemName, y => y.Selected);
+    }
+
 }

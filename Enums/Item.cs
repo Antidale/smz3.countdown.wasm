@@ -5,99 +5,167 @@ namespace smz3.countdown.wasm.Enums
 {
     public enum Item
     {
+        [Key]
         [Description("Hyrule Castle Map")]
         MapHC = 0x7F,
+        
+        [Key]
         [Description("Eastern Palace Map")]
         MapEP = 0x7D,
+        
+        [Key]
         [Description("Desert Palace Map")]
         MapDP = 0x7C,
+        
+        [Key]
         [Description("Tower of Hera Map")]
         MapTH = 0x75,
+        
+        [Key]
         [Description("Palace of Darkness Map")]
         MapPD = 0x79,
+        
+        [Key]
         [Description("Swamp Palace Map")]
         MapSP = 0x7A,
+        
+        [Key]
         [Description("Skull Woods Map")]
         MapSW = 0x77,
+        
+        [Key]
         [Description("Thieves Town Map")]
         MapTT = 0x74,
+        
+        [Key]
         [Description("Ice Palace Map")]
         MapIP = 0x76,
+        
+        [Key]
         [Description("Misery Mire Map")]
         MapMM = 0x78,
+        
+        [Key]
         [Description("Turtle Rock Map")]
         MapTR = 0x73,
+        
+        [Key]
         [Description("Ganons Tower Map")]
         MapGT = 0x72,
 
-        [Description("Eastern Palace Compass")]
-        CompassEP = 0x8D,
-        [Description("Desert Palace Compass")]
-        CompassDP = 0x8C,
-        [Description("Tower of Hera Compass")]
-        CompassTH = 0x85,
-        [Description("Palace of Darkness Compass")]
-        CompassPD = 0x89,
-        [Description("Swamp Palace Compass")]
-        CompassSP = 0x8A,
-        [Description("Skull Woods Compass")]
-        CompassSW = 0x87,
-        [Description("Thieves Town Compass")]
-        CompassTT = 0x84,
-        [Description("Ice Palace Compass")]
-        CompassIP = 0x86,
-        [Description("Misery Mire Compass")]
-        CompassMM = 0x88,
-        [Description("Turtle Rock Compass")]
-        CompassTR = 0x83,
-        [Description("Ganons Tower Compass")]
-        CompassGT = 0x82,
+        //[Description("Eastern Palace Compass")]
+        //CompassEP = 0x8D,
+        //[Description("Desert Palace Compass")]
+        //CompassDP = 0x8C,
+        //[Description("Tower of Hera Compass")]
+        //CompassTH = 0x85,
+        //[Description("Palace of Darkness Compass")]
+        //CompassPD = 0x89,
+        //[Description("Swamp Palace Compass")]
+        //CompassSP = 0x8A,
+        //[Description("Skull Woods Compass")]
+        //CompassSW = 0x87,
+        //[Description("Thieves Town Compass")]
+        //CompassTT = 0x84,
+        //[Description("Ice Palace Compass")]
+        //CompassIP = 0x86,
+        //[Description("Misery Mire Compass")]
+        //CompassMM = 0x88,
+        //[Description("Turtle Rock Compass")]
+        //CompassTR = 0x83,
+        //[Description("Ganons Tower Compass")]
+        //CompassGT = 0x82,
 
+        [Key]
         [Description("Eastern Palace Big Key")]
         BigKeyEP = 0x9D,
+        
+        [Key]
         [Description("Desert Palace Big Key")]
         BigKeyDP = 0x9C,
+        
+        [Key]
         [Description("Tower of Hera Big Key")]
         BigKeyTH = 0x95,
+        
+        [Key]
         [Description("Palace of Darkness Big Key")]
         BigKeyPD = 0x99,
+
+        [Key]
         [Description("Swamp Palace Big Key")]
         BigKeySP = 0x9A,
+
+        [Key]
         [Description("Skull Woods Big Key")]
         BigKeySW = 0x97,
+
+        [Key]
         [Description("Thieves Town Big Key")]
         BigKeyTT = 0x94,
+
+        [Key]
         [Description("Ice Palace Big Key")]
         BigKeyIP = 0x96,
+
+        [Key]
         [Description("Misery Mire Big Key")]
         BigKeyMM = 0x98,
+
+        [Key]
         [Description("Turtle Rock Big Key")]
         BigKeyTR = 0x93,
+
+        [Key]
         [Description("Ganons Tower Big Key")]
         BigKeyGT = 0x92,
 
+
+        [Key]
         [Description("Sewer Key")]
         KeyHC = 0xA0,
+
+        [Key]
         [Description("Castle Tower Key")]
         KeyCT = 0xA4,
+
+        [Key]
         [Description("Desert Palace Key")]
         KeyDP = 0xA3,
+
+        [Key]
         [Description("Tower of Hera Key")]
         KeyTH = 0xAA,
+
+        [Key]
         [Description("Palace of Darkness Key")]
         KeyPD = 0xA6,
+
+        [Key]
         [Description("Swamp Palace Key")]
         KeySP = 0xA5,
+
+        [Key]
         [Description("Skull Woods Key")]
         KeySW = 0xA8,
+
+        [Key]
         [Description("Thieves Town Key")]
         KeyTT = 0xAB,
+
+        [Key]
         [Description("Ice Palace Key")]
         KeyIP = 0xA9,
+
+        [Key]
         [Description("Misery Mire Key")]
         KeyMM = 0xA7,
+
+        [Key]
         [Description("Turtle Rock Key")]
         KeyTR = 0xAC,
+
+        [Key]
         [Description("Ganons Tower Key")]
         KeyGT = 0xAD,
 
@@ -110,97 +178,97 @@ namespace smz3.countdown.wasm.Enums
         //[Description("Map")]
         //Map = 0x33,
 
-        [Major(true)]
+        [Major]
         [Description("Progressive Mail")]
         ProgressiveTunic = 0x60,
-        [Major(true)]
+        [Major]
         [Description("Progressive Shield")]
         ProgressiveShield = 0x5F,
-        [Major(true)]
+        [Major]
         [Description("Progressive Sword")]
         ProgressiveSword = 0x5E,
-        [Major(true)]
+        [Major]
         [Description("Bow")]
         Bow = 0x0B,
-        [Major(true)]
+        [Major]
         [Description("Silver Arrows")]
         SilverArrows = 0x58,
-        [Major(true)]
+        [Major]
         [Description("Blue Boomerang")]
         BlueBoomerang = 0x0C,
-        [Major(true)]
+        [Major]
         [Description("Red Boomerang")]
         RedBoomerang = 0x2A,
-        [Major(true)]
+        [Major]
         [Description("Hookshot")]
         Hookshot = 0x0A,
-        [Major(true)]
+        [Major]
         [Description("Mushroom")]
         Mushroom = 0x29,
-        [Major(true)]
+        [Major]
         [Description("Magic Powder")]
         Powder = 0x0D,
-        [Major(true)]
+        [Major]
         [Description("Fire Rod")]
         Firerod = 0x07,
-        [Major(true)]
+        [Major]
         [Description("Ice Rod")]
         Icerod = 0x08,
-        [Major(true)]
+        [Major]
         [Description("Bombos")]
         Bombos = 0x0f,
-        [Major(true)]
+        [Major]
         [Description("Ether")]
         Ether = 0x10,
-        [Major(true)]
+        [Major]
         [Description("Quake")]
         Quake = 0x11,
-        [Major(true)]
+        [Major]
         [Description("Lamp")]
         Lamp = 0x12,
-        [Major(true)]
+        [Major]
         [Description("Hammer")]
         Hammer = 0x09,
-        [Major(true)]
+        [Major]
         [Description("Shovel")]
         Shovel = 0x13,
-        [Major(true)]
+        [Major]
         [Description("Flute")]
         Flute = 0x14,
-        [Major(true)]
+        [Major]
         [Description("Bug Catching Net")]
         Bugnet = 0x21,
-        [Major(true)]
+        [Major]
         [Description("Book of Mudora")]
         Book = 0x1D,
-        [Major(true)]
+        [Major]
         [Description("Bottle")]
         Bottle = 0x16,
-        [Major(true)]
+        [Major]
         [Description("Cane of Somaria")]
         Somaria = 0x15,
-        [Major(true)]
+        [Major]
         [Description("Cane of Byrna")]
         Byrna = 0x18,
-        [Major(true)]
+        [Major]
         [Description("Magic Cape")]
         Cape = 0x19,
-        [Major(true)]
+        [Major]
         [Description("Magic Mirror")]
         Mirror = 0x1A,
-        [Major(true)]
+        [Major]
         [Description("Pegasus Boots")]
         Boots = 0x4B,
-        [Major(true)]
+        [Major]
         [Description("Progressive Glove")]
         ProgressiveGlove = 0x61,
-        [Major(true)]
+        [Major]
         [Description("Zora's Flippers")]
         Flippers = 0x1E,
-        [Major(true)]
+        [Major]
         [Description("Moon Pearl")]
         MoonPearl = 0x1F,
-        [Major(true)]
+        [Major]
         [Description("Half Magic")]
         HalfMagic = 0x4E,
         [Description("Piece of Heart")]
@@ -238,45 +306,83 @@ namespace smz3.countdown.wasm.Enums
         [Description("+10 Arrow Capacity")]
         ArrowUpgrade10 = 0x54,
 
+        [Key]
         [Description("Crateria Level 1 Keycard")]
         CardCrateriaL1 = 0xD0,
+
+        [Key]
         [Description("Crateria Level 2 Keycard")]
         CardCrateriaL2 = 0xD1,
+
+        [Key]
         [Description("Crateria Boss Keycard")]
         CardCrateriaBoss = 0xD2,
+
+        [Key]
         [Description("Brinstar Level 1 Keycard")]
         CardBrinstarL1 = 0xD3,
+
+        [Key]
         [Description("Brinstar Level 2 Keycard")]
         CardBrinstarL2 = 0xD4,
+
+        [Key]
         [Description("Brinstar Boss Keycard")]
         CardBrinstarBoss = 0xD5,
+
+        [Key]
         [Description("Norfair Level 1 Keycard")]
         CardNorfairL1 = 0xD6,
+
+        [Key]
         [Description("Norfair Level 2 Keycard")]
         CardNorfairL2 = 0xD7,
+
+        [Key]
         [Description("Norfair Boss Keycard")]
         CardNorfairBoss = 0xD8,
+
+        [Key]
         [Description("Maridia Level 1 Keycard")]
         CardMaridiaL1 = 0xD9,
+
+        [Key]
         [Description("Maridia Level 2 Keycard")]
         CardMaridiaL2 = 0xDA,
+
+        [Key]
         [Description("Maridia Boss Keycard")]
         CardMaridiaBoss = 0xDB,
+
+        [Key]
         [Description("Wrecked Ship Level 1 Keycard")]
         CardWreckedShipL1 = 0xDC,
+
+        [Key]
         [Description("Wrecked Ship Boss Keycard")]
         CardWreckedShipBoss = 0xDD,
+
+        [Key]
         [Description("Lower Norfair Level 1 Keycard")]
         CardLowerNorfairL1 = 0xDE,
+
+        [Key]
         [Description("Lower Norfair Boss Keycard")]
         CardLowerNorfairBoss = 0xDF,
 
+        [Key]
         [Description("Brinstar Map")]
         SmMapBrinstar = 0xCA,
+
+        [Key]
         [Description("Wrecked Ship Map")]
         SmMapWreckedShip = 0xCB,
+
+        [Key]
         [Description("Maridia Map")]
         SmMapMaridia = 0xCC,
+
+        [Key]
         [Description("Lower Norfair Map")]
         SmMapLowerNorfair = 0xCD,
 
@@ -286,56 +392,56 @@ namespace smz3.countdown.wasm.Enums
         Super = 0xC3,
         [Description("Power Bomb")]
         PowerBomb = 0xC4,
-        [Major(true)]
+        [Major]
         [Description("Grappling Beam")]
         Grapple = 0xB0,
-        [Major(true)]
+        [Major]
         [Description("X-Ray Scope")]
         XRay = 0xB1,
         [Description("Energy Tank")]
         ETank = 0xC0,
         [Description("Reserve Tank")]
         ReserveTank = 0xC1,
-        [Major(true)]
+        [Major]
         [Description("Charge Beam")]
         Charge = 0xBB,
-        [Major(true)]
+        [Major]
         [Description("Ice Beam")]
         Ice = 0xBC,
-        [Major(true)]
+        [Major]
         [Description("Wave Beam")]
         Wave = 0xBD,
-        [Major(true)]
+        [Major]
         [Description("Spazer")]
         Spazer = 0xBE,
-        [Major(true)]
+        [Major]
         [Description("Plasma Beam")]
         Plasma = 0xBF,
-        [Major(true)]
+        [Major]
         [Description("Varia Suit")]
         Varia = 0xB2,
-        [Major(true)]
+        [Major]
         [Description("Gravity Suit")]
         Gravity = 0xB6,
-        [Major(true)]
+        [Major]
         [Description("Morphing Ball")]
         Morph = 0xB4,
-        [Major(true)]
+        [Major]
         [Description("Morph Bombs")]
         Bombs = 0xB9,
-        [Major(true)]
+        [Major]
         [Description("Spring Ball")]
         SpringBall = 0xB3,
-        [Major(true)]
+        [Major]
         [Description("Screw Attack")]
         ScrewAttack = 0xB5,
-        [Major(true)]
+        [Major]
         [Description("Hi-Jump Boots")]
         HiJump = 0xB7,
-        [Major(true)]
+        [Major]
         [Description("Space Jump")]
         SpaceJump = 0xB8,
-        [Major(true)]
+        [Major]
         [Description("Speed Booster")]
         SpeedBooster = 0xBA,
     }
