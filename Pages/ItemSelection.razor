@@ -1,0 +1,88 @@
+﻿@page "/ItemSelection"
+
+@using smz3.countdown.wasm.Models
+@using smz3.countdown.wasm.Services
+@inject ItemService ItemService
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager NavigationManager
+@implements IAsyncDisposable
+
+<PageTitle>Items</PageTitle>
+<h3>
+    Majors
+    <button class="btn btn-primary" @onclick="SetToDefault">Default</button>
+    <button class="btn btn-secondary" @onclick="SetToDefaultKeys">Keys Default</button>
+    <button class="btn btn-success float-end"  @onclick="SaveDataAsync">Save</button>
+    <span class="float-end">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+</h3>
+
+
+<div class="container">
+    <div class="row">
+        @for (var i = 0; i < ItemsChoices.Count(); i++)
+        {
+            var internalIndex = i;
+            <Checkbox @bind-CheckboxModel=ItemsChoices[i]></Checkbox>
+        }
+    </div>
+</div>
+
+
+@code {
+
+    private HashSet<string> Items { get; set; } = new HashSet<string>();
+    private List<CheckboxModel> ItemsChoices { get; set; } = new List<CheckboxModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var storageMajors = await localStorage.GetItemAsync<List<string>>("Majors");
+        if (storageMajors != null)
+        {
+            Items = storageMajors.ToHashSet();
+        }
+        else
+        {
+            Items = ItemService.MajorItems.OrderBy(x => x).ToHashSet();
+        }
+
+        ItemsChoices = GenerateItemsChoicesList(ItemService.AllItems, Items);
+
+        base.OnInitialized();
+    }
+
+    private async Task SetToDefault()
+    {
+        Items = ItemService.MajorItems.OrderBy(x => x).ToHashSet();
+        ItemsChoices = GenerateItemsChoicesList(ItemService.AllItems, Items);
+        await SaveDataAsync();
+    }
+
+    private async Task SetToDefaultKeys()
+    {
+        Items = ItemService.KeysItems.Concat(ItemService.MajorItems).OrderBy(x => x).ToHashSet();
+        ItemsChoices = GenerateItemsChoicesList(ItemService.AllItems, Items);
+        await SaveDataAsync();
+    }
+
+    private List<CheckboxModel> GenerateItemsChoicesList(HashSet<string> outerSet, HashSet<string> innerSet)
+    {
+        return outerSet.GroupJoin(
+            innerSet,
+            o => o,
+            i => i,
+            (o, i) => new { ItemName = o, Selected = !string.IsNullOrWhiteSpace(i.FirstOrDefault()) })
+            .OrderBy(x => x.ItemName)
+            .Select(x => new CheckboxModel { Name = x.ItemName, IsChecked = x.Selected })
+            .ToList();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await SaveDataAsync();
+    }
+
+    public async Task SaveDataAsync()
+    {
+        await localStorage.SetItemAsync<List<string>>("Majors", ItemsChoices.Where(x => x.IsChecked).Select(x => x.Name).ToList());
+    }
+}
