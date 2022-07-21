@@ -4,6 +4,15 @@ namespace smz3.countdown.wasm.Enums
 {
     public enum Area
     {
+        [Area("Light World", "Light World", "Light World North West")]
+        LightWorldNorthWest,
+
+        [Area("Light World", "Light World", "Light World North East")]
+        LightWorldNorthEast,
+
+        [Area("Light World", "Light World", "Light World South")]
+        LightWorldSouth,
+        
         [Area("Hyrule Castle", "Hyrule Castle", "Hyrule Castle")]
         HyruleCastle,
 
@@ -48,15 +57,6 @@ namespace smz3.countdown.wasm.Enums
 
         [Area("Death Mountain", "Death Mountain", "Light World Death Mountain West")]
         LightWorldDeathMountainWest,
-
-        [Area("Light World", "Light World", "Light World North West")]
-        LightWorldNorthWest,
-
-        [Area("Light World", "Light World", "Light World North East")]
-        LightWorldNorthEast,
-
-        [Area("Light World", "Light World", "Light World South")]
-        LightWorldSouth,
 
         [Area("Dark World", "Death Mountain", "Dark World Death Mountain East")]
         DarkWorldDeathMountainEast,
