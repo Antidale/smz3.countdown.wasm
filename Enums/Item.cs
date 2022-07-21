@@ -53,28 +53,28 @@ namespace smz3.countdown.wasm.Enums
         [Description("Ganons Tower Map")]
         MapGT = 0x72,
 
-        [Description("Eastern Palace Compass")]
-        CompassEP = 0x8D,
-        [Description("Desert Palace Compass")]
-        CompassDP = 0x8C,
-        [Description("Tower of Hera Compass")]
-        CompassTH = 0x85,
-        [Description("Palace of Darkness Compass")]
-        CompassPD = 0x89,
-        [Description("Swamp Palace Compass")]
-        CompassSP = 0x8A,
-        [Description("Skull Woods Compass")]
-        CompassSW = 0x87,
-        [Description("Thieves Town Compass")]
-        CompassTT = 0x84,
-        [Description("Ice Palace Compass")]
-        CompassIP = 0x86,
-        [Description("Misery Mire Compass")]
-        CompassMM = 0x88,
-        [Description("Turtle Rock Compass")]
-        CompassTR = 0x83,
-        [Description("Ganons Tower Compass")]
-        CompassGT = 0x82,
+        //[Description("Eastern Palace Compass")]
+        //CompassEP = 0x8D,
+        //[Description("Desert Palace Compass")]
+        //CompassDP = 0x8C,
+        //[Description("Tower of Hera Compass")]
+        //CompassTH = 0x85,
+        //[Description("Palace of Darkness Compass")]
+        //CompassPD = 0x89,
+        //[Description("Swamp Palace Compass")]
+        //CompassSP = 0x8A,
+        //[Description("Skull Woods Compass")]
+        //CompassSW = 0x87,
+        //[Description("Thieves Town Compass")]
+        //CompassTT = 0x84,
+        //[Description("Ice Palace Compass")]
+        //CompassIP = 0x86,
+        //[Description("Misery Mire Compass")]
+        //CompassMM = 0x88,
+        //[Description("Turtle Rock Compass")]
+        //CompassTR = 0x83,
+        //[Description("Ganons Tower Compass")]
+        //CompassGT = 0x82,
 
         [Key]
         [Description("Eastern Palace Big Key")]

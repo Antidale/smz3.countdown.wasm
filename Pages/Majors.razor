@@ -3,6 +3,7 @@
 @using smz3.countdown.wasm.Services
 @inject ItemService ItemService
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager NavigationManager
 
 <PageTitle>Majors</PageTitle>
 <h3>
@@ -65,25 +66,23 @@
             Items.Remove(itemName);
         }
 
-        ItemService.MajorItems = Items;
         await localStorage.SetItemAsync<List<string>>("Majors", Items.ToList());
     }
 
     private async Task SetToDefault()
     {
         Items = ItemService.MajorItems.OrderBy(x => x).ToHashSet();
-        ItemsChoices = GenerateItemsChoicesDictionary(ItemService.AllItems, Items);
 
+        ItemsChoices = GenerateItemsChoicesDictionary(ItemService.AllItems, Items);
+        NavigationManager.NavigateTo("/");
         await localStorage.SetItemAsync<List<string>>("Majors", Items.ToList());
     }
 
     private async Task SetToDefaultKeys()
     {
-
         Items = ItemService.KeysItems.Concat(ItemService.MajorItems).OrderBy(x => x).ToHashSet();
-
         ItemsChoices = GenerateItemsChoicesDictionary(ItemService.AllItems, Items);
-
+        NavigationManager.NavigateTo("/");
         await localStorage.SetItemAsync<List<string>>("Majors", Items.ToList());
     }
 
@@ -94,6 +93,8 @@
             o => o,
             i => i,
             (o, i) => new { ItemName = o, Selected = !string.IsNullOrWhiteSpace(i.FirstOrDefault()) })
-            .OrderBy(x => x.ItemName).ToDictionary(x => x.ItemName, y => y.Selected);
+            .OrderBy(x => x.ItemName)
+            .ToDictionary(x => x.ItemName, y => y.Selected);
     }
+
 }
