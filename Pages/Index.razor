@@ -22,8 +22,14 @@
 }
 else
 {
-    <button @onclick="SaveSeedAsync" class="btn btn-success">Save Seed</button>
-    <button @onclick="NewSeed" class="btn btn-outline-success float-end">New Seed</button>
+    <div class="row">
+        <button @onclick="SaveSeedAsync" class="btn btn-success col-md-2 col-sm-12">Save Seed</button>
+        <div class="col-md-2"></div>
+        <div class="col-md-5 font-monospace"><h4>@response.Seed.Hash</h4></div>
+        <div class="col-md-1"></div>
+        <button @onclick="NewSeed" class="btn btn-outline-success col-md-2 col-sm-12d">New Seed</button>
+    </div>
+
     <br />
     <br />
 }
