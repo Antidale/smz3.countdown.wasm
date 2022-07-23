@@ -1,24 +1,68 @@
 ﻿@page "/locations"
 @using smz3.countdown.wasm.Services
 @inject LocationService LocationService
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+
 <PageTitle>Locations</PageTitle>
 <h3>Locations</h3>
 <p>Setting your own location groupings is not yet an available feature. In the meantime, this page lists all the places that are grouped under each heading. This should correspond exactly with how things are in the spoiler log</p>
+<br />
+<br />
+<TabControl>
+    <TabBody Title="Spoiler Location Grouping">
+        <br />
+        <button class="btn btn-success" @onclick="@SaveStandard">Use this grouping</button>
+        @foreach (var locationGroup in LocationService.Locations)
+        {
+            <h4 style="margin-left: 10px">@locationGroup.Key</h4>
+            <div class="container">
+                <div class="row">
+                    @foreach (var location in locationGroup.Value)
+                    {
+                        <div class="col-4">@location</div>
+                    }
+                </div>
+            </div>
+            <br />
+        }
+    </TabBody>
+    <TabBody Title="Alternate Location Grouping">
+        <br />
+        <button class="btn btn-success" @onclick="@SaveAlternate">Use this grouping</button>
+        @foreach (var locationGroup in LocationService.AltLocations)
+        {
+            <h4 style="margin-left: 10px">@locationGroup.Key</h4>
+            <div class="container">
+                <div class="row">
+                    @foreach (var location in locationGroup.Value)
+                    {
+                        <div class="col-4">@location</div>
+                    }
+                </div>
+            </div>
+            <br />
+        }
+    </TabBody>
+</TabControl>
 
-@foreach (var locationGroup in LocationService.Locations)
-{
-    <h4>@locationGroup.Key</h4>
-    <div class="container">
-        <div class="row">
-            @foreach (var location in locationGroup.Value)
-            {
-                <div class="col-4">@location</div>
-            }
-        </div>
-    </div>
-    <br />
-}
 
 @code {
+    private const string Spoiler = "Spoiler";
+    private const string Alternate = "Alternate";
 
+    private async Task SaveStandard()
+    {
+        await SaveSelection(Spoiler);
+    }
+
+    private async Task SaveAlternate()
+    {
+        await SaveSelection(Alternate);
+    }
+
+    private async Task SaveSelection(string groupingName)
+    {
+        await localStorage.SetItemAsStringAsync("GroupingMode", groupingName);
+    }
 }
