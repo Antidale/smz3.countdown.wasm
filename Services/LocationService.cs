@@ -62,23 +62,6 @@
                     "Waterfall Fairy - Left",
                     "Zora's Ledge"
                 },
-                ["Death Mountain"] = new List<string>
-                {
-                    "Ether Tablet",
-                    "Floating Island",
-                    "Mimic Cave",
-                    "Old Man",
-                    "Paradox Cave Upper - Left",
-                    "Paradox Cave Upper - Right",
-                    "Paradox Cave Lower - Far Left",
-                    "Paradox Cave Lower - Left",
-                    "Paradox Cave Lower - Middle",
-                    "Paradox Cave Lower - Right",
-                    "Paradox Cave Lower - Far Right",
-                    "Spectacle Rock",
-                    "Spectacle Rock Cave",
-                    "Spiral Cave",
-                },
                 ["Hyrule Castle"] = new List<string>
                 {
                     "Hyrule Castle - Boomerang Chest",
@@ -123,6 +106,23 @@
                     "Tower of Hera - Compass Chest",
                     "Tower of Hera - Big Chest",
                     "Tower of Hera - Moldorm",
+                },
+                ["Death Mountain"] = new List<string>
+                {
+                    "Ether Tablet",
+                    "Floating Island",
+                    "Mimic Cave",
+                    "Old Man",
+                    "Paradox Cave Upper - Left",
+                    "Paradox Cave Upper - Right",
+                    "Paradox Cave Lower - Far Left",
+                    "Paradox Cave Lower - Left",
+                    "Paradox Cave Lower - Middle",
+                    "Paradox Cave Lower - Right",
+                    "Paradox Cave Lower - Far Right",
+                    "Spectacle Rock",
+                    "Spectacle Rock Cave",
+                    "Spiral Cave",
                 },
                 ["Dark World"] = new List<string>
                 {

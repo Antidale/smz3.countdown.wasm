@@ -8,6 +8,7 @@
 
 @inject HttpClient Http
 @inject ItemService ItemService
+@inject LocationService LocationService
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @implements IAsyncDisposable
 
@@ -29,7 +30,9 @@ else
         <div class="col-md-1"></div>
         <button @onclick="NewSeed" class="btn btn-outline-success col-md-2 col-sm-12d">New Seed</button>
     </div>
-
+    <div class="row">
+        <div class="text-center">Remaining: @TotalRemainingCount of @TotalItemCount</div>
+    </div>
     <br />
     <br />
 }
@@ -80,6 +83,9 @@ else
     private HashSet<string> itemList { get; set; } = new HashSet<string>();
     private Dictionary<string, string> locationsList = new Dictionary<string, string>();
     private bool disableDropdown { get; set; } = false;
+
+    int TotalItemCount => countdownLocationInfos.Sum(x => x.OriginalCount);
+    int TotalRemainingCount => countdownLocationInfos.Sum(x => x.CurrentCount);
 
     string urlBase => "https://samus.link/api/spoiler/";
 
@@ -146,6 +152,11 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        //This delay is a bit of a hack, because I've decided to pass data via reading/writing to local storage. 
+        // A better option would probably be either to use cascading parameters, or change how the ItemService works
+        await Task.Delay(8);
+
+        //Fetch any saved data
         await GetSavedMajorsAsync();
         GetLocationInfo();
         await GetSavedCoundownInfoAsync();
@@ -163,9 +174,9 @@ else
                 return;
             }
 
-            if (locationsList.ContainsKey(l.LocationRegion))
+            if (locationsList.ContainsKey(l.LocationName))
             {
-                var displayText = locationsList[l.LocationRegion];
+                var displayText = locationsList[l.LocationName];
                 locationInfo[displayText] += 1;
             }
         });
@@ -249,9 +260,8 @@ else
 
     public void GetLocationInfo()
     {
-        var areas = Enum.GetValues(typeof(Area));
-        locationsList = ((Area[])areas).Select(x => x.GetAttribute<AreaAttribute>())
-                                       .ToDictionary(key => key.LocationRegion, value => value.DisplayText);
+        locationsList = LocationService.Locations.SelectMany(x => x.Value, (key, value) => new { LocationName = value, DisplayName = key.Key } )
+                                                 .ToDictionary(x => x.LocationName, y => y.DisplayName);
 
         locationInfo = locationsList.Select(x => x.Value)
                                     .Distinct()
