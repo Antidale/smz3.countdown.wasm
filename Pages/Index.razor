@@ -26,7 +26,7 @@ else
     <div class="row">
         <button @onclick="SaveSeedAsync" class="btn btn-success col-md-2 col-sm-12">Save Seed</button>
         <div class="col-md-2"></div>
-        <div class="col-md-5 font-monospace"><h4>@response.Seed.Hash</h4></div>
+        <div class="col-md-5 font-monospace"><h4>@seedHash</h4></div>
         <div class="col-md-1"></div>
         <button @onclick="NewSeed" class="btn btn-outline-success col-md-2 col-sm-12d">New Seed</button>
     </div>
@@ -83,6 +83,7 @@ else
     private HashSet<string> itemList { get; set; } = new HashSet<string>();
     private Dictionary<string, string> locationsList = new Dictionary<string, string>();
     private bool disableDropdown { get; set; } = false;
+    private string seedHash { get; set; } = string.Empty;
 
     int TotalItemCount => countdownLocationInfos.Sum(x => x.OriginalCount);
     int TotalRemainingCount => countdownLocationInfos.Sum(x => x.CurrentCount);
@@ -107,6 +108,7 @@ else
             }
 
             players = response?.Seed.Worlds.Select(x => (x.Player, x.WorldId)).ToList() ?? players;
+            seedHash = response?.Seed.Hash ?? string.Empty;
 
             //Single player
             if (players.Count == 1)
@@ -161,7 +163,7 @@ else
         GetLocationInfo();
         await GetSavedCoundownInfoAsync();
         await GetSavedPlayerInfoAsync();
-
+        await GetSavedSeedHashAsync();
         base.OnInitialized();
     }
 
@@ -198,6 +200,7 @@ else
         players = new List<(string, int)>();
         response = new SpoilerResponse();
         SelectedPlayer = string.Empty;
+        seedHash = string.Empty;
         foreach (var location in locationInfo)
         {
             locationInfo[location.Key] = 0;
@@ -210,6 +213,7 @@ else
 
     private async Task SaveSeedAsync()
     {
+        await localStorage.SetItemAsStringAsync("Hash", seedHash);
         await localStorage.SetItemAsync<List<CountdownLocationInfo>>("CurrentSeed", countdownLocationInfos);
         await localStorage.SetItemAsync<List<(string, int)>>("players", players);
         await localStorage.SetItemAsStringAsync("SelectedPlayer", SelectedPlayer);
@@ -227,6 +231,11 @@ else
         {
             countdownLocationInfos = currentSeed;
         }
+    }
+
+    private async Task GetSavedSeedHashAsync()
+    {
+        seedHash = (await localStorage.GetItemAsStringAsync("Hash")) ?? string.Empty;
     }
 
     private async Task GetSavedPlayerInfoAsync()
