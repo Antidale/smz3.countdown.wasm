@@ -10,6 +10,10 @@
         /// A more specific map section, e.g. Light World Death Mountain West or Crateria Central
         /// </summary>
         public string LocationRegion { get; set; } = string.Empty;
+        /// <summary>
+        /// the specific check where the item resides
+        /// </summary>
+        public string LocationName { get; set; } = string.Empty;
         public int WorldId { get; set; }
         public int ItemWorldId { get; set; }
         public string ItemName { get; set; } = string.Empty;
