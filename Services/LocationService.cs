@@ -395,38 +395,27 @@
 
             AltLocations = new Dictionary<string, List<string>>
             {
-                ["Light World"] = new List<string>
+                ["Central Hyrule"] = new List<string>
                 {
-                    "Aginah's Cave",
-                    "Bombos Tablet",
-                    "Checkerboard Cave",
-                    "Desert Ledge",
-                    "Graveyard Ledge",
+                    "Castle Tower - Foyer",
+                    "Castle Tower - Dark Maze","Flute Spot",
                     "Hobo",
-                    "Ice Rod Cave",
-                    "Floodgate Chest",
-                    "Flute Spot",
-                    
-                    "King's Tomb",
-                    "King Zora",
-                    "Lake Hylia Island",
-                    "Mini Moldorm Cave - Far Left",
-                    "Mini Moldorm Cave - Left",
-                    "Mini Moldorm Cave - NPC",
-                    "Mini Moldorm Cave - Right",
-                    "Mini Moldorm Cave - Far Right",
-                    "Potion Shop",
-
+                    "Hyrule Castle - Boomerang Chest",
+                    "Hyrule Castle - Map Chest",
+                    "Hyrule Castle - Zelda's Cell","Link's House",
+                    "Link's Uncle",
+                    "Sanctuary",
                     "South of Grove",
-                    "Spectacle Rock",
-                    "Spectacle Rock Cave",
-                    "Sunken Treasure",
-                    "Waterfall Fairy - Right",
-                    "Waterfall Fairy - Left",
-                    "Zora's Ledge"
+                    "Secret Passage",
+                    "Sewers - Secret Room - Left",
+                    "Sewers - Secret Room - Middle",
+                    "Sewers - Secret Room - Right",
+                    "Sewers - Dark Cross",
                 },
                 ["North/North West LW"] = new List<string>
                 {
+                    "Graveyard Ledge",
+                    "King's Tomb",
                     "Lost Woods Hideout",
                     "Lumberjack Tree",
                     "Master Sword Pedestal",
@@ -435,7 +424,6 @@
                 },
                 ["Kakariko Village"] = new List<string>
                 {
-
                     "Blind's Hideout - Top",
                     "Blind's Hideout - Far Left",
                     "Blind's Hideout - Left",
@@ -454,6 +442,56 @@
                     "Maze Race",
                     "Sick Kid",
                 },
+                ["South Shore"] = new List<string>
+                {
+                    "Floodgate Chest",
+                    "Ice Rod Cave",
+                    "Lake Hylia Island",
+                    "Mini Moldorm Cave - Far Left",
+                    "Mini Moldorm Cave - Left",
+                    "Mini Moldorm Cave - NPC",
+                    "Mini Moldorm Cave - Right",
+                    "Mini Moldorm Cave - Far Right",
+                    "Sunken Treasure",
+                },
+                ["Eastern Area"] = new List<string>
+                {
+                    "Eastern Palace - Cannonball Chest",
+                    "Eastern Palace - Map Chest",
+                    "Eastern Palace - Compass Chest",
+                    "Eastern Palace - Big Chest",
+                    "Eastern Palace - Big Key Chest",
+                    "Eastern Palace - Armos Knights","Sahasrahla",
+                    "Sahasrahla's Hut - Left",
+                    "Sahasrahla's Hut - Middle",
+                    "Sahasrahla's Hut - Right",
+                },
+                ["Desert Area"] = new List<string>
+                {
+                    "Aginah's Cave",
+                    "Bombos Tablet",
+                    "Checkerboard Cave",
+                    "Desert Ledge",
+                    "Desert Palace - Big Chest",
+                    "Desert Palace - Torch",
+                    "Desert Palace - Map Chest",
+                    "Desert Palace - Big Key Chest",
+                    "Desert Palace - Compass Chest",
+                    "Desert Palace - Lanmolas",
+                },
+                ["East LW DM"] = new List<string>
+                {
+                    "Ether Tablet",
+                    "Old Man",
+                    "Spectacle Rock",
+                    "Spectacle Rock Cave",
+                    "Tower of Hera - Basement Cage",
+                    "Tower of Hera - Map Chest",
+                    "Tower of Hera - Big Key Chest",
+                    "Tower of Hera - Compass Chest",
+                    "Tower of Hera - Big Chest",
+                    "Tower of Hera - Moldorm",
+                },
                 ["West LW DM"] = new List<string>
                 {
                     "Floating Island",
@@ -467,85 +505,17 @@
                     "Paradox Cave Lower - Far Right",
                     "Spiral Cave",
                 },
-                ["Central Hyrule"] = new List<string>
+                ["Zora Checks"] = new List<string>
                 {
-                    "Link's House",
-                    "Hyrule Castle - Boomerang Chest",
-                    "Hyrule Castle - Map Chest",
-                    "Hyrule Castle - Zelda's Cell",
-                    "Link's Uncle",
-                    "Sanctuary",
-                    "Secret Passage",
-                    "Sewers - Secret Room - Left",
-                    "Sewers - Secret Room - Middle",
-                    "Sewers - Secret Room - Right",
-                    "Sewers - Dark Cross"
+                    "Potion Shop",
+                    "King Zora",
+                    "Waterfall Fairy - Right",
+                    "Waterfall Fairy - Left",
+                    "Zora's Ledge"
                 },
-                ["Castle Tower"] = new List<string>
+                ["Podamid"] = new List<string>
                 {
-                    "Castle Tower - Foyer",
-                    "Castle Tower - Dark Maze"
-                },
-                ["Eastern Area"] = new List<string>
-                {
-                    "Sahasrahla",
-                    "Sahasrahla's Hut - Left",
-                    "Sahasrahla's Hut - Middle",
-                    "Sahasrahla's Hut - Right",
-                    "Eastern Palace - Cannonball Chest",
-                    "Eastern Palace - Map Chest",
-                    "Eastern Palace - Compass Chest",
-                    "Eastern Palace - Big Chest",
-                    "Eastern Palace - Big Key Chest",
-                    "Eastern Palace - Armos Knights",
-                },
-                ["Desert Palace"] = new List<string>
-                {
-                    "Desert Palace - Big Chest",
-                    "Desert Palace - Torch",
-                    "Desert Palace - Map Chest",
-                    "Desert Palace - Big Key Chest",
-                    "Desert Palace - Compass Chest",
-                    "Desert Palace - Lanmolas",
-                },
-                ["East LW DM"] = new List<string>
-                {
-                    "Ether Tablet",
-                    "Old Man",
-
-                    "Tower of Hera - Basement Cage",
-                    "Tower of Hera - Map Chest",
-                    "Tower of Hera - Big Key Chest",
-                    "Tower of Hera - Compass Chest",
-                    "Tower of Hera - Big Chest",
-                    "Tower of Hera - Moldorm",
-                },
-                ["Dark World"] = new List<string>
-                {
-                    "Spike Cave",
-                    "Hookshot Cave - Top Right",
-                    "Hookshot Cave - Top Left",
-                    "Hookshot Cave - Bottom Left",
-                    "Hookshot Cave - Bottom Right",
-                    "Superbunny Cave - Top",
-                    "Superbunny Cave - Bottom",
-                    "Bumper Cave",
-                    
                     "Catfish",
-                    "Pyramid",
-                    "Pyramid Fairy - Left",
-                    "Pyramid Fairy - Right",
-                    "Digging Game",
-                    "Stumpy",
-                    "Hype Cave - Top",
-                    "Hype Cave - Middle Right",
-                    "Hype Cave - Middle Left",
-                    "Hype Cave - Bottom",
-                    "Hype Cave - NPC",
-                    
-                },
-                ["Palace of Darkness"] = new List<string>
-                {
                     "Palace of Darkness - Shooter Room",
                     "Palace of Darkness - Big Key Chest",
                     "Palace of Darkness - Stalfos Basement",
@@ -560,9 +530,25 @@
                     "Palace of Darkness - Dark Maze - Bottom",
                     "Palace of Darkness - Big Chest",
                     "Palace of Darkness - Helmasaur King",
+                    "Pyramid",
+                    "Pyramid Fairy - Left",
+                    "Pyramid Fairy - Right",
                 },
-                ["Swamp Palace"] = new List<string>
+                ["Swice Cave"] = new List<string>
                 {
+                    "Hype Cave - Top",
+                    "Hype Cave - Middle Right",
+                    "Hype Cave - Middle Left",
+                    "Hype Cave - Bottom",
+                    "Hype Cave - NPC",
+                    "Ice Palace - Compass Chest",
+                    "Ice Palace - Spike Room",
+                    "Ice Palace - Map Chest",
+                    "Ice Palace - Big Key Chest",
+                    "Ice Palace - Iced T Room",
+                    "Ice Palace - Freezor Chest",
+                    "Ice Palace - Big Chest",
+                    "Ice Palace - Kholdstare",
                     "Swamp Palace - Entrance",
                     "Swamp Palace - Map Chest",
                     "Swamp Palace - Big Chest",
@@ -574,8 +560,9 @@
                     "Swamp Palace - Waterfall Room",
                     "Swamp Palace - Arrghus",
                 },
-                ["Skull Woods"] = new List<string>
+                ["Skull Woods/Bumper Cave"] = new List<string>
                 {
+                    "Bumper Cave",
                     "Skull Woods - Pot Prison",
                     "Skull Woods - Compass Chest",
                     "Skull Woods - Big Chest",
@@ -587,11 +574,12 @@
                 },
                 ["Village of Outcasts"] = new List<string>
                 {
-                    "Chest Game",
-                    "C-Shaped House",
-                    "Brewery",
-                    "Hammer Pegs",
                     "Blacksmith",
+                    "Brewery",
+                    "C-Shaped House",
+                    "Chest Game",
+                    "Digging Game",
+                    "Hammer Pegs",
                     "Purple Chest",
                     "Thieves' Town - Map Chest",
                     "Thieves' Town - Ambush Chest",
@@ -601,21 +589,12 @@
                     "Thieves' Town - Blind's Cell",
                     "Thieves' Town - Big Chest",
                     "Thieves' Town - Blind",
-                },
-                ["Ice Palace"] = new List<string>
-                {
-                    "Ice Palace - Compass Chest",
-                    "Ice Palace - Spike Room",
-                    "Ice Palace - Map Chest",
-                    "Ice Palace - Big Key Chest",
-                    "Ice Palace - Iced T Room",
-                    "Ice Palace - Freezor Chest",
-                    "Ice Palace - Big Chest",
-                    "Ice Palace - Kholdstare",
+                    "Stumpy",
                 },
                 ["Mire Area"] = new List<string>
                 {
-                    "Misery Mire - Main Lobby",
+                    "Mire Shed - Left",
+                    "Mire Shed - Right","Misery Mire - Main Lobby",
                     "Misery Mire - Map Chest",
                     "Misery Mire - Bridge Chest",
                     "Misery Mire - Spike Chest",
@@ -623,13 +602,16 @@
                     "Misery Mire - Big Key Chest",
                     "Misery Mire - Big Chest",
                     "Misery Mire - Vitreous",
-                    "Mire Shed - Left",
-                    "Mire Shed - Right",
                 },
-                ["Turtle Rock"] = new List<string>
+                ["Dark DM"] = new List<string>
                 {
-                    "Turtle Rock - Compass Chest",
-                    "Turtle Rock - Roller Room - Left",
+                    "Hookshot Cave - Top Right",
+                    "Hookshot Cave - Top Left",
+                    "Hookshot Cave - Bottom Left",
+                    "Hookshot Cave - Bottom Right","Turtle Rock - Compass Chest",
+                    "Spike Cave",
+                    "Superbunny Cave - Top",
+                    "Superbunny Cave - Bottom","Turtle Rock - Roller Room - Left",
                     "Turtle Rock - Roller Room - Right",
                     "Turtle Rock - Chain Chomps",
                     "Turtle Rock - Big Key Chest",
@@ -640,6 +622,7 @@
                     "Turtle Rock - Eye Bridge - Bottom Right",
                     "Turtle Rock - Eye Bridge - Bottom Left",
                     "Turtle Rock - Trinexx",
+                    
                 },
                 ["Ganon's Tower"] = new List<string>
                 {

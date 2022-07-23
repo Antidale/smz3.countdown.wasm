@@ -10,15 +10,25 @@
 <br />
 <br />
 <br />
-<h4>Area Locations</h4>
-<div class="container">
-    <div class="row">
-        @foreach (var location in Locations)
-        {
-            <div class="col-4">@location</div>
-        }
+@if (@Locations != null && Locations.Any())
+{
+
+    <h4>Area Locations</h4>
+    <div class="container">
+        <div class="row">
+            @foreach (var location in Locations)
+            {
+                <div class="col-4">@location</div>
+            }
+        </div>
     </div>
-</div>
+}
+else
+{
+    <h4>Area Locations</h4>
+    <p>unable to list locations</p>
+}
+
 
 @code {
     [Parameter]
@@ -27,7 +37,8 @@
     [Parameter]
     public EventCallback<CountdownLocationInfo> LocationInfoChanged { get; set; }
 
-    List<string> Locations = new List<string>();
+    [Parameter]
+    public List<string> Locations { get; set; } = new List<string>();
 
     private async Task Found()
     {
@@ -52,9 +63,4 @@
         await LocationInfoChanged.InvokeAsync(LocationInfo);
     }
 
-    protected override Task OnParametersSetAsync()
-    {
-        Locations = LocationService.Locations.FirstOrDefault(x => x.Key == LocationInfo.LocationName).Value;
-        return base.OnParametersSetAsync();
-    }
 }

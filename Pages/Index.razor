@@ -65,8 +65,10 @@ else
         @for (var i = 0; i < countdownLocationInfos.Count(); i++)
         {
             var internalIndex = i;
+            var locationName = countdownLocationInfos[internalIndex].LocationName ?? string.Empty;
+            var areaLocations = locationGrouping == "Spoiler" ? LocationService.Locations[locationName] : LocationService.AltLocations[locationName];
             <TabBody Title="@countdownLocationInfos[internalIndex].LocationName">
-                <CountdownLocation @bind-LocationInfo=countdownLocationInfos[internalIndex] />
+                <CountdownLocation @bind-LocationInfo=countdownLocationInfos[internalIndex] Locations=areaLocations />
             </TabBody>
         }
     </TabControl>
@@ -84,6 +86,7 @@ else
     private Dictionary<string, string> locationsList = new Dictionary<string, string>();
     private bool disableDropdown { get; set; } = false;
     private string seedHash { get; set; } = string.Empty;
+    private string locationGrouping { get; set; } = "Spoiler";
 
     int TotalItemCount => countdownLocationInfos.Sum(x => x.OriginalCount);
     int TotalRemainingCount => countdownLocationInfos.Sum(x => x.CurrentCount);
@@ -154,12 +157,13 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        //This delay is a bit of a hack, because I've decided to pass data via reading/writing to local storage. 
+        //This delay is a bit of a hack, because I've decided to pass data via reading/writing to local storage.
         // A better option would probably be either to use cascading parameters, or change how the ItemService works
         await Task.Delay(8);
 
         //Fetch any saved data
         await GetSavedMajorsAsync();
+        await GetGroupingModeAsync();
         GetLocationInfo();
         await GetSavedCoundownInfoAsync();
         await GetSavedPlayerInfoAsync();
@@ -201,6 +205,9 @@ else
         response = new SpoilerResponse();
         SelectedPlayer = string.Empty;
         seedHash = string.Empty;
+        await localStorage.SetItemAsStringAsync("ActiveSeedGroupingMode", string.Empty);
+        await GetGroupingModeAsync();
+        GetLocationInfo();
         foreach (var location in locationInfo)
         {
             locationInfo[location.Key] = 0;
@@ -217,6 +224,7 @@ else
         await localStorage.SetItemAsync<List<CountdownLocationInfo>>("CurrentSeed", countdownLocationInfos);
         await localStorage.SetItemAsync<List<(string, int)>>("players", players);
         await localStorage.SetItemAsStringAsync("SelectedPlayer", SelectedPlayer);
+        await localStorage.SetItemAsStringAsync("ActiveSeedGroupingMode", locationGrouping);
     }
 
     public async ValueTask DisposeAsync()
@@ -236,6 +244,20 @@ else
     private async Task GetSavedSeedHashAsync()
     {
         seedHash = (await localStorage.GetItemAsStringAsync("Hash")) ?? string.Empty;
+    }
+
+    private async Task GetGroupingModeAsync()
+    {
+        var savedGroupingMode = await localStorage.GetItemAsStringAsync("ActiveSeedGroupingMode");
+        var groupingMode = await localStorage.GetItemAsStringAsync("GroupingMode");
+
+        if(!string.IsNullOrWhiteSpace(savedGroupingMode))
+        {
+            locationGrouping = savedGroupingMode;
+            return;
+        }
+
+        locationGrouping = groupingMode ?? locationGrouping;
     }
 
     private async Task GetSavedPlayerInfoAsync()
@@ -269,8 +291,16 @@ else
 
     public void GetLocationInfo()
     {
-        locationsList = LocationService.Locations.SelectMany(x => x.Value, (key, value) => new { LocationName = value, DisplayName = key.Key } )
-                                                 .ToDictionary(x => x.LocationName, y => y.DisplayName);
+        if (locationGrouping == "Spoiler")
+        {
+            locationsList = LocationService.Locations.SelectMany(x => x.Value, (key, value) => new { LocationName = value, DisplayName = key.Key })
+                                                     .ToDictionary(x => x.LocationName, y => y.DisplayName);
+        }
+        else
+        {
+            locationsList = LocationService.AltLocations.SelectMany(x => x.Value, (key, value) => new { LocationName = value, DisplayName = key.Key })
+                                                        .ToDictionary(x => x.LocationName, y => y.DisplayName);
+        }
 
         locationInfo = locationsList.Select(x => x.Value)
                                     .Distinct()
