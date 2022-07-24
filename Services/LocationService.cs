@@ -668,6 +668,7 @@
                     "Morphing Ball",
                     "Power Bomb (blue Brinstar)",
                     "Missile (blue Brinstar middle)",
+                    "Missile (blue Brinstar behind missile)",
                     "Energy Tank, Brinstar Ceiling",
                     "Missile (blue Brinstar bottom)",
                     "Missile (blue Brinstar top)",
@@ -704,7 +705,6 @@
                 },
                 ["Wrecked Ship"] = new List<string>
                 {
-                    "Missile (blue Brinstar behind missile)",
                     "Missile (outside Wrecked Ship bottom)",
                     "Missile (outside Wrecked Ship top)",
                     "Missile (outside Wrecked Ship middle)",
