@@ -479,7 +479,7 @@
                     "Desert Palace - Compass Chest",
                     "Desert Palace - Lanmolas",
                 },
-                ["East LW DM"] = new List<string>
+                ["West LW DM"] = new List<string>
                 {
                     "Ether Tablet",
                     "Old Man",
@@ -492,7 +492,7 @@
                     "Tower of Hera - Big Chest",
                     "Tower of Hera - Moldorm",
                 },
-                ["West LW DM"] = new List<string>
+                ["East LW DM"] = new List<string>
                 {
                     "Floating Island",
                     "Mimic Cave",
@@ -718,7 +718,7 @@
                     "Right Super, Wrecked Ship",
                     "Gravity Suit",
                 },
-                ["East Maridia"] = new List<string>
+                ["West Maridia"] = new List<string>
                 {
                     "Missile (green Maridia shinespark)",
                     "Super Missile (green Maridia)",
@@ -728,7 +728,7 @@
                     "Missile (yellow Maridia super missile)",
                     "Missile (yellow Maridia false wall)",
                 },
-                ["West Maridia"] = new List<string>
+                ["East Maridia"] = new List<string>
                 {
                     "Spring Ball",
                     "Missile (Draygon)",
