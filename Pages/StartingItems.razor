@@ -1,0 +1,32 @@
+﻿@page "/startingItems"
+@using System.Text.Json;
+@using System.Text;
+@using smz3.countdown.api.Models
+@inject HttpClient Http
+
+
+<PageTitle>Starting Items</PageTitle>
+
+<button @onclick="SendForm">Test Generate</button>
+
+@if(!string.IsNullOrEmpty(seedSlug))
+{
+    <a href="@url" target="_blank">Here's Your Seed</a>
+}
+
+@code {
+    private string seedSlug { get; set; } = string.Empty;
+    private string url { get; set; }
+
+    public async Task SendForm()
+    {
+        var requestJson = JsonSerializer.Serialize(new GenerateRequest());
+
+        var response = await Http.PostAsync($"https://smz3-countdown-api.herokuapp.com/generate", new StringContent(requestJson, Encoding.UTF8, "application/json"));
+        var moreThings = await response.Content.ReadFromJsonAsync<GenerateResponse>();
+
+
+        url = $"https://beta.samus.link/seed/{" "}";
+    }
+
+}
