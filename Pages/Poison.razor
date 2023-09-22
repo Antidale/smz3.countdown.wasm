@@ -27,6 +27,7 @@
             <select id="objectives-dropdown" class="form-select" @onchange="ObjectivesChanged">
                 <option value="" disabled selected> -- Select -- </option>
                 <option value="Orandom:6/req:all/win:game">Swap win:crystal to win:game</option>
+                <option value="Orandom:6,boss/req:all/win:game">Force objectives to be boss hunts</option>
                 <option value="O1:quest_masamunealtar/2:quest_giant/random:4/req:all/win:crystal">Force quest_masamune and quest_giant, reduce random count by 2</option>
                 <option value="O1:quest_monsterqueen/2:quest_sealedcave/random:4/req:all/win:crystal">Force quest_monsterqueen and quest_sealedcave, reduce random count by 2</option>
                 <option value="Orandom:6/req:all/win:crystal">Lock Orandom:6/req:all/win:crystal</option>
@@ -61,10 +62,10 @@
             <label for="treasure-dropdown" class="form-label">Treasures</label>
             <select id="treasure-dropdown" class="form-select" @onchange="TreasureChanged">
                 <option value="" disabled selected> -- Select -- </option>
-                <option value="Tshuffle">Swap TStandard to Tshuffle</option>
-                <option value="Tpro">Swap TStandard to Tpro</option>
+                <option value="Tshuffle">Swap Tstandard to Tshuffle</option>
+                <option value="Tpro">Swap Tstandard to Tpro</option>
                 <option value="Tstandard/no:j">Remove J items</option>
-                <option value="Tempty">Swap TStandard to Tempty</option>
+                <option value="Tempty">Swap Tstandard to Tempty</option>
                 <option value="Tstandard/sparse:{}">Add Sparse option</option>
                 <option value="Tstandard/money">Apply Tmoney</option>
                 <option value="Tstandard">Lock Tstandard</option>
