@@ -92,8 +92,6 @@ else
     int TotalItemCount => countdownLocationInfos.Sum(x => x.OriginalCount);
     int TotalRemainingCount => countdownLocationInfos.Sum(x => x.CurrentCount);
 
-    string urlBase => "https://samus.link/api/spoiler/";
-
     public async Task ConvertShortGuid()
     {
         id = childString?.Trim().ConvertShortGuidToGuidString();

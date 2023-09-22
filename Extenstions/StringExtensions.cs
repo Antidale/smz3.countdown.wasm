@@ -18,5 +18,10 @@
                 return string.Empty;
             }
         }
+
+        //public static string ConvertGuidToSlug(this string guid)
+        //{
+        //    return Convert.ToBase64String(Convert.ToHexString());
+        //}
     }
 }
