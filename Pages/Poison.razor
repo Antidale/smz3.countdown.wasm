@@ -52,12 +52,13 @@
                 <option value="Tstandard/no:j">Remove J items</option>
                 <option value="Tempty">Swap TStandard to Tempty</option>
                 <option value="Tstandard/sparse:{}">Add Sparse option</option>
+                <option value="Tstandard/money">Apply Tmoney</option>
                 <option value="Tstandard">Lock Tstandard</option>
             </select>
         </div>
 
         <div class="mb-4 col-md-2" style="margin-top: 40px">
-            <input id="junk-checkbox" type="checkbox" class="form-check-input" value="@junkEnabled" @onchange="JunkChanged" />
+            <input id="junk-checkbox" type="checkbox" class="form-check-input" disabled="@junkCheckboxDisabled" @onchange="JunkChanged" />
             <label for="junk-checkbox" class="form-check-label">Apply Tjunk</label>
         </div>
 
@@ -197,6 +198,7 @@
     bool lockAgility = false;
     bool sparseDisabled = true;
     bool junkEnabled = false;
+    bool junkCheckboxDisabled = false;
     bool agilityCheckboxDisabled = false;
     bool lockAgilityDisabled = false;
     string sparseValue = "{}";
@@ -269,6 +271,21 @@
         {
             treasuresCurrent = (string)e.Value;
             sparseDisabled = !treasuresCurrent.Contains("sparse");
+
+            if (treasuresCurrent.Contains("money"))
+            {
+                junkCheckboxDisabled = true;
+            }
+            else
+            {
+                if (junkEnabled)
+                {
+                    treasuresCurrent += "/junk";
+                }
+                junkCheckboxDisabled = false;
+            }
+
+            
             currentFlagset = BuildFlagset();
         }
     }
@@ -398,7 +415,7 @@
         if (e?.Value is not null)
         {
             var newValue = (bool)e.Value;
-
+            junkEnabled = newValue;
             treasuresCurrent = newValue
                 ? treasuresCurrent + "/junk"
                 : treasuresCurrent.Replace("/junk", "");
