@@ -8,7 +8,7 @@
 <br />
 
 <label for="baseFlagset" class="form-label">Base Flagset</label>
-<textarea rows="2" disabled class="form-control" style="resize: none">@baseFlagset</textarea>
+<textarea rows="2" id="baseFlagset" disabled class="form-control" style="resize: none">@baseFlagset</textarea>
 <br />
 
 <label for="currentFlagset" class="form-label">Current Flagset</label>
@@ -37,13 +37,27 @@
             <label for="ki-dropdown" class="form-label">Key Items</label>
             <select id="ki-dropdown" class="form-select" @onchange="KeyItemsChanged">
                 <option value="" disabled selected> -- Select -- </option>
-                <optionvalue value="Kmain/summon/moon/trap/nofree">Add Monster Chests</optionvalue>
+                <option value="Kmain/summon/moon/trap/nofree">Add Monster Chests</option>
                 <option value="Kmain/summon/moon/nofree/force:hook">Add force:hook</option>
                 <option value="Kmain/summon/moon/nofree">Lock Kmain/summon/moon/nofree</option>
             </select>
         </div>
 
-        <div class="mb-4 col-md-4">
+        <div class="mb-4 col-md-6">
+            <label for="characters-dropdown" class="form-label">Characters</label>
+            <select id="characters-dropdown" class="form-select" @onchange="CharactersChanged">
+                <option value="" disabled selected> -- Select -- </option>
+                <option value="Cstandard/nofree/j:abilities/nekkie/only:rydia,tellah,edward,yang,porom,cid">Reject%: Only:rydia,tellah,edward,yang,porom,cid</option>
+                <option value="Cstandard/nofree/j:abilities/nekkie/party:4">Apply Party:4</option>
+                <option value="Cstandard/nofree/j:abilities/nekkie/party:3">Apply Party:3</option>
+                <option value="Cstandard/nofree/j:abilities/nekkie/permajoin/bye">Apply Permajoin AND Bye</option>
+                <option value="Cstandard/nofree/j:abilities/nekkie/permajoin">Apply Permajoin</option>
+                <option value="Cstandard/nofree/j:abilities/nekkie/bye">Apply Bye</option>
+                <option value="Cstandard/nofree/j:abilities/nekkie">Lock Cstandard/nofree/j:abilities/nekkie</option>
+            </select>
+        </div>
+
+        <div class="mb-4 col-md-3">
             <label for="treasure-dropdown" class="form-label">Treasures</label>
             <select id="treasure-dropdown" class="form-select" @onchange="TreasureChanged">
                 <option value="" disabled selected> -- Select -- </option>
@@ -57,12 +71,12 @@
             </select>
         </div>
 
-        <div class="mb-4 col-md-2" style="margin-top: 40px">
+        <div class="mb-4 col-md-1" style="margin-top: 40px">
             <input id="junk-checkbox" type="checkbox" class="form-check-input" disabled="@junkCheckboxDisabled" @onchange="JunkChanged" />
-            <label for="junk-checkbox" class="form-check-label">Apply Tjunk</label>
+            <label for="junk-checkbox" class="form-check-label">Tjunk</label>
         </div>
 
-        <div class="mb-4 col-md-6">
+        <div class="mb-4 col-md-2">
             <label for="sparse-dropdown" class="form-label">TSparse</label>
             <select id="sparse-dropdown" class="form-select" @onchange="SparseChanged" disabled="@sparseDisabled">
                 <option value="" disabled selected> -- Select -- </option>
@@ -82,7 +96,7 @@
             <label for="shop-dropdown" class="form-label">Shops</label>
             <select id="shop-dropdown" class="form-select" @onchange="ShopsChanged">
                 <option value="" disabled selected> -- Select -- </option>
-                <optionvalue value="Spro">Swap Sstandard to Spro</optionvalue>
+                <option value="Spro">Swap Sstandard to Spro</option>
                 <option value="Scabins">Swap Sstandard to Scabins</option>
                 <option value="Sempty">Swap Sstandard to Sempty</option>
                 <option value="Sstandard/sell:0">Add Sell:0</option>
@@ -107,7 +121,7 @@
             <label for="encounters-dropdown" class="form-label">Encounters</label>
             <select id="encounters-dropdown" class="form-select" @onchange="EncountersChanged">
                 <option value="" disabled selected> -- Select -- </option>
-                <optionvalue value="Ereduce">Swap Etoggle to Ereduce</optionvalue>
+                <option value="Ereduce">Swap Etoggle to Ereduce</option>
                 <option value="Enoencounters">Swap Etoggle to Enoencounters</option>
                 <option value="Etoggle/danger">Apply Edanger</option>
                 <option value="Etoggle/no:sirens">Apply Eno:sirens</option>
@@ -127,16 +141,13 @@
         </div>
 
         <div class="mb-4 col-md-6">
-            <label for="glitch-drodpown" class="form-label">Glitches</label>
+            <label for="glitch-dropdown" class="form-label">Glitches</label>
             <select id="glitch-dropdown" @onchange="GlitchChanged" class="form-select">
                 <option value="" disabled selected> -- Select -- </option>
                 <option value="Gnone">No Glitches</option>
                 <option value="Glife/sylph/backrow">Lock Glife/sylph/backrow</option>
             </select>
         </div>
-
-
-
     </div>
     <fieldset>
         <p>Agility</p>
@@ -252,7 +263,7 @@
         }
     }
 
-    void Characterhanged(ChangeEventArgs e)
+    void CharactersChanged(ChangeEventArgs e)
     {
         if (e?.Value is not null)
         {
@@ -261,7 +272,6 @@
                 : string.Empty;
             charactersCurrent = (string)e.Value + heroSuffix;
             currentFlagset = BuildFlagset();
-            StateHasChanged();
         }
     }
 
