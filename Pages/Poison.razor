@@ -192,17 +192,21 @@
     const string bossesBase = "Bstandard/alt:gauntlet";
     const string kitsBase = "-kit:freedom";
     const string glitchesBase = "Glife/sylph/backrow";
+    const string smithAltBase = "-smith:alt";
+    const string noCursedBase = "";
 
     string objectivesCurrent = objectivesBase;
     string charactersCurrent = charactersBase;
     string treasuresCurrent = treasuresBase;
     string agilityCurrent = agilityBase;
+    string noCursedCurrent = noCursedBase;
     string encountersCurrent = encountersBase;
     string shopsCurrent = shopsBase;
     string keyItemsCurrent = keyItemsBase;
     string bossesCurrent = bossesBase;
     string kitsCurrent = kitsBase;
     string glitchesCurrent = glitchesBase;
+    string smithAltCurrent = smithAltBase;
 
     bool vanillaAgility = false;
     bool hero = false;
@@ -217,13 +221,11 @@
 
     private readonly static string baseFlagset = string.Join(" ", objectivesBase, keyItemsBase, "Pkey", charactersBase, treasuresBase, shopsBase, bossesBase, encountersBase, glitchesBase, kitsBase, "-noadamants -smith:alt");
     private string currentFlagset = baseFlagset;
-    bool disableKeyItems = false;
-    bool disableCharacters = false;
 
     private string BuildFlagset()
     {
         return string.Join(" ", objectivesCurrent, keyItemsCurrent, "Pkey", charactersCurrent, treasuresCurrent, shopsCurrent,
-        bossesCurrent, encountersCurrent, glitchesCurrent, agilityCurrent, kitsCurrent, "-noadamants -smith:alt");
+        bossesCurrent, encountersCurrent, glitchesCurrent, kitsCurrent, "-noadamants", noCursedCurrent, smithAltCurrent, agilityCurrent);
     }
 
     private async Task CopyTextToClipboard()
@@ -296,7 +298,7 @@
                 junkCheckboxDisabled = false;
             }
 
-            
+
             currentFlagset = BuildFlagset();
         }
     }
@@ -389,20 +391,24 @@
                     charactersCurrent = hero
                         ? charactersCurrent + "/hero"
                         : charactersCurrent.Replace("/hero", "");
+
+                    smithAltCurrent = hero
+                        ? string.Empty
+                        : smithAltBase;
                     break;
 
                 case AgiEnum.NoCursed:
                     noCursed = newValue;
-                    agilityCurrent = noCursed
-                        ? agilityCurrent + " -nocursed "
+                    noCursedCurrent = noCursed
+                        ? "-nocursed"
                         : agilityBase.Replace("-nocursed ", "");
                     break;
 
                 case AgiEnum.VanillaAgility:
-                    noCursed = newValue;
+                    vanillaAgility = newValue;
                     agilityCurrent = noCursed
-                        ? agilityCurrent + " -vanilla:agility "
-                        : agilityBase.Replace("-vanilla:agility ", "");
+                        ? agilityCurrent + "-vanilla:agility"
+                        : string.Empty;
                     break;
             }
 
@@ -434,5 +440,4 @@
             currentFlagset = BuildFlagset();
         }
     }
-
 }
