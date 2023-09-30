@@ -1,5 +1,7 @@
 ﻿@page "/poison"
 @using smz3.countdown.wasm.Enums;
+
+
 @inject IJSRuntime JSRuntime
 
 <PageTitle>PYP Helper</PageTitle>
@@ -36,7 +38,7 @@
 
         <div class="mb-4 col-md-6">
             <label for="ki-dropdown" class="form-label">Key Items</label>
-            <select id="ki-dropdown" class="form-select" @onchange="KeyItemsChanged">
+            <select id="ki-dropdown" class="form-select"@onchange="KeyItemsChanged">
                 <option value="" disabled selected> -- Select -- </option>
                 <option value="Kmain/summon/moon/trap/nofree">Add Monster Chests</option>
                 <option value="Kmain/summon/moon/nofree/force:hook">Add force:hook</option>
