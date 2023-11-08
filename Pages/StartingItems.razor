@@ -4,19 +4,18 @@
 @using smz3.countdown.api.Models
 @inject HttpClient Http
 
-
 <PageTitle>Starting Items</PageTitle>
 
 <button @onclick="SendForm">Test Generate</button>
 
-@if(!string.IsNullOrEmpty(seedSlug))
+@if (!string.IsNullOrEmpty(seedSlug))
 {
     <a href="@url" target="_blank">Here's Your Seed</a>
 }
 
 @code {
     private string seedSlug { get; set; } = string.Empty;
-    private string url { get; set; }
+    private string url { get; set; } = string.Empty;
 
     public async Task SendForm()
     {
@@ -28,5 +27,4 @@
 
         url = $"https://beta.samus.link/seed/{" "}";
     }
-
 }
