@@ -2,125 +2,125 @@
 {
     public class LocationService
     {
-        public Dictionary<string, List<string>> Locations { get; set; } = new Dictionary<string, List<string>>();
-        public Dictionary<string, List<string>> AltLocations { get; set; } = new Dictionary<string, List<string>>();
+        public Dictionary<string, List<string>> Locations { get; set; } = [];
+        public Dictionary<string, List<string>> AltLocations { get; set; } = [];
 
         public LocationService()
         {
             Locations = new Dictionary<string, List<string>>
             {
-                ["Light World"] = new List<string>
-                {
+                ["Light World"] =
+                [
                     "Light World North West",
                     "Light World North East",
                     "Light World South"
-                },
-                ["Hyrule Castle"] = new List<string>
-                {
+                ],
+                ["Hyrule Castle"] =
+                [
                     "Hyrule Castle"
-                },
-                ["Castle Tower"] = new List<string>
-                {
+                ],
+                ["Castle Tower"] =
+                [
                     "Castle Tower"
-                },
-                ["Eastern Palace"] = new List<string>
-                {
+                ],
+                ["Eastern Palace"] =
+                [
                     "Eastern Palace"
-                },
-                ["Desert Palace"] = new List<string>
-                {
+                ],
+                ["Desert Palace"] =
+                [
                     "Desert Palace"
-                },
-                ["Tower of Hera"] = new List<string>
-                {
+                ],
+                ["Tower of Hera"] =
+                [
                     "Tower of Hera"
-                },
-                ["Death Mountain"] = new List<string>
-                {
+                ],
+                ["Death Mountain"] =
+                [
                     "Light World Death Mountain West",
                     "Light World Death Mountain East",
-                },
-                ["Dark World"] = new List<string>
-                {
+                ],
+                ["Dark World"] =
+                [
                     "Dark World Death Mountain West",
                     "Dark World Death Mountain East",
                     "Dark World North West",
                     "Dark World North East",
                     "Dark World South",
                     "Dark World Mire"
-                },
-                ["Palace of Darkness"] = new List<string>
-                {
+                ],
+                ["Palace of Darkness"] =
+                [
                     "Palace of Darkness"
-                },
-                ["Swamp Palace"] = new List<string>
-                {
+                ],
+                ["Swamp Palace"] =
+                [
                     "Swamp Palace"
-                },
-                ["Skull Woods"] = new List<string>
-                {
+                ],
+                ["Skull Woods"] =
+                [
                     "Skull Woods"
-                },
-                ["Thieves' Town"] = new List<string>
-                {
+                ],
+                ["Thieves' Town"] =
+                [
                     "Thieves' Town"
-                },
-                ["Ice Palace"] = new List<string>
-                {
+                ],
+                ["Ice Palace"] =
+                [
                     "Ice Palace"
-                },
-                ["Misery Mire"] = new List<string>
-                {
+                ],
+                ["Misery Mire"] =
+                [
                     "Misery Mire"
-                },
-                ["Turtle Rock"] = new List<string>
-                {
+                ],
+                ["Turtle Rock"] =
+                [
                     "Turtle Rock"
-                },
-                ["Ganon's Tower"] = new List<string>
-                {
+                ],
+                ["Ganon's Tower"] =
+                [
                     "Ganon's Tower"
-                },
-                ["Crateria"] = new List<string>
-                {
+                ],
+                ["Crateria"] =
+                [
                     "Crateria West",
                     "Crateria Central",
                     "Crateria East"
-                },
-                ["Brinstar"] = new List<string>
-                {
+                ],
+                ["Brinstar"] =
+                [
                     "Brinstar Blue",
                     "Brinstar Green",
                     "Brinstar Pink",
                     "Brinstar Red",
                     "Brinstar Kraid",
-                },
-                ["Wrecked Ship"] = new List<string>
-                {
+                ],
+                ["Wrecked Ship"] =
+                [
                     "Wrecked Ship"
-                },
-                ["Maridia"] = new List<string>
-                {
+                ],
+                ["Maridia"] =
+                [
                     "Maridia Outer",
                     "Maridia Inner"
-                },
-                ["Upper Norfair"] = new List<string>
-                {
+                ],
+                ["Upper Norfair"] =
+                [
                     "Norfair Upper West",
                     "Norfair Upper East",
                     "Norfair Upper Crocomire"
-                },
-                ["Lower Norfair"] = new List<string>
-                {
+                ],
+                ["Lower Norfair"] =
+                [
                     "Norfair Lower West",
                     "Norfair Lower East"
-                }
+                ]
             };
 
             AltLocations = new Dictionary<string, List<string>>
             {
-                ["West LW"] = new List<string>
-                {
+                ["West LW"] =
+                [
                     "Light World North West",
                     "Castle Tower",
                     "Hyrule Castle",
@@ -131,9 +131,9 @@
                     "Link's House",
                     "Sunken Treasure",
                     "Floodgate Chest",
-                },
-                ["East LW"] = new List<string>
-                {
+                ],
+                ["East LW"] =
+                [
                     "Eastern Palace",
                     "Light World North East",
                     "Mini Moldorm Cave - Far Left",
@@ -144,36 +144,36 @@
                     "Lake Hylia Island",
                     "Ice Rod Cave",
                     "Hobo"
-                },
-                ["Desert"] = new List<string>
-                {
+                ],
+                ["Desert"] =
+                [
                     "Desert Palace",
                     "Bombos Tablet",
                     "Desert Ledge",
                     "Aginah's Cave",
                     "Checkerboard Cave",
-                },
-                ["Death Mountain"] = new List<string>
-                {
+                ],
+                ["Death Mountain"] =
+                [
                     "Light World Death Mountain West",
                     "Light World Death Mountain East",
                     "Tower of Hera"
-                },
-                ["East DW"] = new List<string>
-                {
+                ],
+                ["East DW"] =
+                [
                     "Palace of Darkness",
                     "Dark World North East"
-                },
-                ["Village of Outcasts"] = new List<string>
-                {
+                ],
+                ["Village of Outcasts"] =
+                [
                     "Thieves' Town",
                     "Dark World North West",
                     "Skull Woods",
                     "Stumpy",
                     "Digging Game"
-                },
-                ["Dark Swamp"] = new List<string>
-                {
+                ],
+                ["Dark Swamp"] =
+                [
                     "Swamp Palace",
                     "Ice Palace",
                     "Hype Cave - Top",
@@ -181,53 +181,53 @@
                     "Hype Cave - Middle Left",
                     "Hype Cave - Bottom",
                     "Hype Cave - NPC"
-                },
-                ["Misery Mire"] = new List<string>
-                {
+                ],
+                ["Misery Mire"] =
+                [
                     "Dark World Mire",
                     "Misery Mire"
-                },
-                ["Dark DM"] = new List<string>
-                {
+                ],
+                ["Dark DM"] =
+                [
                     "Dark World Death Mountain West",
                     "Dark World Death Mountain East",
                     "Turtle Rock"
-                },
-                ["Ganon's Tower"] = new List<string>
-                {
+                ],
+                ["Ganon's Tower"] =
+                [
                     "Ganon's Tower",
-                },
-                ["Crateria"] = new List<string>
-                {
+                ],
+                ["Crateria"] =
+                [
                     "Crateria West",
                     "Crateria Central",
                     "Brinstar Blue",
                     "Missile (Crateria moat)"
-                },
-                ["Green/Pink Brin"] = new List<string>
-                {
+                ],
+                ["Green/Pink Brin"] =
+                [
                     "Brinstar Green",
                     "Brinstar Pink"
-                },
-                ["Red Brin/Kraid"] = new List<string>
-                {
+                ],
+                ["Red Brin/Kraid"] =
+                [
                     "Brinstar Red",
                     "Brinstar Kraid"
-                },
-                ["Wrecked Ship"] = new List<string>
-                {
+                ],
+                ["Wrecked Ship"] =
+                [
                     "Crateria East",
                     "Wrecked Ship"
-                },
-                ["West Maridia"] = new List<string>
-                {
+                ],
+                ["West Maridia"] =
+                [
                     "Maridia Outer",
                     "Super Missile (yellow Maridia)",
                     "Missile (yellow Maridia super missile)",
                     "Missile (yellow Maridia false wall)"
-                },
-                ["East Maridia"] = new List<string>
-                {
+                ],
+                ["East Maridia"] =
+                [
                     "Plasma Beam",
                     "Missile (left Maridia sand pit room)",
                     "Reserve Tank, Maridia",
@@ -238,22 +238,22 @@
                     "Missile (Draygon)",
                     "Energy Tank, Botwoon",
                     "Space Jump",
-                },
-                ["Upper Norfair"] = new List<string>
-                {
+                ],
+                ["Upper Norfair"] =
+                [
                     "Norfair Upper West",
                     "Norfair Upper East",
                     "Missile (above Crocomire)"
-                },
-                ["Crocomire"] = new List<string>
-                {
+                ],
+                ["Crocomire"] =
+                [
                     "Norfair Upper Crocomire"
-                },
-                ["Lower Norfair"] = new List<string>
-                {
+                ],
+                ["Lower Norfair"] =
+                [
                     "Norfair Lower West",
                     "Norfair Lower East"
-                }
+                ]
             };
         }
     }
