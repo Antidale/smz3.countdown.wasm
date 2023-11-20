@@ -9,7 +9,7 @@
 @code {
 
     [Parameter]
-    public CheckboxModel CheckboxModel { get; set; } = new CheckboxModel();
+    public CheckboxModel CheckboxModel { get; set; } = new();
 
     [Parameter]
     public EventCallback<CheckboxModel> CheckboxModelChanged { get; set; }

@@ -39,7 +39,7 @@ else
     public EventCallback<CountdownLocationInfo> LocationInfoChanged { get; set; }
 
     [Parameter]
-    public List<string> Locations { get; set; } = new List<string>();
+    public List<string> Locations { get; set; } = [];
 
     private async Task Found()
     {

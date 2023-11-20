@@ -1,5 +1,4 @@
-﻿using smz3.countdown.wasm.Attributes;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace smz3.countdown.wasm.Extenstions
 {
@@ -14,10 +13,11 @@ namespace smz3.countdown.wasm.Extenstions
             }
 
             var attributes = (DescriptionAttribute[])field.GetCustomAttributes(typeof(DescriptionAttribute), false);
-            if (attributes != null && attributes.Length > 0)
-                return attributes[0].Description;
-            else
-                return name.ToString();
+
+            return attributes != null && attributes.Length > 0
+                ? attributes[0].Description
+                : name.ToString();
+
         }
 
         public static T GetAttribute<T>(this Enum name) where T : Attribute, new()
@@ -27,14 +27,10 @@ namespace smz3.countdown.wasm.Extenstions
                 return new T();
 
             var attributes = (T[])field.GetCustomAttributes(typeof(T), false);
-            if (attributes != null && attributes.Length > 0)
-            {
-                return attributes[0];
-            }
-            else
-            {
-                return new T();
-            }
+
+            return attributes != null && attributes.Length > 0
+                ? attributes[0]
+                : new T();
         }
 
         public static bool HasAttribute<T>(this Enum name) where T : Attribute
@@ -44,14 +40,8 @@ namespace smz3.countdown.wasm.Extenstions
                 return false;
 
             var attributes = (T[])field.GetCustomAttributes(typeof(T), false);
-            if (attributes != null && attributes.Length > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+
+            return attributes != null && attributes.Length > 0;
         }
     }
 }
