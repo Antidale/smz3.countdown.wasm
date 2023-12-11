@@ -1,4 +1,4 @@
-﻿namespace smz3.countdown.api.Models
+﻿namespace smz3.countdown.wasm.Features.StartingItems
 {
     public class GenerateRequest
     {
