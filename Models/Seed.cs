@@ -7,7 +7,7 @@
         public string Hash { get; set; } = string.Empty;
         public string Mode { get; set; } = string.Empty;
         public int Players { get; set; }
-        public List<World> Worlds { get; set; } = new List<World>();
+        public List<World> Worlds { get; set; } = [];
 
     }
 }
