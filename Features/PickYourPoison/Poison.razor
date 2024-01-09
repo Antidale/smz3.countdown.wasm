@@ -37,7 +37,7 @@
 
         <div class="mb-4 col-md-6">
             <label for="ki-dropdown" class="form-label">Key Items</label>
-            <select id="ki-dropdown" class="form-select"@onchange="KeyItemsChanged">
+            <select id="ki-dropdown" class="form-select" @onchange="KeyItemsChanged">
                 <option value="" disabled selected> -- Select -- </option>
                 <option value="Kmain/summon/moon/trap/nofree">Add Monster Chests</option>
                 <option value="Kmain/summon/moon/nofree/force:hook">Add force:hook</option>
@@ -299,7 +299,6 @@
                 junkCheckboxDisabled = false;
             }
 
-
             currentFlagset = BuildFlagset();
         }
     }
@@ -309,15 +308,6 @@
         if (e?.Value is not null)
         {
             treasuresCurrent = treasuresCurrent.Replace(sparseValue, (string)e.Value);
-            currentFlagset = BuildFlagset();
-        }
-    }
-
-    void AgilityChanged(ChangeEventArgs e)
-    {
-        if (e?.Value is not null)
-        {
-            currentFlagset = currentFlagset.Replace("Orandom:6/req:all/win:crystal", (string)e.Value);
             currentFlagset = BuildFlagset();
         }
     }
