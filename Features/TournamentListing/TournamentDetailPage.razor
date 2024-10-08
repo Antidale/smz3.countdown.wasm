@@ -1,0 +1,40 @@
+﻿@page "/tournaments/{id:int}"
+@using FeInfo.Common.DTOs
+@using smz3.countdown.wasm.Extenstions
+@inject HttpClient Http
+
+
+<h3>@tournamentSummary.TournamentName</h3>
+<QuickGrid Items="Registrants">
+    <PropertyColumn Property="@(r => r.DiscordName)" Title="Discord Name" Sortable="true"/>
+    <PropertyColumn Property="@(r => r.TwitchName)" Title="Twitch Name" Sortable="true"/>
+    <PropertyColumn Property="@(r => r.Pronouns)" Sortable="true"/>
+    <PropertyColumn Property="@(r => r.DisplayName)" Title="Display Name" Sortable="true"/>
+    <PropertyColumn Property="@(r => r.RegisterationDateLocal())" Title="Registration Date" Sortable="true"/>
+
+</QuickGrid>
+
+@code {
+    [CascadingParameter]
+    public TournamentAppState AppState { get; set; } = new ();
+    
+    [Parameter]
+    public int id { get; set; }
+
+    private TournamentSummary tournamentSummary = new();
+
+    private IQueryable<TournamentRegistrant>? Registrants = new List<TournamentRegistrant>().AsQueryable();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Registrants = await AppState.GetTournamentRegistrants(id);
+
+        tournamentSummary = AppState.Tournaments.FirstOrDefault(x => x.TournamentId == id) ?? tournamentSummary;
+        if(tournamentSummary.TournamentId == 0)
+        {
+            await AppState.FetchTournaments();
+            tournamentSummary = AppState.Tournaments.FirstOrDefault(x => x.TournamentId == id) ?? tournamentSummary;
+        }
+        
+    }
+}

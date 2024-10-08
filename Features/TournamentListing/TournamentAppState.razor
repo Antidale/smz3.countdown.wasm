@@ -1,0 +1,72 @@
+﻿@using FeInfo.Common.DTOs
+@inject HttpClient Http
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private List<EventCallback<StatePropertyChangedArgs>> Callbacks
+    = new List<EventCallback<StatePropertyChangedArgs>>();
+
+    // Each component will register a callback
+    public void RegisterCallback(EventCallback<StatePropertyChangedArgs> callback)
+    {
+        // Only add if we have not already registered this callback
+        if (!Callbacks.Contains(callback))
+        {
+            Callbacks.Add(callback);
+        }
+    }
+
+    private void NotifyPropertyChanged(StatePropertyChangedArgs args)
+    {
+        foreach (var callback in Callbacks)
+        {
+            // Ignore exceptions due to dangling references
+            try
+            {
+                // Invoke the callback
+                callback.InvokeAsync(args);
+            }
+            catch { }
+        }
+    }
+
+    private List<TournamentSummary> tournaments = new ();
+    public List<TournamentSummary> Tournaments 
+    {
+        get => tournaments;
+        set
+        {
+            tournaments = value;
+            NotifyPropertyChanged(new(nameof(Tournaments), value));
+            StateHasChanged();
+        }
+    }
+
+    private Dictionary<int, IQueryable<TournamentRegistrant>> tournamentRegistrants = new();
+    public Dictionary<int, IQueryable<TournamentRegistrant>> TournamentRegistrants { get => tournamentRegistrants; }
+
+    public async Task FetchTournaments()
+    {
+        Tournaments = await Http.GetFromJsonAsync<List<TournamentSummary>>("https://free-enterprise-info-api.herokuapp.com/api/Tournament") ?? Tournaments;
+    }
+
+    public async Task<IQueryable<TournamentRegistrant>> GetTournamentRegistrants(int id)
+    {
+        if(tournamentRegistrants.TryGetValue(id, out var registrants) && registrants is not null && registrants.Any())
+        {
+            return registrants;
+        }
+
+        registrants = (await Http.GetFromJsonAsync<List<TournamentRegistrant>>($"https://free-enterprise-info-api.herokuapp.com/api/Tournament/{id}/registrants"))?.AsQueryable() ?? new List<TournamentRegistrant>().AsQueryable();
+
+        tournamentRegistrants.TryAdd(id, registrants);
+        return registrants;
+    }
+
+}
