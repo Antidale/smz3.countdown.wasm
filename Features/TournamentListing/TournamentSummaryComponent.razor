@@ -1,0 +1,14 @@
+﻿<h2>@Tournament.TournamentName</h2>
+<p>Entrants: @Tournament.EntrantCount</p>
+@if(!string.IsNullOrWhiteSpace(Tournament.RulesLink))
+{
+    <p><a href="@Tournament.RulesLink">Rules Doc</a></p>
+}
+<p>@Tournament.GuildName</p>
+<p>Registration Window: @Tournament.RegistrationStart.ToLocalTime().ToString("G") to @Tournament.RegistrationEnd.ToLocalTime().ToString("G")</p>
+<a href="/tournaments/@Tournament.TournamentId">See Registrants</a>
+
+@code {
+    [Parameter]
+    public TournamentSummary Tournament { get; set; } = new();
+}
