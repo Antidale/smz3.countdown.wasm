@@ -71,11 +71,6 @@ a,
     align-content: center;
 }
 
-.striped tbody {
-    tr:nth-child(odd) {
-        background-color: hsl(210, 11%, 20%);
-    }
-}
 
 .button-row {
     display: flex;
@@ -92,10 +87,8 @@ a,
 
 .tournament-summary {
     margin: .3rem 0rem;
-    background-color: hsl(210, 11%, 20%);
     max-width: 95%;
     padding: 1rem 1.5rem .2rem;
-    border: 2px solid hsl(210, 11%, 60%);
 }
 
 @media (max-width: 1150px) {
