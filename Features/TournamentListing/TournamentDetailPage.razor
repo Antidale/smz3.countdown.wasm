@@ -22,13 +22,14 @@
 <div class="detail-container">
     @if(Entrants is not null && Entrants.All(e => !string.IsNullOrWhiteSpace(e.DiscordName)))
     {
-        <QuickGrid Items="Entrants" Class="striped">
+        <QuickGrid Items="Entrants" Class="table table-striped">
             <PropertyColumn Property="@(r => r.DiscordName)" Title="Discord Name" Sortable="true"/>
             <PropertyColumn Property="@(r => r.TwitchName)" Title="Twitch Name" Sortable="true"/>
             <PropertyColumn Property="@(r => r.Pronouns)" Sortable="true"/>
             <PropertyColumn Property="@(r => r.DisplayName)" Title="Display Name" Sortable="true"/>
             <PropertyColumn Property="@(r => r.RegisterationDateLocal())" Title="Registration Date" Sortable="true" IsDefaultSortColumn="true" InitialSortDirection="SortDirection.Descending" />
         </QuickGrid>
+
         @if(Entrants is not null && Entrants.Count() > 16)
         {
             <Paginator State="@pagination" />
