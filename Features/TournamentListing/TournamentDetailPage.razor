@@ -5,21 +5,39 @@
 
 
 <h3>@tournamentSummary.TournamentName</h3>
+<h5>@tournamentSummary.GuildName</h5>
+<p>@tournamentSummary.EntrantCount Entrants</P>
+@if(HasRulesLink())
+{
+    <a class="" href="@tournamentSummary.RulesLink">Rules Doc</a>
+}
+<details>
+    <summary>
+        @RegistrationStatus()
+    </summary>
+    <p>Registration Start: @tournamentSummary.RegistrationStart.ToLocalString()</p>
+    <p>Registration End: @tournamentSummary.RegistrationEnd.ToLocalString()</p>
+</details>
+
 <div class="detail-container">
-
-
-    <QuickGrid Items="Registrants" Class="striped">
-        <PropertyColumn Property="@(r => r.DiscordName)" Title="Discord Name" Sortable="true"/>
-        <PropertyColumn Property="@(r => r.TwitchName)" Title="Twitch Name" Sortable="true"/>
-        <PropertyColumn Property="@(r => r.Pronouns)" Sortable="true"/>
-        <PropertyColumn Property="@(r => r.DisplayName)" Title="Display Name" Sortable="true"/>
-        <PropertyColumn Property="@(r => r.RegisterationDateLocal())" Title="Registration Date" Sortable="true" IsDefaultSortColumn="true" InitialSortDirection="SortDirection.Descending" />
-    </QuickGrid>
-    @if(Registrants is not null && Registrants.Count() > 16)
+    @if(Entrants is not null && Entrants.Count() < 1)
     {
-        <Paginator State="@pagination" />
+        <QuickGrid Items="Entrants" Class="striped">
+            <PropertyColumn Property="@(r => r.DiscordName)" Title="Discord Name" Sortable="true"/>
+            <PropertyColumn Property="@(r => r.TwitchName)" Title="Twitch Name" Sortable="true"/>
+            <PropertyColumn Property="@(r => r.Pronouns)" Sortable="true"/>
+            <PropertyColumn Property="@(r => r.DisplayName)" Title="Display Name" Sortable="true"/>
+            <PropertyColumn Property="@(r => r.RegisterationDateLocal())" Title="Registration Date" Sortable="true" IsDefaultSortColumn="true" InitialSortDirection="SortDirection.Descending" />
+        </QuickGrid>
+        @if(Entrants is not null && Entrants.Count() > 16)
+        {
+            <Paginator State="@pagination" />
+        }
     }
-    
+    else
+    {
+        <h4>No Entrants</h4>
+    }
 </div>
 
 @code {
@@ -33,11 +51,11 @@
 
     private TournamentSummary tournamentSummary = new();
 
-    private IQueryable<TournamentRegistrant>? Registrants = new List<TournamentRegistrant>().AsQueryable();
+    private IQueryable<TournamentRegistrant>? Entrants = new List<TournamentRegistrant>().AsQueryable();
 
     protected override async Task OnInitializedAsync()
     {
-        Registrants = await AppState.GetTournamentRegistrants(id);
+        Entrants = await AppState.GetTournamentRegistrants(id);
 
         tournamentSummary = AppState.Tournaments.FirstOrDefault(x => x.TournamentId == id) ?? tournamentSummary;
         if(tournamentSummary.TournamentId == 0)
@@ -45,6 +63,16 @@
             await AppState.FetchTournaments();
             tournamentSummary = AppState.Tournaments.FirstOrDefault(x => x.TournamentId == id) ?? tournamentSummary;
         }
-        
     }
+
+    public string RegistrationStatus()
+    {
+        if(DateTimeOffset.UtcNow < tournamentSummary.RegistrationStart) return $"Registration Opens {tournamentSummary.RegistrationStart.ToLocalString()}";
+
+        if(DateTimeOffset.UtcNow > tournamentSummary.RegistrationEnd) return "Registration Closed";
+
+        return "Registration Open";
+    }
+
+    public bool HasRulesLink() => !string.IsNullOrWhiteSpace(tournamentSummary.RulesLink);
 }
