@@ -5,14 +5,22 @@
 
 
 <h3>@tournamentSummary.TournamentName</h3>
-<QuickGrid Items="Registrants">
-    <PropertyColumn Property="@(r => r.DiscordName)" Title="Discord Name" Sortable="true"/>
-    <PropertyColumn Property="@(r => r.TwitchName)" Title="Twitch Name" Sortable="true"/>
-    <PropertyColumn Property="@(r => r.Pronouns)" Sortable="true"/>
-    <PropertyColumn Property="@(r => r.DisplayName)" Title="Display Name" Sortable="true"/>
-    <PropertyColumn Property="@(r => r.RegisterationDateLocal())" Title="Registration Date" Sortable="true"/>
+<div class="detail-container">
 
-</QuickGrid>
+
+    <QuickGrid Items="Registrants" Class="striped">
+        <PropertyColumn Property="@(r => r.DiscordName)" Title="Discord Name" Sortable="true"/>
+        <PropertyColumn Property="@(r => r.TwitchName)" Title="Twitch Name" Sortable="true"/>
+        <PropertyColumn Property="@(r => r.Pronouns)" Sortable="true"/>
+        <PropertyColumn Property="@(r => r.DisplayName)" Title="Display Name" Sortable="true"/>
+        <PropertyColumn Property="@(r => r.RegisterationDateLocal())" Title="Registration Date" Sortable="true" IsDefaultSortColumn="true" InitialSortDirection="SortDirection.Descending" />
+    </QuickGrid>
+    @if(Registrants is not null && Registrants.Count() > 16)
+    {
+        <Paginator State="@pagination" />
+    }
+    
+</div>
 
 @code {
     [CascadingParameter]
@@ -20,6 +28,8 @@
     
     [Parameter]
     public int id { get; set; }
+
+    PaginationState pagination = new PaginationState { ItemsPerPage = 16 };
 
     private TournamentSummary tournamentSummary = new();
 

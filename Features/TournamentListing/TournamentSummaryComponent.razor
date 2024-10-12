@@ -4,11 +4,13 @@
     <p>@Tournament.GuildName</p>
     <p>Registration Window: @Tournament.RegistrationStart.ToLocalString() to @Tournament.RegistrationEnd.ToLocalString()</p>
     <p>
-        <a class="btn btn-primary" href="/tournaments/@Tournament.TournamentId">See Registrants</a>
-        @if(!string.IsNullOrWhiteSpace(Tournament.RulesLink))
-        {
-            <a class="btn btn-info" href="@Tournament.RulesLink">Rules Doc</a>
-        }
+        <div class="button-row">
+            <a class="btn btn-primary" href="/tournaments/@Tournament.TournamentId">See Registrants</a>
+            @if(!string.IsNullOrWhiteSpace(Tournament.RulesLink))
+            {
+                <a class="btn btn-info" href="@Tournament.RulesLink">Rules Doc</a>
+            }
+        </div>
     </p>
 </div>
 
