@@ -80,6 +80,7 @@ a,
 .button-row {
     display: flex;
     gap: 1em;
+    padding: .5rem 0rem;
 }
 
 .tournament-grid {
@@ -117,4 +118,41 @@ a,
     .button-row {
         flex-direction: column;
     }
+}
+
+.detail-container {
+    max-width: 90%;
+}
+
+details {
+    margin-left: 20px;
+    margin-bottom: .3rem;
+
+    summary {
+        margin-top: 0px;
+        margin-left: -20px;
+        list-style: none;
+    }
+}
+
+p {
+    margin: 0px;
+}
+
+.quickgrid {
+    margin-top: 1rem;
+}
+
+summary::-webkit-details-marker {
+    display: none
+}
+
+summary::after {
+    content: '\00a0\00a0►';
+    font-size: .7rem;
+    vertical-align: text-bottom
+}
+
+details[open] summary::after {
+    content: "\00a0\00a0▼";
 }
