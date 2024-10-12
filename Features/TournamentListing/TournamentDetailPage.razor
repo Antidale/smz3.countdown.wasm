@@ -20,7 +20,7 @@
 </details>
 
 <div class="detail-container">
-    @if(Entrants is not null && Entrants.Count() < 1)
+    @if(Entrants is not null && Entrants.All(e => !string.IsNullOrWhiteSpace(e.DiscordName)))
     {
         <QuickGrid Items="Entrants" Class="striped">
             <PropertyColumn Property="@(r => r.DiscordName)" Title="Discord Name" Sortable="true"/>
