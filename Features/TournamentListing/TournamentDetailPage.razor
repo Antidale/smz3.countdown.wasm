@@ -27,7 +27,7 @@
             <PropertyColumn Property="@(r => r.TwitchName)" Title="Twitch Name" Sortable="true"/>
             <PropertyColumn Property="@(r => r.Pronouns)" Sortable="true"/>
             <PropertyColumn Property="@(r => r.DisplayName)" Title="Display Name" Sortable="true"/>
-            <PropertyColumn Property="@(r => r.RegisterationDateLocal())" Title="Registration Date" Sortable="true" IsDefaultSortColumn="true" InitialSortDirection="SortDirection.Descending" />
+            <TemplateColumn Title="Registration Date" SortBy="@sortByRegistrationDate" IsDefaultSortColumn="true" InitialSortDirection="SortDirection.Descending" Sortable="true">@context.RegistrationDateLocal()</TemplateColumn>
         </QuickGrid>
 
         @if(Entrants is not null && Entrants.Count() > 16)
@@ -76,4 +76,6 @@
     }
 
     public bool HasRulesLink() => !string.IsNullOrWhiteSpace(tournamentSummary.RulesLink);
+
+    GridSort<TournamentRegistrant> sortByRegistrationDate = GridSort<TournamentRegistrant>.ByDescending(r => r.RegistrationDate.Ticks);
 }
