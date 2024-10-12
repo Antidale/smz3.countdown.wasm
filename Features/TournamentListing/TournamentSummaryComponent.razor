@@ -1,10 +1,7 @@
 ﻿<div class="tournament-summary">
     <h2>@Tournament.TournamentName</h2>
     <h4>@Tournament.GuildName</h4>
-    @if(HasOpenedRegistration())
-    {
-        <p>@Tournament.EntrantCount Entrants </p>
-    }
+    <p>@Tournament.EntrantCount Entrants </p>
     
     <p>@RegistrationStatus()</p>
 
@@ -14,7 +11,7 @@
             <div class="button-row">
                 @if(HasOpenedRegistration())
                 {
-                    <a class="btn btn-primary" href="/tournaments/@Tournament.TournamentId">See Registrants</a>
+                    <a class="btn btn-primary" href="/tournaments/@Tournament.TournamentId">Registrants</a>
                 }
                 
                 @if(HasRulesLink())

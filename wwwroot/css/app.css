@@ -86,10 +86,11 @@ a,
     margin: auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    gap: 1.1rem;
 }
 
 .tournament-summary {
+    margin: .3rem 0rem;
     background-color: hsl(210, 11%, 20%);
     max-width: 95%;
     padding: 1rem 1.5rem .2rem;
