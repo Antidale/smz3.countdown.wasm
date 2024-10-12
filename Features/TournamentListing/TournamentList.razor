@@ -5,10 +5,12 @@
 
 @if(AppState.Tournaments.Any())
 {
+    <div class="tournament-grid">
     @foreach(var tournament in AppState.Tournaments)
     {
         <TournamentSummaryComponent Tournament="@tournament" />
     }
+    </div>
 }
 
 @code {
