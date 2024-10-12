@@ -70,3 +70,14 @@ a,
     font-size: 25px;
     align-content: center;
 }
+
+.striped tbody {
+    tr:nth-child(odd) {
+        background-color: hsl(210, 11%, 20%);
+    }
+}
+
+.button-row {
+    display: flex;
+    gap: 1em;
+}
