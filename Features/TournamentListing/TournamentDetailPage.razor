@@ -4,16 +4,23 @@
 @inject HttpClient Http
 
 
-<h3>@tournamentSummary.TournamentName</h3>
-<h5>@tournamentSummary.GuildName</h5>
+<h1 class="h3">@tournamentSummary.TournamentName</h1>
+<h2 class="h5">@tournamentSummary.GuildName</h2>
 <p>@tournamentSummary.EntrantCount Entrants</P>
-@if(HasRulesLink())
-{
-    <a class="" href="@tournamentSummary.RulesLink">Rules Doc</a>
-}
+<div class="button-row">
+    @if(@tournamentSummary.HasRulesLink())
+    {
+        <a class="" href="@tournamentSummary.RulesLink">Rules Doc</a>
+    }
+
+    @if(@tournamentSummary.HasStandingsLink())
+    {
+        <a class="" href="@tournamentSummary.StandingsLink">Standings</a>
+    }
+</div>
 <details>
     <summary>
-        @RegistrationStatus()
+        @tournamentSummary.RegistrationStatus()
     </summary>
     <p>Registration Start: @tournamentSummary.RegistrationStart.ToLocalString()</p>
     <p>Registration End: @tournamentSummary.RegistrationEnd.ToLocalString()</p>
@@ -65,17 +72,6 @@
             tournamentSummary = AppState.Tournaments.FirstOrDefault(x => x.TournamentId == id) ?? tournamentSummary;
         }
     }
-
-    public string RegistrationStatus()
-    {
-        if(DateTimeOffset.UtcNow < tournamentSummary.RegistrationStart) return $"Registration Opens {tournamentSummary.RegistrationStart.ToLocalString()}";
-
-        if(DateTimeOffset.UtcNow > tournamentSummary.RegistrationEnd) return "Registration Closed";
-
-        return "Registration Open";
-    }
-
-    public bool HasRulesLink() => !string.IsNullOrWhiteSpace(tournamentSummary.RulesLink);
 
     GridSort<TournamentRegistrant> sortByRegistrationDate = GridSort<TournamentRegistrant>.ByDescending(r => r.RegistrationDate.Ticks);
 }
