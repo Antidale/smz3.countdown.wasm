@@ -3,20 +3,25 @@
     <h4>@Tournament.GuildName</h4>
     <p>@Tournament.EntrantCount Entrants </p>
     
-    <p>@RegistrationStatus()</p>
+    <p>@Tournament.RegistrationStatus()</p>
 
-    @if(HasOpenedRegistration() || HasRulesLink())
+    @if(Tournament.HasOpenedRegistration() || Tournament.HasRulesLink())
     {
         <p>
             <div class="button-row">
-                @if(HasOpenedRegistration())
+                @if(Tournament.HasOpenedRegistration())
                 {
                     <a class="btn btn-primary" href="/tournaments/@Tournament.TournamentId">Entrants</a>
                 }
                 
-                @if(HasRulesLink())
+                @if(Tournament.HasRulesLink())
                 {
                     <a class="btn btn-info" href="@Tournament.RulesLink">Rules Doc</a>
+                }
+
+                @if(Tournament.HasStandingsLink())
+                {
+                    <a class="btn btn-success" href="@Tournament.StandingsLink">Standings</a>
                 }
             </div>
         </p>
@@ -26,17 +31,4 @@
 @code {
     [Parameter]
     public TournamentSummary Tournament { get; set; } = new();
-
-    public string RegistrationStatus()
-    {
-        if(DateTimeOffset.UtcNow < Tournament.RegistrationStart) return $"Registration Opens {Tournament.RegistrationStart.ToLocalString()}";
-
-        if(DateTimeOffset.UtcNow > Tournament.RegistrationEnd) return "Registration Closed";
-
-        return "Registration Open";
-    }
-
-    public bool HasRulesLink() => !string.IsNullOrWhiteSpace(Tournament.RulesLink);
-
-    public bool HasOpenedRegistration() => !RegistrationStatus().StartsWith("Registration Opens");
 }

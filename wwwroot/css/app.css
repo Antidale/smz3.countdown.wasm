@@ -71,7 +71,6 @@ a,
     align-content: center;
 }
 
-
 .button-row {
     display: flex;
     gap: 1em;
@@ -101,13 +100,7 @@ a,
     }
 }
 
-@media (max-width: 830px) {
-    .tournament-summary {
-        max-width: 85%
-    }
-}
-
-@media (max-width: 700px) {
+@media (max-width: 845px) {
     .button-row {
         flex-direction: column;
     }
