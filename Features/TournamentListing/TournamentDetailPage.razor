@@ -61,7 +61,7 @@
 
     private IQueryable<TournamentRegistrant>? Entrants = new List<TournamentRegistrant>().AsQueryable();
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         Entrants = await AppState.GetTournamentRegistrants(id);
 
@@ -71,6 +71,7 @@
             await AppState.FetchTournaments();
             tournamentSummary = AppState.Tournaments.FirstOrDefault(x => x.TournamentId == id) ?? tournamentSummary;
         }
+
     }
 
     GridSort<TournamentRegistrant> sortByRegistrationDate = GridSort<TournamentRegistrant>.ByDescending(r => r.RegistrationDate.Ticks);
