@@ -53,7 +53,14 @@
 
     public async Task FetchTournaments()
     {
-        Tournaments = await Http.GetFromJsonAsync<List<TournamentSummary>>("https://free-enterprise-info-api.herokuapp.com/api/Tournament") ?? Tournaments;
+        try
+        {
+            Tournaments = await Http.GetFromJsonAsync<List<TournamentSummary>>("https://free-enterprise-info-api.herokuapp.com/api/Tournament") ?? Tournaments;
+        }
+        catch(Exception)
+        {
+            //no-op, eventually maybe add a toast or something?
+        }
     }
 
     public async Task<IQueryable<TournamentRegistrant>> GetTournamentRegistrants(int id)
@@ -63,10 +70,17 @@
             return registrants;
         }
 
-        registrants = (await Http.GetFromJsonAsync<List<TournamentRegistrant>>($"https://free-enterprise-info-api.herokuapp.com/api/Tournament/{id}/registrants"))?.AsQueryable() ?? new List<TournamentRegistrant>().AsQueryable();
+        try
+        {
+            registrants = (await Http.GetFromJsonAsync<List<TournamentRegistrant>>($"https://free-enterprise-info-api.herokuapp.com/api/Tournament/{id}/registrants"))?.AsQueryable() ?? new List<TournamentRegistrant>().AsQueryable();
 
-        tournamentRegistrants.TryAdd(id, registrants);
-        return registrants;
+            tournamentRegistrants.TryAdd(id, registrants);
+        }
+        catch (Exception)
+        {
+            //no-op, eventually maybe add a toast or something?
+        }
+
+        return registrants ?? new List<TournamentRegistrant>().AsQueryable();
     }
-
 }
