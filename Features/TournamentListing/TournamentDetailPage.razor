@@ -27,7 +27,11 @@
 </details>
 
 <div class="detail-container">
-    @if(Entrants is not null && Entrants.All(e => !string.IsNullOrWhiteSpace(e.DiscordName)))
+    @if(Entrants is null || Entrants.All(e => string.IsNullOrWhiteSpace(e.DiscordName)))
+    {
+        <h4>No Entrants</h4>
+    }
+    else
     {
         <QuickGrid Items="Entrants" Class="table table-striped">
             <PropertyColumn Property="@(r => r.DiscordName)" Title="Discord Name" Sortable="true"/>
@@ -41,10 +45,6 @@
         {
             <Paginator State="@pagination" />
         }
-    }
-    else
-    {
-        <h4>No Entrants</h4>
     }
 </div>
 
