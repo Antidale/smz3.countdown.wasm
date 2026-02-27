@@ -2,28 +2,44 @@
 <br />
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-sm-10">
+        <div class="col-md-6 col-sm-10 mb-5">
             <h4>Do All</h4>
-            <ul>
-                <li>Value</li>
-                <li>Masa</li>
-                <li>Ribbon</li>
-            </ul>
+            <div class="container">
+                <div class="row">
+                    <Objective DisplayText="Value" />
+                    <Objective DisplayText="Masa" />
+                    <Objective DisplayText="Ribbon" />
+                </div>
+            </div>
         </div>
-        <div class="col-md-6 col-sm-10">
-            <h4>Do Four</h4>
+        <div class="col-md-6 col-sm-10 mb-5">
+            <h4>Do Four <button class="btn btn-sm btn-primary" @onclick="ShowQuestInput">+</button></h4>
+            <div class="container">
+                <div class="row">
+
+                </div>
+            </div>
         </div>
-        <div class="col-md-6 col-sm-10">
-            <h4>XP Bosses</h4>
+        <div class="col-md-6 col-sm-10 mb-5">
+            <h4>XP Bosses
+                <button class="btn btn-sm btn-primary" @onclick="ShowBossInput">+</button>
+            </h4>
+            <div class="container">
+                <div class="row">
+                    <Objective DisplayText="Baham" />
+                    <Objective DisplayText="Wyvern" />
+                </div>
+            </div>
         </div>
-        <div class="col-md-6 col-sm-10">
-
+        <div class="col-12 mb-5">
+            <h4 class="col-12">Flagset Notes</h4>
+            <p>Kmain/moon/miab:above Balt:gauntlet/whichburn vanilla:miab</p>
         </div>
 
-
-
-        <h4 class="col-12">Flagset Notes</h4>
-        <h4>Personal Notes</h4>
+        <div class="col-12 mb-5">
+            <h4 class="col-12">Personal Notes</h4>
+            <p>@personalNotes</p>
+        </div>
     </div>
 </div>
 
@@ -40,6 +56,16 @@
 
 @code {
 
+    private string personalNotes = "Don't forget Flamedog";
+    private void ShowBossInput()
+    {
+
+    }
+
+    private void ShowQuestInput()
+    {
+
+    }
     //have a backing list of the Tough Quest objectives so we can filter the dropdowns to just what hasn't been selected yet
     //keep track of already selected flagsets
     //Have a backing list of the boss objectives so we can filter the dropdowns to just what hasn't been selected yet
