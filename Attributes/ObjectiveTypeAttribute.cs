@@ -10,5 +10,4 @@ public class ObjectiveTypeAttribute(ObjectiveType objectiveType) : Attribute
     {
         return Type.GetDescription();
     }
-
 }
