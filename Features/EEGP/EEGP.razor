@@ -5,8 +5,18 @@
 @using smz3.countdown.wasm.Components
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject NavigationManager NavigationManager
-@implements IAsyncDisposable
-<h3>EEGP</h3>
+
+<TabControl>
+    <TabBody Title="Megaflare Rally">
+        <MegaflareRally />
+    </TabBody>
+    <TabBody Title="Tsunami Open">
+        <TsunamiOpen />
+    </TabBody>
+    <TabBody Title="Zantetsuken Circuit">
+        <ZantetsukenCircuit />
+    </TabBody>
+</TabControl>
 
 @code {
     /* selection of flagset (MR, TO, ZC)
@@ -24,21 +34,5 @@ available flagset)
 
     */
 
-    protected override async Task OnInitializedAsync()
-    {
-        //fetch all the saved notes for each tab
 
-        await base.OnInitializedAsync();
-    }
-    public async ValueTask DisposeAsync()
-    {
-        await SaveDataAsync();
-    }
-
-    public async Task SaveDataAsync()
-    {
-        //get active tab, save data for that tab to local storage
-        var activeTab = "myactive tab";
-        await localStorage.SetItemAsync<string>(activeTab, "");
-    }
 }

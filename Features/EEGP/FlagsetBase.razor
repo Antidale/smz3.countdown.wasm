@@ -1,0 +1,21 @@
+﻿@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+@code {
+    public string StorageKey => GetType().ToString();
+    public string FlagsetNotes { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        FlagsetNotes = await localStorage.GetItemAsStringAsync(StorageKey) ?? "";
+        await base.OnInitializedAsync();
+    }
+    public async ValueTask DisposeAsync()
+    {
+        await SaveDataAsync();
+    }
+
+    public async Task SaveDataAsync()
+    {
+        await localStorage.SetItemAsync<string>(StorageKey, FlagsetNotes);
+    }
+}
