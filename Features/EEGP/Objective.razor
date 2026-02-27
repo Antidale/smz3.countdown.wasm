@@ -1,7 +1,7 @@
 ﻿@using Enums = smz3.countdown.wasm.Enums
 
 <button @onclick="ToggleStrike"
-        class="@strikeThrough @buttonStyle col-3 btn btn-secondary mx-1 fw-bold text-wrap">@DisplayText</button>
+        class="@strikeThrough @buttonStyle btn btn-secondary mx-1 fw-bold text-wrap">@DisplayText</button>
 
 @code {
     @* [Parameter]
@@ -24,6 +24,4 @@
 
     private string SetStrikeThrough() => IsClicked ? "text-decoration-line-through" : string.Empty;
     private string SetButtonStyle() => IsClicked ? "btn-secondary" : "btn-primary";
-
-
 }

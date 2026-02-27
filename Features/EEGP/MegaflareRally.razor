@@ -1,80 +1,114 @@
 ﻿@inherits FlagsetBase
-<br />
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 col-sm-10 mb-5">
-            <h4>Do All</h4>
-            <div class="container">
-                <div class="row">
-                    <Objective DisplayText="Value" />
-                    <Objective DisplayText="Masa" />
-                    <Objective DisplayText="Ribbon" />
-                </div>
-            </div>
+<div class="grid mt-5">
+    <section>
+        <h2 class="h5">Do All</h2>
+        <div class="button-row">
+            <Objective DisplayText="Value" />
+            <Objective DisplayText="Masa" />
+            <Objective DisplayText="Ribbon" />
         </div>
-        <div class="col-md-6 col-sm-10 mb-5">
-            <h4>Do Four <button class="btn btn-sm btn-primary" @onclick="ShowQuestInput">+</button></h4>
-            <div class="container">
-                <div class="row">
-
-                </div>
-            </div>
+    </section>
+    <section>
+        <h2 class="h5">Do Four&nbsp;
+            <button class="btn btn-sm btn-success" onclick="document.getElementById('obj-dialog').showModal()">
+                +
+            </button>
+        </h2>
+        <div class="button-row">
+            @foreach (var obj in questObjectives)
+            {
+                <Objective DisplayText="@obj" />
+            }
         </div>
-        <div class="col-md-6 col-sm-10 mb-5">
-            <h4>XP Bosses
-                <button class="btn btn-sm btn-primary" @onclick="ShowBossInput">+</button>
-            </h4>
-            <div class="container">
-                <div class="row">
-                    <Objective DisplayText="Baham" />
-                    <Objective DisplayText="Wyvern" />
-                </div>
-            </div>
+    </section>
+    <section>
+        <h2 class="h5">XP Bosses
+            <button class="btn btn-sm btn-success"
+                    onclick="document.getElementById('boss-dialog').showModal()">+</button>
+        </h2>
+        <div class="button-row">
+            @foreach (var boss in bossObjectives)
+            {
+                <Objective DisplayText="@boss" />
+            }
         </div>
-        <div class="col-12 mb-5">
-            <h4 class="col-12">Flagset Notes</h4>
-            <p>Kmain/moon/miab:above Balt:gauntlet/whichburn vanilla:miab</p>
+    </section>
+    <section class="full-span">
+        <h2 class="h5">Flagset Notes</h2>
+        <div class="button-row">
+            @foreach (var note in flagsetNotes)
+            {
+                <Objective DisplayText="@note" />
+            }
         </div>
-
-        <div class="col-12 mb-5">
-            <h4 class="col-12">Personal Notes</h4>
-            <p>@personalNotes</p>
-        </div>
-    </div>
+    </section>
+    <section class="full-span">
+        <h2 class="h5">Personal Notes</h2>
+        <p>@personalNotes</p>
+    </section>
 </div>
 
+<dialog id="obj-dialog" @onclose="OnObjClose" @oncancel="OnObjCancel">
+    <form method="dialog">
+        <input type="text" @bind="objEntry" @bind:event="oninput" placeholder="Enter Objective text" />
+        <button>save</button>
+    </form>
+</dialog>
 
-
-
-@* <InputTextArea></InputTextArea> *@
-@* 
-    List static objectives for win:crystal 
-    List 
-    
-*@
+<dialog id="boss-dialog" @onclose="OnBossClose" @oncancel="OnBossCancel">
+    <form method="dialog">
+        <input type="text" @bind="bossEntry" @bind:event="oninput" placeholder="Enter Objective text" />
+        <button>save</button>
+    </form>
+</dialog>
 
 
 @code {
 
-    private string personalNotes = "Don't forget Flamedog";
-    private void ShowBossInput()
-    {
+    private List<string> questObjectives = ["Rat Trade"];
+    private List<string> bossObjectives = ["Bahamut", "Wyvern"];
+    private List<string> flagsetNotes = ["Kmain/moon/miab:above", "Balt:gauntlet/whichburn", "vanilla:miab"];
 
+    private string objEntry = string.Empty;
+    private string bossEntry = string.Empty;
+
+    private string personalNotes = "Don't forget Flamedog";
+    private void OnObjCancel(EventArgs e)
+    {
+        bossEntry = string.Empty;
     }
 
-    private void ShowQuestInput()
+    private void OnObjClose(EventArgs e)
     {
+        questObjectives.Add(objEntry);
+        objEntry = string.Empty;
+    }
 
+    private void OnBossCancel()
+    {
+        bossEntry = string.Empty;
+    }
+
+    private void OnBossClose()
+    {
+        bossObjectives.Add(bossEntry);
+        bossEntry = string.Empty;
+    }
+
+    private void ResetData()
+    {
+        questObjectives = ["Rat Trade"];
+        objEntry = string.Empty;
+
+        bossObjectives = ["Bahamut", "Wyvern"];
+        bossEntry = string.Empty;
     }
 
     /*
         TODO
-        * allow adding boss objectives to list
-        * allow adding to "Do 4" for the quests
-        * have default for rat tail
         * input area for personal notes
           * possibly change to List<string> for that on the base class?
-        * Style flagset notes, probably as something kinda like the buttons
+        * Style dialog
     */
 
 
