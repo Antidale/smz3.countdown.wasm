@@ -1,10 +1,11 @@
 ﻿@inherits FlagsetBase
+
 <PageTitle>Zantetsuken Circuit</PageTitle>
 <div class="grid mt-5">
     <section>
         <h2 class="h3">3 Points
             <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
-                    onclick="document.getElementById('three-point-dialog').showModal()" />
+                    @onclick="() => ShowModalById(threePointId)" />
 
         </h2>
         <div class="button-row flex-wrap">
@@ -17,7 +18,7 @@
     <section>
         <h2 class="h3">5 Points
             <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
-                    onclick="document.getElementById('five-point-dialog').showModal()" />
+                    @onclick="() => ShowModalById(fivePointId)" />
 
         </h2>
         <div class="button-row flex-wrap">
@@ -30,7 +31,7 @@
     <section>
         <h2 class="h3">7 Points
             <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
-                    onclick="document.getElementById('seven-point-dialog').showModal()" />
+                    @onclick="() => ShowModalById(sevenPointId)" />
 
         </h2>
         <div class="button-row flex-wrap">
@@ -51,20 +52,19 @@
         <h2 class="h3">
             Notes
             <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
-                    onclick="document.getElementById('note-dialog').showModal()" />
+                    @onclick="() => ShowModalById(noteDialogId)" />
             <button class="btn btn-info btn-plus btn-sm nf oi nf-fa-edit mb-2 pb-1"
-                    onclick="document.getElementById('edit-note-dialog').showModal()" />
+                    @onclick="() => ShowModalById(editId)" />
         </h2>
         <ObjectiveList ObjectivesList="@PersonalNotes" />
     </section>
 </div>
 
-<Dialog ModalId="@threePointId" OnObjectiveUpdated="HandleListUpdated" />
-<Dialog ModalId="@fivePointId" OnObjectiveUpdated="HandleListUpdated" />
-<Dialog ModalId="@sevenPointId" OnObjectiveUpdated="HandleListUpdated" />
-<Dialog ModalId="@noteDialogId" OnObjectiveUpdated="HandleListUpdated" />
-<EditDialog ModalId="@editNoteDialogId" OnListUpdated="HandleListEdit" Notes="PersonalNotes" />
-
+<Dialog ModalId="@threePointId" OnObjectiveUpdated="HandleItemAdded" />
+<Dialog ModalId="@fivePointId" OnObjectiveUpdated="HandleItemAdded" />
+<Dialog ModalId="@sevenPointId" OnObjectiveUpdated="HandleItemAdded" />
+<Dialog ModalId="@noteDialogId" OnObjectiveUpdated="HandleItemAdded" />
+<EditDialog ModalId="@editId" Notes="PersonalNotes" OnListUpdated="HandleItemRemoved" />
 
 @code {
     private int DarkMatter = 0;
@@ -74,15 +74,13 @@
     const string threePointId = "three-point-dialog";
     const string fivePointId = "five-point-dialog";
     const string sevenPointId = "seven-point-dialog";
-    const string noteDialogId = "note-dialog";
-    const string editNoteDialogId = "edit-note-dialog";
 
     public void HandleObjectiveCompleted(int points)
     {
         DarkMatter += points;
     }
 
-    public async Task HandleListUpdated(KeyValuePair<string, string> data)
+    public async Task HandleItemAdded(KeyValuePair<string, string> data)
     {
         switch (data.Key)
         {
@@ -103,9 +101,4 @@
         await SaveDataAsync();
     }
 
-    private async Task HandleListEdit(List<string> args)
-    {
-        PersonalNotes = args;
-        await SaveDataAsync();
-    }
 }
