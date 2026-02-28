@@ -2,7 +2,7 @@
 <PageTitle>Meganuke Rally</PageTitle>
 <div class="grid mt-5">
     <section>
-        <h2 class="h5">Do All</h2>
+        <h2 class="h3">Do All</h2>
         <div class="button-row">
             <Objective DisplayText="Value" />
             <Objective DisplayText="Masa" />
@@ -10,10 +10,10 @@
         </div>
     </section>
     <section>
-        <h2 class="h5">Do Four&nbsp;
-            <button class="btn btn-sm btn-success" onclick="document.getElementById('obj-dialog').showModal()">
-                +
-            </button>
+        <h2 class="h3">Do Four&nbsp;
+            <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
+                    onclick="document.getElementById('obj-dialog').showModal()" />
+
         </h2>
         <div class="button-row">
             @foreach (var obj in questObjectives)
@@ -23,9 +23,9 @@
         </div>
     </section>
     <section>
-        <h2 class="h5">XP Bosses
-            <button class="btn btn-sm btn-success"
-                    onclick="document.getElementById('boss-dialog').showModal()">+</button>
+        <h2 class="h3">XP Bosses
+            <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
+                    onclick="document.getElementById('boss-dialog').showModal()"></button>
         </h2>
         <div class="button-row">
             @foreach (var boss in bossObjectives)
@@ -35,7 +35,7 @@
         </div>
     </section>
     <section class="full-span">
-        <h2 class="h5">Flagset Notes</h2>
+        <h2 class="h3">Flagset Notes</h2>
         <div class="button-row">
             @foreach (var note in flagsetNotes)
             {
@@ -44,11 +44,10 @@
         </div>
     </section>
     <section class="full-span">
-        <h2 class="h5">
+        <h2 class="h3">
             Personal Notes
-            <button class="btn btn-sm btn-success" onclick="document.getElementById('note-dialog').showModal()">+
-            </button>
-
+            <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
+                    onclick="document.getElementById('note-dialog').showModal()" />
         </h2>
         <div class="button-row">
             @foreach (var note in PersonalNotes)
