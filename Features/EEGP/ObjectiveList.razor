@@ -1,0 +1,12 @@
+﻿<div class="button-row flex-wrap">
+    @foreach (var obj in ObjectivesList)
+    {
+        <Objective DisplayText="@obj" />
+    }
+</div>
+
+@code {
+    [Parameter]
+    public List<string> ObjectivesList { get; set; } = new();
+
+}

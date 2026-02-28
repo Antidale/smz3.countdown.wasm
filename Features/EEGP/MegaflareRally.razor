@@ -10,51 +10,29 @@
         </div>
     </section>
     <section>
-        <h2 class="h3">Do Four&nbsp;
+        <h2 class="h3">Do Four
             <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
                     onclick="document.getElementById('obj-dialog').showModal()" />
 
         </h2>
-        <div class="button-row">
-            @foreach (var obj in questObjectives)
-            {
-                <Objective DisplayText="@obj" />
-            }
-        </div>
+        <ObjectiveList ObjectivesList="@questObjectives" />
     </section>
     <section>
         <h2 class="h3">XP Bosses
             <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
                     onclick="document.getElementById('boss-dialog').showModal()"></button>
         </h2>
-        <div class="button-row">
-            @foreach (var boss in bossObjectives)
-            {
-                <Objective DisplayText="@boss" />
-            }
-        </div>
-    </section>
-    <section class="full-span">
-        <h2 class="h3">Flagset Notes</h2>
-        <div class="button-row">
-            @foreach (var note in flagsetNotes)
-            {
-                <Objective DisplayText="@note" />
-            }
+        <div class="button-row flex-wrap">
+            <ObjectiveList ObjectivesList="@bossObjectives" />
         </div>
     </section>
     <section class="full-span">
         <h2 class="h3">
-            Personal Notes
+            Notes
             <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
                     onclick="document.getElementById('note-dialog').showModal()" />
         </h2>
-        <div class="button-row">
-            @foreach (var note in PersonalNotes)
-            {
-                <Objective DisplayText="@note" />
-            }
-        </div>
+        <ObjectiveList ObjectivesList="@PersonalNotes" />
     </section>
 </div>
 
