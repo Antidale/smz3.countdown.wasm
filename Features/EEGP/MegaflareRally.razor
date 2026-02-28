@@ -38,60 +38,10 @@
     </section>
 </div>
 
-<dialog id="obj-dialog" @onclose="OnObjClose" @oncancel="OnCancel" closedby="any">
-    <form method="dialog">
-        <input type="text" @bind="noteEntry" @bind:event="oninput" placeholder="Objective description" />
-        <div class="button-row mt-2">
-            <button class="btn btn-small btn-success">save</button>
-            <button class="btn btn-small btn-outline-danger">cancel</button>
-        </div>
-    </form>
-</dialog>
-
-<dialog id="boss-dialog" @onclose="OnBossClose" @oncancel="OnCancel" closedby="any">
-    <form method="dialog">
-        <input type="text" @bind="noteEntry" @bind:event="oninput" placeholder="Boss name" />
-        <div class="button-row mt-2">
-            <button class="btn btn-small btn-success">save</button>
-            <button class="btn btn-small btn-outline-danger">cancel</button>
-        </div>
-    </form>
-</dialog>
-
-<dialog id="note-dialog" @onclose="OnNoteClose" @oncancel="OnCancel" closedby="any">
-    <form method="dialog">
-        <p>Add your note:</p>
-        <input type="text" @bind="noteEntry" @bind:event="oninput" placeholder="Enter note" class="form-control" />
-        <div class="button-row mt-2">
-            <button class="btn btn-small btn-success">save</button>
-            <button class="btn btn-small btn-outline-danger">cancel</button>
-        </div>
-    </form>
-</dialog>
-
-<dialog id="edit-note-dialog" @onclose="OnEditNoteClose" @oncancel="OnEditNoteCancel" closedby="any">
-    <form method="dialog">
-        @if (PersonalNotes.Count > 0)
-        {
-            <h3 class="h5">Click Trash to remove note</h3>
-            <div class="grid">
-                @foreach (var note in PersonalNotes)
-                {
-                    <p class="my-2">@note</p>
-                    <button class="btn btn-danger btn-sm nf oi nf-cod-trash mx-4 my-2" @onclick="() => RemoveNote(note)"
-                            @onclick:preventDefault="true" />
-                }
-            </div>
-            <button class="btn btn-small btn-outline-primary mt-5">Close</button>
-        }
-        else
-        {
-            <p>No notes to remove</p>
-            <button class="btn btn-small btn-outline-primary">Close</button>
-        }
-    </form>
-</dialog>
-
+<Dialog ModalId="obj-dialog" OnObjectiveUpdated="HandleItemAdded" />
+<Dialog ModalId="boss-dialog" OnObjectiveUpdated="HandleItemAdded" />
+<Dialog ModalId="note-dialog" OnObjectiveUpdated="HandleItemAdded" />
+<EditDialog ModalId="edit-note-dialog" Notes="PersonalNotes" OnListUpdated="HandleItemRemoved" />
 
 @code {
 
@@ -100,51 +50,27 @@
     private List<string> flagsetNotes = ["Kmain/moon/miab:above", "Balt:gauntlet/whichburn", "vanilla:miab"];
     private string noteEntry = string.Empty;
 
-    private void OnObjClose(EventArgs e)
+    public async Task HandleItemAdded(KeyValuePair<string, string> args)
     {
-        if (string.IsNullOrWhiteSpace(noteEntry))
+        switch (args.Key)
         {
-            return;
+            case "obj-dialog":
+                questObjectives.Add(args.Value);
+                break;
+            case "boss-dialog":
+                bossObjectives.Add(args.Value);
+                break;
+            case "note-dialog":
+                PersonalNotes.Add(args.Value);
+                break;
         }
-        questObjectives.Add(noteEntry);
-        noteEntry = string.Empty;
-    }
 
-    private void OnCancel()
-    {
-        noteEntry = string.Empty;
-    }
-
-    private void OnBossClose()
-    {
-        if (string.IsNullOrWhiteSpace(noteEntry))
-        {
-            return;
-        }
-        bossObjectives.Add(noteEntry);
-        noteEntry = string.Empty;
-    }
-
-    private async Task OnNoteClose()
-    {
-        if (string.IsNullOrWhiteSpace(noteEntry))
-        {
-            return;
-        }
-        PersonalNotes.Add(noteEntry);
-        await SaveDataAsync();
-        noteEntry = string.Empty;
-    }
-
-    private void OnEditNoteCancel() { /* no-op */ }
-
-    private async Task OnEditNoteClose()
-    {
         await SaveDataAsync();
     }
 
-    private async Task RemoveNote(string note)
+    public async Task HandleItemRemoved(List<string> args)
     {
-        PersonalNotes.Remove(note);
+        PersonalNotes = args;
+        await SaveDataAsync();
     }
 }
