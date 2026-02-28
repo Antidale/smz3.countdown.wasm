@@ -1,4 +1,5 @@
 ﻿@inherits FlagsetBase
+<PageTitle>Meganuke Rally</PageTitle>
 <div class="grid mt-5">
     <section>
         <h2 class="h5">Do All</h2>
@@ -43,22 +44,50 @@
         </div>
     </section>
     <section class="full-span">
-        <h2 class="h5">Personal Notes</h2>
-        <p>@personalNotes</p>
+        <h2 class="h5">
+            Personal Notes
+            <button class="btn btn-sm btn-success" onclick="document.getElementById('note-dialog').showModal()">+
+            </button>
+
+        </h2>
+        <div class="button-row">
+            @foreach (var note in PersonalNotes)
+            {
+                <Objective DisplayText="@note" />
+            }
+        </div>
     </section>
 </div>
 
-<dialog id="obj-dialog" @onclose="OnObjClose" @oncancel="OnObjCancel">
+<dialog id="obj-dialog" @onclose="OnObjClose" @oncancel="OnObjCancel" closedby="any">
     <form method="dialog">
-        <input type="text" @bind="objEntry" @bind:event="oninput" placeholder="Enter Objective text" />
-        <button>save</button>
+        <input type="text" @bind="objEntry" @bind:event="oninput" placeholder="Objective description" />
+        <div class="button-row mt-2">
+            <button class="btn btn-small btn-success">save</button>
+            <button class="btn btn-small btn-outline-danger">cancel</button>
+        </div>
     </form>
 </dialog>
 
-<dialog id="boss-dialog" @onclose="OnBossClose" @oncancel="OnBossCancel">
+<dialog id="boss-dialog" @onclose="OnBossClose" @oncancel="OnBossCancel" closedby="any">
     <form method="dialog">
-        <input type="text" @bind="bossEntry" @bind:event="oninput" placeholder="Enter Objective text" />
-        <button>save</button>
+        <input type="text" @bind="bossEntry" @bind:event="oninput" placeholder="Boss name" />
+        <div class="button-row mt-2">
+            <button class="btn btn-small btn-success">save</button>
+            <button class="btn btn-small btn-outline-danger">cancel</button>
+        </div>
+    </form>
+</dialog>
+
+<dialog id="note-dialog" @onclose="OnNoteClose" @oncancel="OnNoteCancel" closedby="any">
+    <form method="dialog">
+        <p>Add your note:</p>
+        <input type="text" @bind="noteEntry" @bind:event="oninput" placeholder="Enter note" class="form-control" />
+        <div class="button-row mt-2">
+            <button class="btn btn-small btn-success">save</button>
+            <button class="btn btn-small btn-outline-danger">cancel</button>
+        </div>
+
     </form>
 </dialog>
 
@@ -71,8 +100,8 @@
 
     private string objEntry = string.Empty;
     private string bossEntry = string.Empty;
+    private string noteEntry = string.Empty;
 
-    private string personalNotes = "Don't forget Flamedog";
     private void OnObjCancel(EventArgs e)
     {
         bossEntry = string.Empty;
@@ -80,6 +109,10 @@
 
     private void OnObjClose(EventArgs e)
     {
+        if (string.IsNullOrWhiteSpace(objEntry))
+        {
+            return;
+        }
         questObjectives.Add(objEntry);
         objEntry = string.Empty;
     }
@@ -91,8 +124,28 @@
 
     private void OnBossClose()
     {
+        if (string.IsNullOrWhiteSpace(bossEntry))
+        {
+            return;
+        }
         bossObjectives.Add(bossEntry);
         bossEntry = string.Empty;
+    }
+
+    private void OnNoteCancel()
+    {
+        noteEntry = string.Empty;
+    }
+
+    private async Task OnNoteClose()
+    {
+        if (string.IsNullOrWhiteSpace(noteEntry))
+        {
+            return;
+        }
+        PersonalNotes.Add(noteEntry);
+        await SaveDataAsync();
+        noteEntry = string.Empty;
     }
 
     private void ResetData()
@@ -105,11 +158,15 @@
     }
 
     /*
+
         TODO
-        * input area for personal notes
-          * possibly change to List<string> for that on the base class?
-        * Style dialog
+        * Allow editing of Personal notes
+
+        the below items aren't a huge deal and can be done after finishing the other tabs
+        * Think about just having personal notes and not generalized flagset notes
+        * Style dialog better
+        * dialog component? adding in personal notes, that'll be three different dialogs and attendent methods all here, which
+does not feel great.
+        * fix alignment with + buttons on those rows
     */
-
-
 }
