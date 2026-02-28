@@ -59,46 +59,10 @@
     </section>
 </div>
 
-<dialog id="three-point-dialog" @onclose="OnThreeClose" @oncancel="OnCancel" closedby="any">
-    <form method="dialog">
-        <input type="text" @bind="noteEntry" @bind:event="oninput" placeholder="Objective description" />
-        <div class="button-row mt-2">
-            <button class="btn btn-small btn-success">save</button>
-            <button class="btn btn-small btn-outline-danger">cancel</button>
-        </div>
-    </form>
-</dialog>
-
-<dialog id="five-point-dialog" @onclose="OnFiveClose" @oncancel="OnCancel" closedby="any">
-    <form method="dialog">
-        <input type="text" @bind="noteEntry" @bind:event="oninput" placeholder="Objective description" />
-        <div class="button-row mt-2">
-            <button class="btn btn-small btn-success">save</button>
-            <button class="btn btn-small btn-outline-danger">cancel</button>
-        </div>
-    </form>
-</dialog>
-
-<dialog id="seven-point-dialog" @onclose="OnSevenClose" @oncancel="OnCancel" closedby="any">
-    <form method="dialog">
-        <input type="text" @bind="noteEntry" @bind:event="oninput" placeholder="Objective description" />
-        <div class="button-row mt-2">
-            <button class="btn btn-small btn-success">save</button>
-            <button class="btn btn-small btn-outline-danger">cancel</button>
-        </div>
-    </form>
-</dialog>
-
-<dialog id="note-dialog" @onclose="OnNoteClose" @oncancel="OnCancel" closedby="any">
-    <form method="dialog">
-        <p>Add your note:</p>
-        <input type="text" @bind="noteEntry" @bind:event="oninput" placeholder="Enter note" class="form-control" />
-        <div class="button-row mt-2">
-            <button class="btn btn-small btn-success">save</button>
-            <button class="btn btn-small btn-outline-danger">cancel</button>
-        </div>
-    </form>
-</dialog>
+<Dialog ModalId="@threePointId" OnObjectiveUpdated="HandleListUpdated" />
+<Dialog ModalId="@fivePointId" OnObjectiveUpdated="HandleListUpdated" />
+<Dialog ModalId="@sevenPointId" OnObjectiveUpdated="HandleListUpdated" />
+<Dialog ModalId="@noteDialogId" OnObjectiveUpdated="HandleListUpdated" />
 
 <dialog id="edit-note-dialog" @onclose="OnEditNoteClose" @oncancel="OnCancel" closedby="any">
     <form method="dialog">
@@ -129,25 +93,36 @@
     private List<string> threePointObjs = ["Odin", "Golbez"];
     private List<string> fivePointObjs = ["Forge", "Trade Pink", "Odin Spot"];
     private List<string> sevenPointObjs = ["Falcon Launch", "Mura Altar"];
+    const string threePointId = "three-point-dialog";
+    const string fivePointId = "five-point-dialog";
+    const string sevenPointId = "seven-point-dialog";
+    const string noteDialogId = "note-dialog";
+    const string editNoteDialogId = "edit-note-dialog";
+
     public void HandleObjectiveCompleted(int points)
     {
         DarkMatter += points;
     }
 
-    private void OnNoteCancel()
+    public async Task HandleListUpdated(KeyValuePair<string, string> data)
     {
-        noteEntry = string.Empty;
-    }
-
-    private async Task OnNoteClose()
-    {
-        if (string.IsNullOrWhiteSpace(noteEntry))
+        switch (data.Key)
         {
-            return;
+            case threePointId:
+                threePointObjs.Add(data.Value);
+                break;
+            case fivePointId:
+                fivePointObjs.Add(data.Value);
+                break;
+            case sevenPointId:
+                sevenPointObjs.Add(data.Value);
+                break;
+            case noteDialogId:
+                PersonalNotes.Add(data.Value);
+                break;
         }
-        PersonalNotes.Add(noteEntry);
+
         await SaveDataAsync();
-        noteEntry = string.Empty;
     }
 
     private void OnCancel()
@@ -163,39 +138,5 @@
     private async Task RemoveNote(string note)
     {
         PersonalNotes.Remove(note);
-    }
-
-    private async Task OnThreeClose()
-    {
-        if (string.IsNullOrWhiteSpace(noteEntry))
-        {
-            return;
-        }
-        threePointObjs.Add(noteEntry);
-        await SaveDataAsync();
-        noteEntry = string.Empty;
-    }
-
-    private async Task OnFiveClose()
-    {
-        if (string.IsNullOrWhiteSpace(noteEntry))
-        {
-            return;
-        }
-        fivePointObjs.Add(noteEntry);
-        await SaveDataAsync();
-        noteEntry = string.Empty;
-    }
-
-
-    private async Task OnSevenClose()
-    {
-        if (string.IsNullOrWhiteSpace(noteEntry))
-        {
-            return;
-        }
-        sevenPointObjs.Add(noteEntry);
-        await SaveDataAsync();
-        noteEntry = string.Empty;
     }
 }
