@@ -1,6 +1,6 @@
 ﻿@using Enums = smz3.countdown.wasm.Enums
 
-<button @onclick="() => ToggleStrike(Points)"
+<button @onclick="() => UpdateComponent(Points)"
         class="@strikeThrough @buttonStyle btn mx-1 fw-bold text-wrap">@DisplayText</button>
 
 @code {
@@ -17,7 +17,7 @@
     private string buttonStyle = "btn-primary";
     private string strikeThrough = "";
 
-    private void ToggleStrike(int points = 0)
+    private void UpdateComponent(int points = 0)
     {
         IsClicked = !IsClicked;
         buttonStyle = SetButtonStyle();
