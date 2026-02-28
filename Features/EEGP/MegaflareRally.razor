@@ -31,6 +31,8 @@
             Notes
             <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
                     onclick="document.getElementById('note-dialog').showModal()" />
+            <button class="btn btn-info btn-plus btn-sm nf oi nf-fa-edit mb-2 pb-1"
+                    onclick="document.getElementById('edit-note-dialog').showModal()"></button>
         </h2>
         <ObjectiveList ObjectivesList="@PersonalNotes" />
     </section>
@@ -64,7 +66,31 @@
             <button class="btn btn-small btn-success">save</button>
             <button class="btn btn-small btn-outline-danger">cancel</button>
         </div>
+    </form>
+</dialog>
 
+<dialog id="edit-note-dialog" @onclose="OnEditNoteClose" @oncancel="OnEditNoteCancel" closedby="any">
+    <form method="dialog">
+        @if (PersonalNotes.Count > 0)
+        {
+            @foreach (var note in PersonalNotes)
+            {
+                <h3 class="h5">Click Trash to remove note</h3>
+                <div class="grid">
+                    <p>@note</p>
+                    <button class="btn btn-danger btn-sm nf oi nf-cod-trash mx-4" @onclick="() => RemoveNote(note)"
+                            @onclick:preventDefault="true" />
+                </div>
+
+            }
+
+            <button class="btn btn-small btn-outline-primary mt-5">Close</button>
+        }
+        else
+        {
+            <p>No notes to remove</p>
+            <button class="btn btn-small btn-outline-primary">Close</button>
+        }
     </form>
 </dialog>
 
@@ -134,16 +160,26 @@
         bossEntry = string.Empty;
     }
 
+    private void OnEditNoteCancel() { /* no-op */ }
+
+    private async Task OnEditNoteClose()
+    {
+        await SaveDataAsync();
+    }
+
+    private async Task RemoveNote(string note)
+    {
+        PersonalNotes.Remove(note);
+    }
+
     /*
 
         TODO
         * Allow editing of Personal notes
 
         the below items aren't a huge deal and can be done after finishing the other tabs
-        * Think about just having personal notes and not generalized flagset notes
         * Style dialog better
         * dialog component? adding in personal notes, that'll be three different dialogs and attendent methods all here, which
 does not feel great.
-        * fix alignment with + buttons on those rows
     */
 }
