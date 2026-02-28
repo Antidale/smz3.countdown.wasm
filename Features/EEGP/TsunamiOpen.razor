@@ -42,18 +42,14 @@
 
     </section>
     <section class="full-span">
-        <h2 class="h5">
-            Personal Notes
-            <button class="btn btn-sm btn-success" onclick="document.getElementById('note-dialog').showModal()">+
-            </button>
-
+        <h2 class="h3">
+            Notes
+            <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
+                    onclick="document.getElementById('note-dialog').showModal()" />
+            <button class="btn btn-info btn-plus btn-sm nf oi nf-fa-edit mb-2 pb-1"
+                    onclick="document.getElementById('edit-note-dialog').showModal()" />
         </h2>
-        <div class="button-row">
-            @foreach (var note in PersonalNotes)
-            {
-                <Objective DisplayText="@note" />
-            }
-        </div>
+        <ObjectiveList ObjectivesList="@PersonalNotes" />
     </section>
 </div>
 
@@ -66,6 +62,29 @@
             <button class="btn btn-small btn-lg btn-outline-danger">cancel</button>
         </div>
 
+    </form>
+</dialog>
+
+<dialog id="edit-note-dialog" @onclose="OnEditNoteClose" @oncancel="OnCancel" closedby="any">
+    <form method="dialog">
+        @if (PersonalNotes.Count > 0)
+        {
+            <h3 class="h5">Click Trash to remove note</h3>
+            <div class="grid">
+                @foreach (var note in PersonalNotes)
+                {
+                    <p class="my-2">@note</p>
+                    <button class="btn btn-danger btn-sm nf oi nf-cod-trash mx-4 my-2" @onclick="() => RemoveNote(note)"
+                            @onclick:preventDefault="true" />
+                }
+            </div>
+            <button class="btn btn-small btn-outline-primary mt-5">Close</button>
+        }
+        else
+        {
+            <p>No notes to remove</p>
+            <button class="btn btn-small btn-outline-primary">Close</button>
+        }
     </form>
 </dialog>
 
@@ -98,6 +117,21 @@
         PersonalNotes.Add(noteEntry);
         await SaveDataAsync();
         noteEntry = string.Empty;
+    }
+
+    private void OnCancel()
+    {
+        noteEntry = string.Empty;
+    }
+
+    private async Task OnEditNoteClose()
+    {
+        await SaveDataAsync();
+    }
+
+    private async Task RemoveNote(string note)
+    {
+        PersonalNotes.Remove(note);
     }
     //boss counter
     //ki counter (?) possibly/probaly not?

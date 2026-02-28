@@ -104,17 +104,15 @@
     <form method="dialog">
         @if (PersonalNotes.Count > 0)
         {
-            @foreach (var note in PersonalNotes)
-            {
-                <h3 class="h5">Click Trash to remove note</h3>
-                <div class="grid">
-                    <p>@note</p>
-                    <button class="btn btn-danger btn-sm nf oi nf-cod-trash mx-4" @onclick="() => RemoveNote(note)"
+            <h3 class="h5">Click Trash to remove note</h3>
+            <div class="grid">
+                @foreach (var note in PersonalNotes)
+                {
+                    <p class="my-2">@note</p>
+                    <button class="btn btn-danger btn-sm nf oi nf-cod-trash mx-4 my-2" @onclick="() => RemoveNote(note)"
                             @onclick:preventDefault="true" />
-                </div>
-
-            }
-
+                }
+            </div>
             <button class="btn btn-small btn-outline-primary mt-5">Close</button>
         }
         else
