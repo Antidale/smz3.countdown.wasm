@@ -63,29 +63,8 @@
 <Dialog ModalId="@fivePointId" OnObjectiveUpdated="HandleListUpdated" />
 <Dialog ModalId="@sevenPointId" OnObjectiveUpdated="HandleListUpdated" />
 <Dialog ModalId="@noteDialogId" OnObjectiveUpdated="HandleListUpdated" />
+<EditDialog ModalId="@editNoteDialogId" OnListUpdated="HandleListEdit" Notes="PersonalNotes" />
 
-<dialog id="edit-note-dialog" @onclose="OnEditNoteClose" @oncancel="OnCancel" closedby="any">
-    <form method="dialog">
-        @if (PersonalNotes.Count > 0)
-        {
-            <h3 class="h5">Click Trash to remove note</h3>
-            <div class="grid">
-                @foreach (var note in PersonalNotes)
-                {
-                    <p class="my-2">@note</p>
-                    <button class="btn btn-danger btn-sm nf oi nf-cod-trash mx-4 my-2" @onclick="() => RemoveNote(note)"
-                            @onclick:preventDefault="true" />
-                }
-            </div>
-            <button class="btn btn-small btn-outline-primary mt-5">Close</button>
-        }
-        else
-        {
-            <p>No notes to remove</p>
-            <button class="btn btn-small btn-outline-primary">Close</button>
-        }
-    </form>
-</dialog>
 
 @code {
     private int DarkMatter = 0;
@@ -124,17 +103,9 @@
         await SaveDataAsync();
     }
 
-    private void OnCancel()
+    private async Task HandleListEdit(List<string> args)
     {
-    }
-
-    private async Task OnEditNoteClose()
-    {
+        PersonalNotes = args;
         await SaveDataAsync();
-    }
-
-    private async Task RemoveNote(string note)
-    {
-        PersonalNotes.Remove(note);
     }
 }
