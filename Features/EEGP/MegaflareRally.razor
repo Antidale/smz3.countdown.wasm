@@ -1,4 +1,5 @@
 ﻿@inherits FlagsetBase
+
 <PageTitle>Meganuke Rally</PageTitle>
 <div class="grid mt-5">
     <section>
@@ -30,9 +31,9 @@
         <h2 class="h3">
             Notes
             <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
-                    onclick="document.getElementById('note-dialog').showModal()" />
+                    @onclick="() => ShowModalById(noteDialogId)" />
             <button class="btn btn-info btn-plus btn-sm nf oi nf-fa-edit mb-2 pb-1"
-                    onclick="document.getElementById('edit-note-dialog').showModal()"></button>
+                    @onclick="() => ShowModalById(editId)" />
         </h2>
         <ObjectiveList ObjectivesList="@PersonalNotes" />
     </section>
@@ -40,15 +41,13 @@
 
 <Dialog ModalId="obj-dialog" OnObjectiveUpdated="HandleItemAdded" />
 <Dialog ModalId="boss-dialog" OnObjectiveUpdated="HandleItemAdded" />
-<Dialog ModalId="note-dialog" OnObjectiveUpdated="HandleItemAdded" />
-<EditDialog ModalId="edit-note-dialog" Notes="PersonalNotes" OnListUpdated="HandleItemRemoved" />
+<Dialog ModalId="@noteDialogId" OnObjectiveUpdated="HandleItemAdded" />
+<EditDialog ModalId="@editId" Notes="PersonalNotes" OnListUpdated="HandleItemRemoved" />
 
 @code {
 
     private List<string> questObjectives = ["Rat Trade"];
     private List<string> bossObjectives = ["Bahamut", "Wyvern"];
-    private List<string> flagsetNotes = ["Kmain/moon/miab:above", "Balt:gauntlet/whichburn", "vanilla:miab"];
-    private string noteEntry = string.Empty;
 
     public async Task HandleItemAdded(KeyValuePair<string, string> args)
     {
@@ -68,9 +67,4 @@
         await SaveDataAsync();
     }
 
-    public async Task HandleItemRemoved(List<string> args)
-    {
-        PersonalNotes = args;
-        await SaveDataAsync();
-    }
 }
