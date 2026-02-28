@@ -38,9 +38,9 @@
     </section>
 </div>
 
-<dialog id="obj-dialog" @onclose="OnObjClose" @oncancel="OnObjCancel" closedby="any">
+<dialog id="obj-dialog" @onclose="OnObjClose" @oncancel="OnCancel" closedby="any">
     <form method="dialog">
-        <input type="text" @bind="objEntry" @bind:event="oninput" placeholder="Objective description" />
+        <input type="text" @bind="noteEntry" @bind:event="oninput" placeholder="Objective description" />
         <div class="button-row mt-2">
             <button class="btn btn-small btn-success">save</button>
             <button class="btn btn-small btn-outline-danger">cancel</button>
@@ -48,9 +48,9 @@
     </form>
 </dialog>
 
-<dialog id="boss-dialog" @onclose="OnBossClose" @oncancel="OnBossCancel" closedby="any">
+<dialog id="boss-dialog" @onclose="OnBossClose" @oncancel="OnCancel" closedby="any">
     <form method="dialog">
-        <input type="text" @bind="bossEntry" @bind:event="oninput" placeholder="Boss name" />
+        <input type="text" @bind="noteEntry" @bind:event="oninput" placeholder="Boss name" />
         <div class="button-row mt-2">
             <button class="btn btn-small btn-success">save</button>
             <button class="btn btn-small btn-outline-danger">cancel</button>
@@ -58,7 +58,7 @@
     </form>
 </dialog>
 
-<dialog id="note-dialog" @onclose="OnNoteClose" @oncancel="OnNoteCancel" closedby="any">
+<dialog id="note-dialog" @onclose="OnNoteClose" @oncancel="OnCancel" closedby="any">
     <form method="dialog">
         <p>Add your note:</p>
         <input type="text" @bind="noteEntry" @bind:event="oninput" placeholder="Enter note" class="form-control" />
@@ -98,43 +98,30 @@
     private List<string> questObjectives = ["Rat Trade"];
     private List<string> bossObjectives = ["Bahamut", "Wyvern"];
     private List<string> flagsetNotes = ["Kmain/moon/miab:above", "Balt:gauntlet/whichburn", "vanilla:miab"];
-
-    private string objEntry = string.Empty;
-    private string bossEntry = string.Empty;
     private string noteEntry = string.Empty;
-
-    private void OnObjCancel(EventArgs e)
-    {
-        bossEntry = string.Empty;
-    }
 
     private void OnObjClose(EventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(objEntry))
+        if (string.IsNullOrWhiteSpace(noteEntry))
         {
             return;
         }
-        questObjectives.Add(objEntry);
-        objEntry = string.Empty;
+        questObjectives.Add(noteEntry);
+        noteEntry = string.Empty;
     }
 
-    private void OnBossCancel()
+    private void OnCancel()
     {
-        bossEntry = string.Empty;
+        noteEntry = string.Empty;
     }
 
     private void OnBossClose()
     {
-        if (string.IsNullOrWhiteSpace(bossEntry))
+        if (string.IsNullOrWhiteSpace(noteEntry))
         {
             return;
         }
-        bossObjectives.Add(bossEntry);
-        bossEntry = string.Empty;
-    }
-
-    private void OnNoteCancel()
-    {
+        bossObjectives.Add(noteEntry);
         noteEntry = string.Empty;
     }
 
@@ -147,15 +134,6 @@
         PersonalNotes.Add(noteEntry);
         await SaveDataAsync();
         noteEntry = string.Empty;
-    }
-
-    private void ResetData()
-    {
-        questObjectives = ["Rat Trade"];
-        objEntry = string.Empty;
-
-        bossObjectives = ["Bahamut", "Wyvern"];
-        bossEntry = string.Empty;
     }
 
     private void OnEditNoteCancel() { /* no-op */ }
