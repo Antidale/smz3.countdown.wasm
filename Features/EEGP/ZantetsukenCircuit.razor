@@ -1,6 +1,206 @@
 ﻿@inherits FlagsetBase
+<PageTitle>Zantetsuken Circuit</PageTitle>
+<div class="grid mt-5">
+    <section>
+        <h2 class="h3">3 Points
+            <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
+                    onclick="document.getElementById('three-point-dialog').showModal()" />
+
+        </h2>
+        <div class="button-row flex-wrap">
+            @foreach (var obj in threePointObjs)
+            {
+                <Objective DisplayText="@obj" Points="3" OnObjectiveUpdated="HandleObjectiveCompleted" />
+            }
+        </div>
+    </section>
+    <section>
+        <h2 class="h3">5 Points
+            <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
+                    onclick="document.getElementById('five-point-dialog').showModal()" />
+
+        </h2>
+        <div class="button-row flex-wrap">
+            @foreach (var obj in fivePointObjs)
+            {
+                <Objective DisplayText="@obj" Points="5" OnObjectiveUpdated="HandleObjectiveCompleted" />
+            }
+        </div>
+    </section>
+    <section>
+        <h2 class="h3">7 Points
+            <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
+                    onclick="document.getElementById('seven-point-dialog').showModal()" />
+
+        </h2>
+        <div class="button-row flex-wrap">
+            @foreach (var obj in sevenPointObjs)
+            {
+                <Objective DisplayText="@obj" Points="7" OnObjectiveUpdated="HandleObjectiveCompleted" />
+            }
+        </div>
+    </section>
+    <section>
+        <h2 class="h3">10 Points</h2>
+        <Objective DisplayText="Giant" Points="10" OnObjectiveUpdated="HandleObjectiveCompleted" />
+    </section>
+    <section>
+        <h2 class="h1">Dark Matter: @DarkMatter </h2>
+    </section>
+    <section class="full-span">
+        <h2 class="h3">
+            Notes
+            <button class="btn btn-success btn-plus btn-sm nf oi nf-fa-plus mb-2 pb-1"
+                    onclick="document.getElementById('note-dialog').showModal()" />
+            <button class="btn btn-info btn-plus btn-sm nf oi nf-fa-edit mb-2 pb-1"
+                    onclick="document.getElementById('edit-note-dialog').showModal()" />
+        </h2>
+        <ObjectiveList ObjectivesList="@PersonalNotes" />
+    </section>
+</div>
+
+<dialog id="three-point-dialog" @onclose="OnThreeClose" @oncancel="OnCancel" closedby="any">
+    <form method="dialog">
+        <input type="text" @bind="noteEntry" @bind:event="oninput" placeholder="Objective description" />
+        <div class="button-row mt-2">
+            <button class="btn btn-small btn-success">save</button>
+            <button class="btn btn-small btn-outline-danger">cancel</button>
+        </div>
+    </form>
+</dialog>
+
+<dialog id="five-point-dialog" @onclose="OnFiveClose" @oncancel="OnCancel" closedby="any">
+    <form method="dialog">
+        <input type="text" @bind="noteEntry" @bind:event="oninput" placeholder="Objective description" />
+        <div class="button-row mt-2">
+            <button class="btn btn-small btn-success">save</button>
+            <button class="btn btn-small btn-outline-danger">cancel</button>
+        </div>
+    </form>
+</dialog>
+
+<dialog id="seven-point-dialog" @onclose="OnSevenClose" @oncancel="OnCancel" closedby="any">
+    <form method="dialog">
+        <input type="text" @bind="noteEntry" @bind:event="oninput" placeholder="Objective description" />
+        <div class="button-row mt-2">
+            <button class="btn btn-small btn-success">save</button>
+            <button class="btn btn-small btn-outline-danger">cancel</button>
+        </div>
+    </form>
+</dialog>
+
+<dialog id="note-dialog" @onclose="OnNoteClose" @oncancel="OnCancel" closedby="any">
+    <form method="dialog">
+        <p>Add your note:</p>
+        <input type="text" @bind="noteEntry" @bind:event="oninput" placeholder="Enter note" class="form-control" />
+        <div class="button-row mt-2">
+            <button class="btn btn-small btn-success">save</button>
+            <button class="btn btn-small btn-outline-danger">cancel</button>
+        </div>
+    </form>
+</dialog>
+
+<dialog id="edit-note-dialog" @onclose="OnEditNoteClose" @oncancel="OnCancel" closedby="any">
+    <form method="dialog">
+        @if (PersonalNotes.Count > 0)
+        {
+            @foreach (var note in PersonalNotes)
+            {
+                <h3 class="h5">Click Trash to remove note</h3>
+                <div class="grid">
+                    <p>@note</p>
+                    <button class="btn btn-danger btn-sm nf oi nf-cod-trash mx-4" @onclick="() => RemoveNote(note)"
+                            @onclick:preventDefault="true" />
+                </div>
+
+            }
+
+            <button class="btn btn-small btn-outline-primary mt-5">Close</button>
+        }
+        else
+        {
+            <p>No notes to remove</p>
+            <button class="btn btn-small btn-outline-primary">Close</button>
+        }
+    </form>
+</dialog>
 
 @code {
+    private int DarkMatter = 0;
+    private string noteEntry = string.Empty;
+    private List<string> threePointObjs = ["Odin", "Golbez"];
+    private List<string> fivePointObjs = ["Forge", "Trade Pink", "Odin Spot"];
+    private List<string> sevenPointObjs = ["Falcon Launch", "Mura Altar"];
+    public void HandleObjectiveCompleted(int points)
+    {
+        DarkMatter += points;
+    }
+
+    private void OnNoteCancel()
+    {
+        noteEntry = string.Empty;
+    }
+
+    private async Task OnNoteClose()
+    {
+        if (string.IsNullOrWhiteSpace(noteEntry))
+        {
+            return;
+        }
+        PersonalNotes.Add(noteEntry);
+        await SaveDataAsync();
+        noteEntry = string.Empty;
+    }
+
+    private void OnCancel()
+    {
+        noteEntry = string.Empty;
+    }
+
+    private async Task OnEditNoteClose()
+    {
+        await SaveDataAsync();
+    }
+
+    private async Task RemoveNote(string note)
+    {
+        PersonalNotes.Remove(note);
+    }
+
+    private async Task OnThreeClose()
+    {
+        if (string.IsNullOrWhiteSpace(noteEntry))
+        {
+            return;
+        }
+        threePointObjs.Add(noteEntry);
+        await SaveDataAsync();
+        noteEntry = string.Empty;
+    }
+
+    private async Task OnFiveClose()
+    {
+        if (string.IsNullOrWhiteSpace(noteEntry))
+        {
+            return;
+        }
+        threePointObjs.Add(noteEntry);
+        await SaveDataAsync();
+        noteEntry = string.Empty;
+    }
+
+
+    private async Task OnSevenClose()
+    {
+        if (string.IsNullOrWhiteSpace(noteEntry))
+        {
+            return;
+        }
+        threePointObjs.Add(noteEntry);
+        await SaveDataAsync();
+        noteEntry = string.Empty;
+    }
+
     //list of boss objectives (odin, golbex, 3 extra)
     //list of 5 pt objs (forge, pink, odin spot, 2 extra)
     //list of 7 pt objs (falcon, mura, 2 extra)

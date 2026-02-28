@@ -1,15 +1,15 @@
 ﻿@page "/tournaments"
 @using FeInfo.Common.DTOs
 @inject HttpClient Http
-<PageTitle>Tournaments</PageTitle>
+<PageTitle>Side Tournaments</PageTitle>
 
-@if(AppState.Tournaments.Any())
+@if (AppState.Tournaments.Any())
 {
     <div class="tournament-grid">
-    @foreach(var tournament in AppState.Tournaments)
-    {
-        <TournamentSummaryComponent Tournament="@tournament" />
-    }
+        @foreach (var tournament in AppState.Tournaments)
+        {
+            <TournamentSummaryComponent Tournament="@tournament" />
+        }
     </div>
 }
 
@@ -18,10 +18,9 @@
     [CascadingParameter]
     public TournamentAppState AppState { get; set; } = new();
 
-
     protected override async Task OnInitializedAsync()
     {
-        if(!AppState.Tournaments.Any())
+        if (!AppState.Tournaments.Any())
         {
             await AppState.FetchTournaments();
         }
