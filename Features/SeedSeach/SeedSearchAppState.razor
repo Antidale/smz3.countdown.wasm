@@ -18,6 +18,7 @@
     public HashSet<SeedDetail> Seeds { get; private set; } = new();
     private Dictionary<int, string> SeedHtml { get; set; } = new Dictionary<int, string>();
 
+    //TODO: add parameters to this so that the search page can call it with those
     public async Task FetchSeeds()
     {
         var seeds = await Http.GetFromJsonAsync<List<SeedDetail>>(seedsEndpoint) ?? new List<SeedDetail>();
@@ -49,7 +50,7 @@
         if (!string.IsNullOrEmpty(html))
             return html;
 
-        html = await Http.GetFromJsonAsync<string>($"{seedsEndpoint}/{id}/html");
+        html = await Http.GetStringAsync($"{seedsEndpoint}/{id}/html");
 
         if (!string.IsNullOrEmpty(html))
         {

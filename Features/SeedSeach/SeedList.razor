@@ -1,9 +1,14 @@
 ﻿<QuickGrid Items="AppState.Seeds.AsQueryable()" Class="table table-striped">
-    <PropertyColumn Property="@(s => s.Flagset)" />
+    @* <PropertyColumn Property="@(s => s.Flagset)"  /> *@
+    <PropertyColumn Property="@(s => s.SeedId)" />
+    <PropertyColumn Property="@(s => s.Seed)" />
+    <PropertyColumn Property="@(s => s.SourceUrl)" />
 
 </QuickGrid>
 
 @code {
     [CascadingParameter]
     public SeedSearchAppState AppState { get; set; } = new();
+
+    //TODO: figure out how to display the list of returned seeds well
 }

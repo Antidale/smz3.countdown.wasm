@@ -1,5 +1,24 @@
-﻿<h3>SeedPatch</h3>
+﻿@page "/seeds/{id:int}"
+
+<article>
+    <iframe srcdoc="@patchPage" referrerpolicy="strict-origin-when-cross-origin" />
+
+
+</article>
 
 @code {
+    [CascadingParameter]
+    public required SeedSearchAppState AppState { get; set; }
 
+    [Parameter]
+    public int Id { get; set; }
+
+    private string patchPage = string.Empty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        patchPage = await AppState.FetchSeedHtml(Id);
+
+    }
+    //TODO: add styling on the iframe to make it the correct size
 }

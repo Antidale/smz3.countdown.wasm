@@ -8,8 +8,16 @@
 @code {
     [Parameter]
     public string Seed { get; set; } = string.Empty;
+    [Parameter]
     public string Flag { get; set; } = string.Empty;
+    [Parameter]
     public string BinaryFlags { get; set; } = string.Empty;
 
+    @* 
+        TODO: 
+        add labels for the inputs, and also style stuff
+        and a search button that uses the AppState
+        pass in the search app state to have it fetch based on that
 
+    *@
 }
