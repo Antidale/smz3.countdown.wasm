@@ -1,0 +1,9 @@
+﻿<QuickGrid Items="AppState.Seeds.AsQueryable()" Class="table table-striped">
+    <PropertyColumn Property="@(s => s.Flagset)" />
+
+</QuickGrid>
+
+@code {
+    [CascadingParameter]
+    public SeedSearchAppState AppState { get; set; } = new();
+}

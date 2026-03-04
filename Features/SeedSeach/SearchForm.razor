@@ -1,0 +1,15 @@
+﻿<div class="input-group">
+    <input type="text" class="inpu" @bind-value="@Seed" placeholder="Seed Value" />
+    <input type="text" @bind-value="@Flag" placeholder="Specific flag" />
+    <input type="text" @bind-value="@BinaryFlags" placeholder="exact binary flags" />
+</div>
+
+
+@code {
+    [Parameter]
+    public string Seed { get; set; } = string.Empty;
+    public string Flag { get; set; } = string.Empty;
+    public string BinaryFlags { get; set; } = string.Empty;
+
+
+}

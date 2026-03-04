@@ -1,0 +1,61 @@
+﻿@using FeInfo.Common.DTOs
+@using System.Runtime.CompilerServices
+@using smz3.countdown.wasm.Constants
+@using smz3.countdown.wasm.Models
+@inherits AppStateBase
+@inject HttpClient Http
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
+
+@code {
+    private string seedsEndpoint = $"{EndpointConstants.API_BASE_ADDRESS}seed";
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    public HashSet<SeedDetail> Seeds { get; private set; } = new();
+    private Dictionary<int, string> SeedHtml { get; set; } = new Dictionary<int, string>();
+
+    public async Task FetchSeeds()
+    {
+        var seeds = await Http.GetFromJsonAsync<List<SeedDetail>>(seedsEndpoint) ?? new List<SeedDetail>();
+        foreach (var seed in seeds)
+        {
+            Seeds.Add(seed);
+        }
+    }
+
+    public async Task<string> FetchSeedHtml(int id)
+    {
+        if (!Seeds.Any(x => x.SeedId == id))
+        {
+            var seed = await Http.GetFromJsonAsync<SeedDetail>($"{seedsEndpoint}/{id}");
+
+            if (seed is not null)
+                Seeds.Add(seed);
+            else
+                return string.Empty;
+        }
+
+        if (SeedHtml.ContainsKey(id))
+        {
+            return SeedHtml[id];
+        }
+
+        SeedHtml.TryGetValue(id, out var html);
+
+        if (!string.IsNullOrEmpty(html))
+            return html;
+
+        html = await Http.GetFromJsonAsync<string>($"{seedsEndpoint}/{id}/html");
+
+        if (!string.IsNullOrEmpty(html))
+        {
+            SeedHtml.TryAdd(id, html);
+        }
+
+        return html ?? string.Empty;
+    }
+}

@@ -13,6 +13,7 @@
         PersonalNotes = await localStorage.GetItemAsync<List<string>>(StorageKey) ?? PersonalNotes;
         await base.OnInitializedAsync();
     }
+
     public async ValueTask DisposeAsync()
     {
 
