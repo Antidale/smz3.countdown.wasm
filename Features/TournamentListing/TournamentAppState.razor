@@ -1,6 +1,7 @@
 ﻿@using FeInfo.Common.DTOs
+@using smz3.countdown.wasm.Services
 @inherits AppStateBase
-@inject HttpClient Http
+@inject IFeApiDataService dataService
 
 <CascadingValue Value="this">
     @ChildContent
@@ -29,9 +30,7 @@
     {
         try
         {
-            Tournaments = await
-Http.GetFromJsonAsync<List<TournamentSummary>>("https://free-enterprise-info-api.herokuapp.com/api/Tournament") ??
-Tournaments;
+            Tournaments = await dataService.GetTournamentsAsync();
         }
         catch (Exception)
         {
@@ -48,9 +47,7 @@ Tournaments;
 
         try
         {
-            registrants = (await
-Http.GetFromJsonAsync<List<TournamentRegistrant>>($"https://free-enterprise-info-api.herokuapp.com/api/Tournament/{id}/registrants"))?.AsQueryable()
-?? new List<TournamentRegistrant>().AsQueryable();
+            registrants = (await dataService.GetTournamentRegistrantsAsync(id)).AsQueryable();
 
             tournamentRegistrants.TryAdd(id, registrants);
         }
@@ -61,4 +58,7 @@ Http.GetFromJsonAsync<List<TournamentRegistrant>>($"https://free-enterprise-info
 
         return registrants ?? new List<TournamentRegistrant>().AsQueryable();
     }
+    //TODO: Continue working at changing this over to an injectible service rather than the Cascading parameter version.
+    //TODO: Pending how well that works with seed search
+
 }
