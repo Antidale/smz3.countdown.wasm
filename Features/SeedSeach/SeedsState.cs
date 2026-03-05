@@ -16,4 +16,44 @@ public class SeedsState(IFeApiDataService dataService)
             Seeds.Add(seed);
         }
     }
+
+    public async Task<string> FetchSeedHtml(int id)
+    {
+        if (!Seeds.Any(x => x.SeedId == id))
+        {
+            var seed = await dataService.GetSeedByIdAsync(id);
+
+            if (seed is not null)
+                Seeds.Add(seed);
+            else
+                return string.Empty;
+        }
+
+        if (_seedHtml.ContainsKey(id))
+        {
+            return _seedHtml[id];
+        }
+
+        _seedHtml.TryGetValue(id, out var html);
+
+        if (!string.IsNullOrEmpty(html))
+            return html;
+
+        try
+        {
+            html = await dataService.GetSeedHtmlAsync(id);
+
+            if (!string.IsNullOrEmpty(html))
+            {
+                _seedHtml.TryAdd(id, html);
+            }
+        }
+        catch
+        {
+            //
+        }
+
+
+        return html ?? string.Empty;
+    }
 }

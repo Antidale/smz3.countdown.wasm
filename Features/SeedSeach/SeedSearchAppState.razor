@@ -11,8 +11,6 @@
 </CascadingValue>
 
 @code {
-    private string seedsEndpoint = $"{EndpointConstants.API_BASE_ADDRESS}seed";
-
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
@@ -22,7 +20,7 @@
     //TODO: add parameters to this so that the search page can call it with those
     public async Task FetchSeeds()
     {
-        var seeds = await dataService.GetSeedsAsync(seedsEndpoint) ?? new List<SeedDetail>();
+        var seeds = await dataService.GetSeedsAsync();
         foreach (var seed in seeds)
         {
             Seeds.Add(seed);
@@ -51,12 +49,20 @@
         if (!string.IsNullOrEmpty(html))
             return html;
 
-        html = await dataService.GetSeedHtmlAsync(id);
-
-        if (!string.IsNullOrEmpty(html))
+        try
         {
-            SeedHtml.TryAdd(id, html);
+            html = await dataService.GetSeedHtmlAsync(id);
+
+            if (!string.IsNullOrEmpty(html))
+            {
+                SeedHtml.TryAdd(id, html);
+            }
         }
+        catch
+        {
+            //
+        }
+
 
         return html ?? string.Empty;
     }

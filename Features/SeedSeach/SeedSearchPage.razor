@@ -2,20 +2,13 @@
 <PageTitle>Seed Search</PageTitle>
 <SearchForm />
 
-@if (@AppState.Seeds.Any())
-{
-    <SeedList />
-}
+
+<SeedList />
+
 
 @code {
-    [CascadingParameter]
-    public SeedSearchAppState AppState { get; set; } = new();
 
-    protected override async Task OnInitializedAsync()
-    {
-        if (!AppState.Seeds.Any())
-        {
-            await AppState.FetchSeeds();
-        }
-    }
+
+
+
 }

@@ -17,26 +17,64 @@ public class FeApiDataService(FeApiHttpClient httpClient) : IFeApiDataService
 {
     public async Task<List<TournamentSummary>> GetTournamentsAsync()
     {
-        return await httpClient.GetFromJsonAsync<List<TournamentSummary>>("Tournament") ?? [];
+        try
+        {
+            return await httpClient.GetFromJsonAsync<List<TournamentSummary>>("Tournament") ?? [];
+        }
+        catch
+        {
+            return [];
+        }
     }
 
     public async Task<string> GetSeedHtmlAsync(int id)
     {
-        return await httpClient.GetStringAsync($"seed/{id}/html");
+        try
+        {
+            return await httpClient.GetStringAsync($"seed/{id}/html");
+        }
+        catch
+        {
+            return string.Empty;
+        }
+
     }
 
     public async Task<List<SeedDetail>> GetSeedsAsync(string binaryFlags = "", string flagName = "", string seedValue = "")
     {
-        return await httpClient.GetFromJsonAsync<List<SeedDetail>>("seed") ?? [];
+        try
+        {
+            return await httpClient.GetFromJsonAsync<List<SeedDetail>>("seed") ?? [];
+        }
+        catch
+        {
+            return [];
+        }
+
     }
 
     public async Task<SeedDetail?> GetSeedByIdAsync(int id)
     {
-        return await httpClient.GetFromJsonAsync<SeedDetail>($"seed/{id}");
+        try
+        {
+            return await httpClient.GetFromJsonAsync<SeedDetail>($"seed/{id}");
+        }
+        catch
+        {
+            return default;
+        }
+
     }
 
     public async Task<List<TournamentRegistrant>> GetTournamentRegistrantsAsync(int id)
     {
-        return await httpClient.GetFromJsonAsync<List<TournamentRegistrant>>($"Tournament/{id}/registrants") ?? [];
+        try
+        {
+            return await httpClient.GetFromJsonAsync<List<TournamentRegistrant>>($"Tournament/{id}/registrants") ?? [];
+        }
+        catch
+        {
+            return [];
+        }
     }
 }

@@ -1,9 +1,15 @@
 ﻿@page "/seeds/{id:int}"
 
-<article>
-    <iframe srcdoc="@patchPage" referrerpolicy="strict-origin-when-cross-origin" />
-
-
+<article class="mx-auto seed-background">
+    @if (string.IsNullOrEmpty(patchPage))
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <iframe srcdoc="@patchPage" referrerpolicy="strict-origin-when-cross-origin" class="seed-iframe" width="100%vw"
+                height="600" />
+    }
 </article>
 
 @code {
@@ -17,8 +23,10 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        patchPage = await AppState.FetchSeedHtml(Id);
+        var response = await AppState.FetchSeedHtml(Id);
+        patchPage = string.IsNullOrWhiteSpace(response)
+            ? "<p class='seed-background mx-auto'>not found</p>"
+            : response;
 
     }
-    //TODO: add styling on the iframe to make it the correct size
 }
