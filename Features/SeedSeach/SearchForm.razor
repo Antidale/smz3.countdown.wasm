@@ -1,11 +1,24 @@
-﻿<div class="input-group">
-    <input type="text" class="inpu" @bind-value="@Seed" placeholder="Seed Value" />
-    <input type="text" @bind-value="@Flag" placeholder="Specific flag" />
-    <input type="text" @bind-value="@BinaryFlags" placeholder="exact binary flags" />
+﻿<h2>Search Panel</h2>
+<div class="input-group row">
+    <label class="form-label" for="seedInput">
+        Seed:
+        <input type="text" id="seedInput" class="input form-control" @bind-value="@Seed" placeholder="Seed Value" />
+    </label>
+    <label class="form-label" for="flagInput">Flag
+        <input type="text" id="flagInput" class="input form-control" @bind-value="@Flag" placeholder="Specific flag" />
+    </label>
+    <label class="form-label" for="binFlagsInput">Binary Flagstring:
+        <input type="text" id="binFlagsInput" class="input form-control" @bind-value="@BinaryFlags"
+               placeholder="exact binary flags" />
+    </label>
+    <button @onclick=@(() => HandleSearchClick()) class="btn btn-primary col-2 mx-3 my-2">Search</button>
 </div>
 
 
 @code {
+
+    [CascadingParameter]
+    public required SeedSearchAppState AppState { get; set; }
     [Parameter]
     public string Seed { get; set; } = string.Empty;
     [Parameter]
@@ -13,6 +26,11 @@
     [Parameter]
     public string BinaryFlags { get; set; } = string.Empty;
 
+
+    public async Task HandleSearchClick()
+    {
+        await AppState.FetchSeeds(binaryFlags: BinaryFlags, flagName: Flag, seedValue: Seed);
+    }
     @* 
         TODO: 
         add labels for the inputs, and also style stuff

@@ -1,5 +1,7 @@
 using System.Net.Http.Json;
+using System.Web;
 using FeInfo.Common.DTOs;
+using smz3.countdown.wasm.Constants;
 using smz3.countdown.wasm.Models;
 
 namespace smz3.countdown.wasm.Services;
@@ -13,13 +15,13 @@ public interface IFeApiDataService
     Task<List<TournamentRegistrant>> GetTournamentRegistrantsAsync(int id);
 }
 
-public class FeApiDataService(FeApiHttpClient httpClient) : IFeApiDataService
+public class FeApiDataService(HttpClient httpClient) : IFeApiDataService
 {
     public async Task<List<TournamentSummary>> GetTournamentsAsync()
     {
         try
         {
-            return await httpClient.GetFromJsonAsync<List<TournamentSummary>>("Tournament") ?? [];
+            return await httpClient.GetFromJsonAsync<List<TournamentSummary>>($"{EndpointConstants.API_BASE_ADDRESS}/Tournament") ?? [];
         }
         catch
         {
@@ -31,10 +33,11 @@ public class FeApiDataService(FeApiHttpClient httpClient) : IFeApiDataService
     {
         try
         {
-            return await httpClient.GetStringAsync($"seed/{id}/html");
+            return await httpClient.GetStringAsync($"{EndpointConstants.API_BASE_ADDRESS}/seed/{id}/html");
         }
-        catch
+        catch (Exception ex)
         {
+            var stuff = ex;
             return string.Empty;
         }
 
@@ -44,10 +47,18 @@ public class FeApiDataService(FeApiHttpClient httpClient) : IFeApiDataService
     {
         try
         {
-            return await httpClient.GetFromJsonAsync<List<SeedDetail>>("seed") ?? [];
+            var builder = new UriBuilder($"{EndpointConstants.API_BASE_ADDRESS}/seed");
+            var query = HttpUtility.ParseQueryString(builder.Query);
+            query["seedString"] = seedValue;
+            query["binaryFlags"] = binaryFlags;
+            query["flagSearch"] = flagName;
+            builder.Query = query.ToString();
+            var stuff = builder.ToString();
+            return await httpClient.GetFromJsonAsync<List<SeedDetail>>(stuff) ?? [];
         }
-        catch
+        catch (Exception ex)
         {
+            var junk = ex.ToString();
             return [];
         }
 
@@ -57,7 +68,7 @@ public class FeApiDataService(FeApiHttpClient httpClient) : IFeApiDataService
     {
         try
         {
-            return await httpClient.GetFromJsonAsync<SeedDetail>($"seed/{id}");
+            return await httpClient.GetFromJsonAsync<SeedDetail>($"{EndpointConstants.API_BASE_ADDRESS}/seed/{id}");
         }
         catch
         {
@@ -70,7 +81,7 @@ public class FeApiDataService(FeApiHttpClient httpClient) : IFeApiDataService
     {
         try
         {
-            return await httpClient.GetFromJsonAsync<List<TournamentRegistrant>>($"Tournament/{id}/registrants") ?? [];
+            return await httpClient.GetFromJsonAsync<List<TournamentRegistrant>>($"{EndpointConstants.API_BASE_ADDRESS}/Tournament/{id}/registrants") ?? [];
         }
         catch
         {

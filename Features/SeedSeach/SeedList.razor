@@ -2,7 +2,9 @@
 {
     <QuickGrid Items="AppState.Seeds.AsQueryable()" Class="table table-striped">
         @* <PropertyColumn Property="@(s => s.Flagset)"  /> *@
-        <PropertyColumn Property="@(s => s.SeedId)" />
+        <TemplateColumn>
+            <a href="/seeds/@context.SeedId">Permalink</a>
+        </TemplateColumn>
         <PropertyColumn Property="@(s => s.Seed)" />
         <PropertyColumn Property="@(s => s.SourceUrl)" />
     </QuickGrid>

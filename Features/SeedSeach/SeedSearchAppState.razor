@@ -18,31 +18,15 @@
     private Dictionary<int, string> SeedHtml { get; set; } = new Dictionary<int, string>();
 
     //TODO: add parameters to this so that the search page can call it with those
-    public async Task FetchSeeds()
+    public async Task FetchSeeds(string binaryFlags = "", string flagName = "", string seedValue = "")
     {
-        var seeds = await dataService.GetSeedsAsync();
-        foreach (var seed in seeds)
-        {
-            Seeds.Add(seed);
-        }
+        var seeds = await dataService.GetSeedsAsync(binaryFlags: binaryFlags, flagName: flagName, seedValue: seedValue);
+        Seeds = seeds.ToHashSet();
+        StateHasChanged();
     }
 
     public async Task<string> FetchSeedHtml(int id)
     {
-        if (!Seeds.Any(x => x.SeedId == id))
-        {
-            var seed = await dataService.GetSeedByIdAsync(id);
-
-            if (seed is not null)
-                Seeds.Add(seed);
-            else
-                return string.Empty;
-        }
-
-        if (SeedHtml.ContainsKey(id))
-        {
-            return SeedHtml[id];
-        }
 
         SeedHtml.TryGetValue(id, out var html);
 
@@ -62,7 +46,6 @@
         {
             //
         }
-
 
         return html ?? string.Empty;
     }
