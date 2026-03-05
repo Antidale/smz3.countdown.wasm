@@ -13,7 +13,6 @@ builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddSingleton<ItemService>();
 builder.Services.AddSingleton<LocationService>();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddScoped(sp => new FeApiHttpClient());
 builder.Services.AddScoped<IFeApiDataService, FeApiDataService>();
 builder.Services.AddScoped<SeedsState>();
 

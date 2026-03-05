@@ -35,12 +35,10 @@ public class FeApiDataService(HttpClient httpClient) : IFeApiDataService
         {
             return await httpClient.GetStringAsync($"{EndpointConstants.API_BASE_ADDRESS}/seed/{id}/html");
         }
-        catch (Exception ex)
+        catch
         {
-            var stuff = ex;
             return string.Empty;
         }
-
     }
 
     public async Task<List<SeedDetail>> GetSeedsAsync(string binaryFlags = "", string flagName = "", string seedValue = "")
@@ -52,13 +50,13 @@ public class FeApiDataService(HttpClient httpClient) : IFeApiDataService
             query["seedString"] = seedValue;
             query["binaryFlags"] = binaryFlags;
             query["flagSearch"] = flagName;
+            query["onlySavedHtml"] = "true";
             builder.Query = query.ToString();
-            var stuff = builder.ToString();
-            return await httpClient.GetFromJsonAsync<List<SeedDetail>>(stuff) ?? [];
+            var uriString = builder.ToString();
+            return await httpClient.GetFromJsonAsync<List<SeedDetail>>(uriString) ?? [];
         }
-        catch (Exception ex)
+        catch
         {
-            var junk = ex.ToString();
             return [];
         }
 
@@ -74,7 +72,6 @@ public class FeApiDataService(HttpClient httpClient) : IFeApiDataService
         {
             return default;
         }
-
     }
 
     public async Task<List<TournamentRegistrant>> GetTournamentRegistrantsAsync(int id)
