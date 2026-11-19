@@ -4,7 +4,7 @@
 @using smz3.countdown.wasm.Services
 @using smz3.countdown.wasm.Components
 @inject ItemService ItemService
-@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject Anti.Blazor.LocalStorage.ILocalStorageService localStorage
 @inject NavigationManager NavigationManager
 @implements IAsyncDisposable
 
@@ -13,7 +13,7 @@
     Majors
     <button class="btn btn-primary" @onclick="SetToDefault">Default</button>
     <button class="btn btn-secondary" @onclick="SetToDefaultKeys">Keys Default</button>
-    <button class="btn btn-success float-end"  @onclick="SaveDataAsync">Save</button>
+    <button class="btn btn-success float-end" @onclick="SaveDataAsync">Save</button>
     <span class="float-end">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 </h3>
 
@@ -23,7 +23,7 @@
         @for (var i = 0; i < ItemsChoices.Count(); i++)
         {
             var internalIndex = i;
-            <Checkbox @bind-CheckboxModel=ItemsChoices[i]></Checkbox>
+            <Checkbox @bind-CheckboxModel=ItemsChoices[internalIndex]></Checkbox>
         }
     </div>
 </div>
@@ -84,6 +84,7 @@
 
     public async Task SaveDataAsync()
     {
-        await localStorage.SetItemAsync<List<string>>("Majors", ItemsChoices.Where(x => x.IsChecked).Select(x => x.Name).ToList());
+        await localStorage.SetItemAsync<List<string>>("Majors", ItemsChoices.Where(x => x.IsChecked).Select(x =>
+x.Name).ToList());
     }
 }

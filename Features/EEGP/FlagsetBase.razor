@@ -1,4 +1,4 @@
-﻿@inject Blazored.LocalStorage.ILocalStorageService localStorage
+﻿@inject Anti.Blazor.LocalStorage.ILocalStorageService localStorage
 @inject IJSRuntime JSRuntime
 
 
@@ -25,7 +25,11 @@
 
     public async Task ShowModalById(string id)
     {
-        await JSRuntime.InvokeVoidAsync("modals.show", id);
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("modals.show", id);
+        }
+        catch { }
     }
 
     public async Task HandleItemRemoved(List<string> args)

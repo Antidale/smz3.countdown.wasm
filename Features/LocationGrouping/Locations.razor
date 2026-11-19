@@ -2,7 +2,7 @@
 @using smz3.countdown.wasm.Services
 @using smz3.countdown.wasm.Components
 @inject LocationService LocationService
-@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject Anti.Blazor.LocalStorage.ILocalStorageService localStorage
 
 <PageTitle>Locations</PageTitle>
 <h3>Locations</h3>
@@ -13,7 +13,9 @@
         <div class="border-1 border-primary">
             <br />
             <h4>Spoiler Grouping Summary</h4>
-            <p>The Spoiler location grouping exactly mimics all the divisions of the SMZ3 spoiler. Users of Apathyduck's desktop appliction should be aware that this is similar to, but not the same as the Default Areas preset</p>
+            <p>The Spoiler location grouping exactly mimics all the divisions of the SMZ3 spoiler. Users of Apathyduck's
+                desktop appliction should be aware that this is similar to, but not the same as the Default Areas preset
+            </p>
             <button class="btn btn-success" @onclick="@SaveStandard">Use this grouping</button>
             <br />
             <br />
@@ -36,26 +38,28 @@
         <div class="border-1 border-secondary">
             <br />
             <h4>Overworld/Dungeon Grouping Summary</h4>
-            <p>This grouping mixes overworld and dungeon areas in ALTTP, somewhat reducing the power of dungeon scouting, but also gaining smaller overworld sections. For Super Metroid, it groups locations similarly to how the VARIA randomizer implements the Full Countdown mode</p>
-            <button class="btn btn-success" @onclick="@SaveAlternate">Use this grouping</button>
-            <br />
-            <br />
-            @foreach (var locationGroup in LocationService.AltLocations)
-            {
-                <h4 style="margin-left: 10px">@locationGroup.Key</h4>
-                <div class="container">
-                    <div class="row">
-                        @foreach (var location in locationGroup.Value)
-                        {
-                            <div class="col-4">@location</div>
-                        }
-                    </div>
-                </div>
+            <p>This grouping mixes overworld and dungeon areas in ALTTP, somewhat reducing the power of dungeon
+                scouting, but also gaining smaller overworld sections. For Super Metroid, it groups locations similarly
+                to how the VARIA randomizer implements the Full Countdown mode</p>
+                <button class="btn btn-success" @onclick="@SaveAlternate">Use this grouping</button>
                 <br />
-            }
-        </div>
-    </TabBody>
-</TabControl>
+                <br />
+                @foreach (var locationGroup in LocationService.AltLocations)
+                {
+                    <h4 style="margin-left: 10px">@locationGroup.Key</h4>
+                    <div class="container">
+                        <div class="row">
+                            @foreach (var location in locationGroup.Value)
+                            {
+                                <div class="col-4">@location</div>
+                            }
+                        </div>
+                    </div>
+                    <br />
+                }
+            </div>
+        </TabBody>
+    </TabControl>
 
 
 @code {

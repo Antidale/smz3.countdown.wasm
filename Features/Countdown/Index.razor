@@ -1,8 +1,4 @@
 ﻿@page "/"
-
-@using System.Diagnostics
-@using smz3.countdown.wasm.Attributes
-@using smz3.countdown.wasm.Enums
 @using smz3.countdown.wasm.Extenstions
 @using smz3.countdown.wasm.Models
 @using smz3.countdown.wasm.Services
@@ -11,7 +7,7 @@
 @inject HttpClient Http
 @inject ItemService ItemService
 @inject LocationService LocationService
-@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject Anti.Blazor.LocalStorage.ILocalStorageService localStorage
 @implements IAsyncDisposable
 
 <PageTitle>Countdown</PageTitle>
@@ -20,7 +16,8 @@
 @if (!countdownLocationInfos.Any())
 {
     <p>Enter Seed or Session info</p>
-    <input type="text" @bind="childString" @bind:event="oninput" title="for solo, use Seed (not Seed Number) for multiworld, use Session" />
+    <input type="text" @bind="childString" @bind:event="oninput"
+           title="for solo, use Seed (not Seed Number) for multiworld, use Session" />
     <button @onclick="ConvertShortGuid">Fetch Spoiler</button>
 }
 else
@@ -28,7 +25,9 @@ else
     <div class="row">
         <button @onclick="SaveSeedAsync" class="btn btn-success col-md-2 col-sm-12">Save Seed</button>
         <div class="col-md-2"></div>
-        <div class="col-md-5 font-monospace"><h4>@seedHash</h4></div>
+        <div class="col-md-5 font-monospace">
+            <h4>@seedHash</h4>
+        </div>
         <div class="col-md-1"></div>
         <button @onclick="NewSeed" class="btn btn-outline-success col-md-2 col-sm-12d">New Seed</button>
     </div>
@@ -68,7 +67,8 @@ else
         {
             var internalIndex = i;
             var locationName = countdownLocationInfos[internalIndex].LocationName ?? string.Empty;
-            var areaLocations = locationGrouping == "Spoiler" ? LocationService.Locations[locationName] : LocationService.AltLocations[locationName];
+            var areaLocations = locationGrouping == "Spoiler" ? LocationService.Locations[locationName] :
+    LocationService.AltLocations[locationName];
             <TabBody Title="@countdownLocationInfos[internalIndex].LocationName">
                 <CountdownLocation @bind-LocationInfo=countdownLocationInfos[internalIndex] Locations=areaLocations />
             </TabBody>
@@ -134,7 +134,8 @@ else
 
     public async Task<SpoilerResponse> GetSpoilerAsync(string id)
     {
-        return await Http.GetFromJsonAsync<SpoilerResponse>($"https://smz3-countdown-api.herokuapp.com/spoiler/{id}") ?? new SpoilerResponse();
+        return await Http.GetFromJsonAsync<SpoilerResponse>($"https://smz3-countdown-api.herokuapp.com/spoiler/{id}") ?? new
+SpoilerResponse();
     }
 
     void SelectedPlayerChanged(ChangeEventArgs e)
@@ -198,11 +199,11 @@ else
 
         return locationInfo.Select(x =>
             new CountdownLocationInfo
-                {
-                    LocationName = x.Key,
-                    CurrentCount = x.Value,
-                    OriginalCount = x.Value
-                })
+            {
+                LocationName = x.Key,
+                CurrentCount = x.Value,
+                OriginalCount = x.Value
+            })
             .ToList();
     }
 
@@ -223,8 +224,6 @@ else
         }
 
         await SaveSeedAsync();
-
-        StateHasChanged();
     }
 
     private async Task SaveSeedAsync()
@@ -302,12 +301,20 @@ else
     {
         if (locationGrouping == "Spoiler")
         {
-            locationsList = LocationService.Locations.SelectMany(x => x.Value, (key, value) => new { LocationName = value, DisplayName = key.Key })
+            locationsList = LocationService.Locations.SelectMany(x => x.Value, (key, value) => new
+            {
+                LocationName = value,
+                DisplayName = key.Key
+            })
                                                      .ToDictionary(x => x.LocationName, y => y.DisplayName);
         }
         else
         {
-            locationsList = LocationService.AltLocations.SelectMany(x => x.Value, (key, value) => new { LocationName = value, DisplayName = key.Key })
+            locationsList = LocationService.AltLocations.SelectMany(x => x.Value, (key, value) => new
+            {
+                LocationName = value,
+                DisplayName = key.Key
+            })
                                                         .ToDictionary(x => x.LocationName, y => y.DisplayName);
         }
 
